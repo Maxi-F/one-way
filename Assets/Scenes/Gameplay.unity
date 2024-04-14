@@ -262,9 +262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbebb190d230d384faac4abd0f612db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
-  acceleration: 15
-  rotationSpeed: 5
+  speed: 8
+  acceleration: 10
   rigidBody: {fileID: 541872684}
   brakeMultiplier: 0.75
 --- !u!136 &541872683
@@ -395,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d2b205f36489f42a9632609b86dc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 1
+  sensitivity: 50
 --- !u!1 &549805779
 GameObject:
   m_ObjectHideFlags: 0
