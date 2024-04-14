@@ -6,9 +6,9 @@ public class WalkingBehaviour : MonoBehaviour
 {
     [SerializeField] private float speed = 12;
     [SerializeField] private float acceleration = 15;
-    [SerializeField] private float rotationSpeed = 5;
     [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private float brakeMultiplier = .75f;
+    private Vector3 _obtainedDirection;
     private Vector3 _desiredDirection;
     private bool _shouldBrake;
 
@@ -25,6 +25,12 @@ public class WalkingBehaviour : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
     }
 
+    public void LookChange()
+    {
+        _desiredDirection = transform.TransformDirection(_obtainedDirection);
+        _desiredDirection.y = 0;
+    }
+
     public void Move(Vector3 direction)
     {
         //We need to convert the direction from global to camera.Local
@@ -33,24 +39,18 @@ public class WalkingBehaviour : MonoBehaviour
         {
             _shouldBrake = true;
         }
-        _desiredDirection = direction;
+        _obtainedDirection = direction;
         Transform localTransform = transform;
         var camera = Camera.main;
         if (camera != null)
             localTransform = camera.transform;
-        _desiredDirection = localTransform.TransformDirection(_desiredDirection);
+        _desiredDirection = localTransform.TransformDirection(_obtainedDirection);
         _desiredDirection.y = 0;
-    }
-
-    private void Update()
-    {
-        float angle = Vector3.SignedAngle(transform.forward, _desiredDirection, transform.up);
-
-        transform.Rotate(transform.up, angle * Time.deltaTime * rotationSpeed);
     }
 
     private void FixedUpdate()
     {
+        Debug.Log(_desiredDirection.normalized);
         var currentHorizontalVelocity = rigidBody.velocity;
         currentHorizontalVelocity.y = 0;
         var currentSpeed = currentHorizontalVelocity.magnitude;
@@ -60,7 +60,6 @@ public class WalkingBehaviour : MonoBehaviour
         {
             rigidBody.AddForce(-currentHorizontalVelocity * brakeMultiplier, ForceMode.Impulse);
             _shouldBrake = false;
-            Debug.Log($"{name}: Character hit brake!\tCurrent Speed is {currentSpeed}");
         }
     }
 }

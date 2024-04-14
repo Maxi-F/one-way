@@ -6,6 +6,8 @@ public class CameraBehaviour : MonoBehaviour
     public Vector3 offset = new Vector3(0, 1.5f, -5);
     public float followSpeed = 5;
     public float rotationSpeed = 5;
+
+
     private void FixedUpdate()
     {
         var rotatedOffset = target.rotation * offset;
