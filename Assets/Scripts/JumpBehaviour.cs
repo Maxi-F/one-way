@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class JumpBehaviour : MonoBehaviour
+public class JumpBehaviour : MonoBehaviour, IBehaviour
 {
     [SerializeField] Transform feetPivot;
     [SerializeField] private float force;
     [SerializeField] private LayerMask floor;
     [SerializeField] private float groundedDistance = 0.1f;
     [SerializeField] private float jumpingMiliseconds = 100f;
+    [SerializeField] private WalkingBehaviour walkingBehaviour;
+    [SerializeField] private Player player;
 
     private Ray _groundRay;
     private Rigidbody _rigidBody;
@@ -19,9 +21,11 @@ public class JumpBehaviour : MonoBehaviour
     private void Start()
     {
         _rigidBody ??= GetComponent<Rigidbody>();
+        walkingBehaviour ??= GetComponent<WalkingBehaviour>();
+        player ??= GetComponent<Player>();
     }
 
-    private void FixedUpdate()
+    public void OnBehaviourFixedUpdate()
     {
         if(_shouldJump && CanJump())
         {
@@ -30,16 +34,38 @@ public class JumpBehaviour : MonoBehaviour
         }
     }
 
-    public bool TryJump()
+    public void Move(Vector3 direction)
+    {
+
+    }
+
+    public string getName()
+    {
+        return "Jump Behaviour";
+    }
+
+    public void LookChange()
+    {
+
+    }
+
+    public void OnBehaviourUpdate()
+    {
+        if(IsOnFloor())
+        {
+            player.SetBehaviour(walkingBehaviour);
+            player.Move(player.desiredDirection);
+        }
+    }
+
+    public void Jump()
     {
         if(IsOnFloor())
         {
             Debug.Log($"{name}: Jump!");
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;
-            return true;
         }
-        return false;
     }
 
     private bool JumpingBreakTime()

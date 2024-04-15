@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 541872682}
   - component: {fileID: 541872688}
   - component: {fileID: 541872689}
+  - component: {fileID: 541872690}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -267,6 +268,8 @@ MonoBehaviour:
   acceleration: 10
   rigidBody: {fileID: 541872684}
   brakeMultiplier: 0.75
+  player: {fileID: 541872690}
+  jumpBehaviour: {fileID: 541872689}
 --- !u!136 &541872683
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -415,6 +418,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundedDistance: 0.1
+  jumpingMiliseconds: 10
+  walkingBehaviour: {fileID: 541872682}
+  player: {fileID: 541872690}
+--- !u!114 &541872690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541872681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17053c4a3c8ab1e4188ec7f0fa4a176c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &549805779
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,9 +478,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9e0e6d416aaf24b84ed94b4faf13a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingBehaviour: {fileID: 541872682}
+  player: {fileID: 541872690}
   rotationBehaviour: {fileID: 541872688}
-  jumpBehaviour: {fileID: 541872689}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,7 +623,7 @@ Transform:
   m_GameObject: {fileID: 560250939}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.971, z: 0}
+  m_LocalPosition: {x: 0, y: -0.91, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
