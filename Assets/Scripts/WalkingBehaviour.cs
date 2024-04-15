@@ -8,9 +8,14 @@ public class WalkingBehaviour : MonoBehaviour
     [SerializeField] private float acceleration = 15;
     [SerializeField] private Rigidbody rigidBody;
     [SerializeField] private float brakeMultiplier = .75f;
+    [SerializeField] private JumpBehaviour jumpBehaviour;
+
     private Vector3 _obtainedDirection;
     private Vector3 _desiredDirection;
     private bool _shouldBrake;
+    private bool _isJumping = false;
+
+    public bool isJumping { get { return _isJumping; } set { _isJumping = value; } }
 
     public float CurrentSpeed
     {
@@ -22,7 +27,17 @@ public class WalkingBehaviour : MonoBehaviour
 
     private void Reset()
     {
-        rigidBody = GetComponent<Rigidbody>();
+        rigidBody ??= GetComponent<Rigidbody>();
+        jumpBehaviour ??= GetComponent<JumpBehaviour>();
+    }
+
+    public void Update()
+    {
+        if(_isJumping && jumpBehaviour.IsOnFloor())
+        {
+            Debug.Log($"{name}: Is on floor!");
+            _isJumping = false;
+        }
     }
 
     public void LookChange()
@@ -35,7 +50,7 @@ public class WalkingBehaviour : MonoBehaviour
     {
         //We need to convert the direction from global to camera.Local
         //direction is currently Global
-        if (direction.magnitude < 0.0001f)
+        if (direction.magnitude < 0.0001f && !_isJumping)
         {
             _shouldBrake = true;
         }
@@ -50,13 +65,12 @@ public class WalkingBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(_desiredDirection.normalized);
         var currentHorizontalVelocity = rigidBody.velocity;
         currentHorizontalVelocity.y = 0;
         var currentSpeed = currentHorizontalVelocity.magnitude;
-        if (currentSpeed < speed)
+        if (currentSpeed < speed && !_isJumping)
             rigidBody.AddForce(_desiredDirection.normalized * acceleration, ForceMode.Force);
-        if (_shouldBrake)
+        if (_shouldBrake && !_isJumping)
         {
             rigidBody.AddForce(-currentHorizontalVelocity * brakeMultiplier, ForceMode.Impulse);
             _shouldBrake = false;

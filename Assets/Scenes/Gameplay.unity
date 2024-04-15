@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 541872683}
   - component: {fileID: 541872682}
   - component: {fileID: 541872688}
+  - component: {fileID: 541872689}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -380,6 +381,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1501360459}
+  - {fileID: 560250940}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &541872688
@@ -395,6 +397,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: 50
+--- !u!114 &541872689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541872681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a7b9a3111ff48479812bbc4ac9d4c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feetPivot: {fileID: 560250940}
+  force: 5
+  floor:
+    serializedVersion: 2
+    m_Bits: 8
+  groundedDistance: 0.1
 --- !u!1 &549805779
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkingBehaviour: {fileID: 541872682}
   rotationBehaviour: {fileID: 541872688}
+  jumpBehaviour: {fileID: 541872689}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,11 +560,58 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 303a304a-a531-4898-b9f8-68d7b82406e6
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 549805781}
+        m_TargetAssemblyTypeName: Movement.InputReader, Assembly-CSharp
+        m_MethodName: HandleJumpInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d511e4ef-e3da-4509-b735-5a291772d6a3
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!1 &560250939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 560250940}
+  m_Layer: 0
+  m_Name: feetPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &560250940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560250939}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.971, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 541872687}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +932,7 @@ GameObject:
   - component: {fileID: 1582959851}
   - component: {fileID: 1582959850}
   - component: {fileID: 1582959849}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

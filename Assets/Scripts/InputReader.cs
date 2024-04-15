@@ -7,6 +7,7 @@ namespace Movement
     {
         [SerializeField] private WalkingBehaviour walkingBehaviour;
         [SerializeField] private RotationBehaviour rotationBehaviour;
+        [SerializeField] private JumpBehaviour jumpBehaviour;
 
         private void Awake()
         {
@@ -35,8 +36,20 @@ namespace Movement
         {
             Vector2 lookInput = context.ReadValue<Vector2>();
             float angle = lookInput.x;
-            rotationBehaviour.RotateInAngles(angle);
-            walkingBehaviour.LookChange();
+            if(walkingBehaviour != null && rotationBehaviour != null)
+            {
+                rotationBehaviour.RotateInAngles(angle);
+                walkingBehaviour.LookChange();
+            }
+        }
+
+        public void HandleJumpInput(InputAction.CallbackContext context)
+        {
+            if(jumpBehaviour && context.started)
+            {
+                bool couldJump = jumpBehaviour.TryJump();
+                walkingBehaviour.isJumping = couldJump;
+            }
         }
     }
 }
