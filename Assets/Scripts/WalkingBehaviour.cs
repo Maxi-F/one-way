@@ -11,45 +11,14 @@ public class WalkingBehaviour : MonoBehaviour, IBehaviour
     [SerializeField] private Player player;
     [SerializeField] private JumpBehaviour jumpBehaviour;
 
-    private Vector3 _desiredDirection;
-    private Vector3 _obtainedDirection;
-    private bool _shouldBrake;
-
-    public float CurrentSpeed
-    {
-        get
-        {
-            return _desiredDirection.magnitude * speed;
-        }
-    }
-
     private void Reset()
     {
         rigidBody ??= GetComponent<Rigidbody>();
         jumpBehaviour ??= GetComponent<JumpBehaviour>();
     }
 
-    public void LookChange()
-    {
-        _desiredDirection = transform.TransformDirection(_obtainedDirection);
-        _desiredDirection.y = 0;
-    }
-
     public void OnBehaviourUpdate()
     {
-    }
-
-    public void Move(Vector3 direction)
-    {
-        //We need to convert the direction from global to camera.Local
-        //direction is currently Global
-        _obtainedDirection = direction;
-        Transform localTransform = transform;
-        var camera = Camera.main;
-        if (camera != null)
-            localTransform = camera.transform;
-        _desiredDirection = localTransform.TransformDirection(_obtainedDirection);
-        _desiredDirection.y = 0;
     }
 
     public void Jump() 
@@ -69,7 +38,9 @@ public class WalkingBehaviour : MonoBehaviour, IBehaviour
         currentHorizontalVelocity.y = 0;
         var currentSpeed = currentHorizontalVelocity.magnitude;
         if (currentSpeed < speed)
-            rigidBody.AddForce(_desiredDirection.normalized * acceleration, ForceMode.Force);
+        {
+            rigidBody.AddForce(player.desiredDirection.normalized * acceleration, ForceMode.Force);
+        }
         if (player.shouldBrake)
         {
             rigidBody.AddForce(-currentHorizontalVelocity * brakeMultiplier, ForceMode.Impulse);

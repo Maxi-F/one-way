@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     private bool _shouldBrake;
     private Vector3 _desiredDirection;
+    private Vector3 _obtainedDirection;
 
     public bool shouldBrake { get { return _shouldBrake; } set { _shouldBrake = value; } }
     public Vector3 desiredDirection { get { return _desiredDirection; } set { _desiredDirection = value; } }
@@ -25,19 +26,25 @@ public class Player : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
-        desiredDirection = direction;
+        _desiredDirection = direction;
+        _obtainedDirection = direction;
 
-        if (direction.magnitude < 0.0001f)
-        {
-            _shouldBrake = true;
-        }
+        _shouldBrake = direction.magnitude < 0.0001f;
 
-        behaviour.Move(direction);
+        Transform localTransform = transform;
+        var camera = Camera.main;
+        if (camera != null)
+            localTransform = camera.transform;
+        _desiredDirection = localTransform.TransformDirection(_desiredDirection);
+        _desiredDirection.y = 0;
+
+        Debug.Log($"{name}: desired direction {_desiredDirection.normalized}");
     }
 
     public void LookChange()
     {
-        behaviour.LookChange();
+        _desiredDirection = transform.TransformDirection(_obtainedDirection);
+        _desiredDirection.y = 0;
     }
 
     public void Jump()

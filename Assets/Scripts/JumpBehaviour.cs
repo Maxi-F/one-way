@@ -14,6 +14,7 @@ public class JumpBehaviour : MonoBehaviour, IBehaviour
     [SerializeField] private Player player;
 
     private Ray _groundRay;
+    private bool _isJumping = false;
     private Rigidbody _rigidBody;
     private bool _shouldJump = false;
     private float _timeJumped = 0f;
@@ -31,12 +32,8 @@ public class JumpBehaviour : MonoBehaviour, IBehaviour
         {
             _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
             _shouldJump = false;
+            _isJumping = true;
         }
-    }
-
-    public void Move(Vector3 direction)
-    {
-
     }
 
     public string getName()
@@ -44,17 +41,13 @@ public class JumpBehaviour : MonoBehaviour, IBehaviour
         return "Jump Behaviour";
     }
 
-    public void LookChange()
-    {
-
-    }
-
     public void OnBehaviourUpdate()
     {
-        if(IsOnFloor())
+        if(IsOnFloor() && _isJumping)
         {
             player.SetBehaviour(walkingBehaviour);
             player.Move(player.desiredDirection);
+            _isJumping = false;
         }
     }
 
