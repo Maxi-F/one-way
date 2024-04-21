@@ -48,7 +48,7 @@ public class JumpBehaviour : MonoBehaviour, IBehaviour
 
     public void LookChange()
     {
-
+        walkingBehaviour.LookChange();
     }
 
     public void OnBehaviourUpdate()

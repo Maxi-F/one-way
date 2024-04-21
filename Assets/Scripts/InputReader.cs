@@ -6,20 +6,12 @@ namespace Movement
     public class InputReader : MonoBehaviour
     {
         [SerializeField] private Player player;
-        [SerializeField] private RotationBehaviour rotationBehaviour;
-
         private void Awake()
         {
             if (player == null)
             {
                 Debug.LogError($"{name}: {nameof(player)} is null!" +
                                $"\nThis class is dependant on a {nameof(player)} component!");
-            }
-
-            if (rotationBehaviour == null)
-            {
-                Debug.LogError($"{name}: {nameof(rotationBehaviour)} is null!" +
-                               $"\nThis class is dependant on a {nameof(rotationBehaviour)} component!");
             }
         }
 
@@ -34,11 +26,9 @@ namespace Movement
         public void HandleLookInput(InputAction.CallbackContext context)
         {
             Vector2 lookInput = context.ReadValue<Vector2>();
-            float angle = lookInput.x;
-            if(player != null && rotationBehaviour != null)
+            if(player != null)
             {
-                rotationBehaviour.RotateInAngles(angle);
-                player.LookChange();
+                player.LookChange(lookInput);
             }
         }
 

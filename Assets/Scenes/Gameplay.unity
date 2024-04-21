@@ -433,6 +433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17053c4a3c8ab1e4188ec7f0fa4a176c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraBehaviour: {fileID: 963194229}
+  _rotationBehaviour: {fileID: 541872688}
 --- !u!1 &549805779
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +481,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 541872690}
-  rotationBehaviour: {fileID: 541872688}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,9 +830,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 541872687}
-  offset: {x: 0, y: 2, z: -5}
-  followSpeed: 5
-  rotationSpeed: 5
+  offset: {x: 0, y: 3, z: -5}
+  followSpeed: 10
+  rotationSpeed: 10
 --- !u!1 &1501360458
 GameObject:
   m_ObjectHideFlags: 0
