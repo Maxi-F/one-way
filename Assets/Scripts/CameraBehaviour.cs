@@ -7,6 +7,7 @@ public class CameraBehaviour : MonoBehaviour
     public float followSpeed = 5;
     public float rotationSpeed = 5;
 
+    private float _rotationInY;
 
     private void FixedUpdate()
     {

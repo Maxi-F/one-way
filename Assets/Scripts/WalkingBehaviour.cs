@@ -6,14 +6,19 @@ public class WalkingBehaviour : MonoBehaviour, IBehaviour
 {
     [SerializeField] private float speed = 12;
     [SerializeField] private float acceleration = 15;
+    [SerializeField] private float brakeMultiplier = .60f;
+    [SerializeField] private float changeDirectionMultiplier = 1.25f;
+    [SerializeField] private float onTouchingGroundImpulse = 10f;
+    [SerializeField] private float maxAngleToChangeDirection = 45f;
+
     [SerializeField] private Rigidbody rigidBody;
-    [SerializeField] private float brakeMultiplier = .75f;
     [SerializeField] private Player player;
     [SerializeField] private JumpBehaviour jumpBehaviour;
 
     private Vector3 _obtainedDirection;
     private Vector3 _desiredDirection;
     private bool _shouldBrake;
+    private bool _isTouchingGround = false;
 
     public float CurrentSpeed
     {
@@ -41,9 +46,7 @@ public class WalkingBehaviour : MonoBehaviour, IBehaviour
 
     public void Move(Vector3 direction)
     {
-        //We need to convert the direction from global to camera.Local
-        //direction is currently Global
-        if (direction.magnitude < 0.0001f)
+        if (direction.magnitude < 0.0001f && jumpBehaviour.IsOnFloor())
         {
             _shouldBrake = true;
         }
@@ -56,7 +59,12 @@ public class WalkingBehaviour : MonoBehaviour, IBehaviour
         _desiredDirection.y = 0;
     }
 
-    public void Jump() 
+    public void TouchesGround()
+    {
+        _isTouchingGround = true;
+    }
+
+    public void Jump()
     {
         player.SetBehaviour(jumpBehaviour);
         player.Jump();
@@ -69,15 +77,29 @@ public class WalkingBehaviour : MonoBehaviour, IBehaviour
 
     public void OnBehaviourFixedUpdate()
     {
-        var currentHorizontalVelocity = rigidBody.velocity;
+        Vector3 currentHorizontalVelocity = rigidBody.velocity;
         currentHorizontalVelocity.y = 0;
-        var currentSpeed = currentHorizontalVelocity.magnitude;
+        float currentSpeed = currentHorizontalVelocity.magnitude;
+
+        float angleBetweenVelocityAndDirection = Vector3.Angle(currentHorizontalVelocity, _desiredDirection);
+        Debug.Log(angleBetweenVelocityAndDirection);
+
         if (currentSpeed < speed)
-            rigidBody.AddForce(_desiredDirection.normalized * acceleration, ForceMode.Force);
+            rigidBody.AddForce(
+                _desiredDirection.normalized * 
+                    acceleration * 
+                    (angleBetweenVelocityAndDirection > maxAngleToChangeDirection ? changeDirectionMultiplier : 1.0f),
+                ForceMode.Force
+            );
         if (_shouldBrake)
         {
             rigidBody.AddForce(-currentHorizontalVelocity * brakeMultiplier, ForceMode.Impulse);
             _shouldBrake = false;
+        }
+        if(_isTouchingGround)
+        {
+            rigidBody.AddForce(_desiredDirection.normalized * onTouchingGroundImpulse, ForceMode.Impulse);
+            _isTouchingGround = false;
         }
     }
 }

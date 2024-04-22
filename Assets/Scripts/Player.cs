@@ -39,6 +39,11 @@ public class Player : MonoBehaviour
         _rotationBehaviour.RotateInAngles(eulers.x);
     }
 
+    public void TouchesGround()
+    {
+        _behaviour.TouchesGround();
+    }
+
     public void Jump()
     {
         _behaviour.Jump();

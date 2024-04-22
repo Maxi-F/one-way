@@ -36,6 +36,8 @@ public class JumpBehaviour : MonoBehaviour, IBehaviour
         }
     }
 
+    public void TouchesGround() { }
+
     public void Move(Vector3 direction)
     {
         walkingBehaviour.Move(direction);
@@ -56,6 +58,7 @@ public class JumpBehaviour : MonoBehaviour, IBehaviour
         if(IsOnFloor() && _isJumping)
         {
             player.SetBehaviour(walkingBehaviour);
+            player.TouchesGround();
             _isJumping = false;
         }
     }
