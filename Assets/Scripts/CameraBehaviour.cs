@@ -9,15 +9,33 @@ public class CameraBehaviour : MonoBehaviour
 
     private float _rotationInY;
 
+    public void OnRotateYAngle(float delta)
+    {
+        _rotationInY = delta;
+    }
+    
     private void FixedUpdate()
     {
-        var rotatedOffset = target.rotation * offset;
+        ModifyRotation();
+        
+        ModifyPosition();
+    }
+
+    private void ModifyRotation()
+    {
+        var desiredRotation = target.rotation
+                              * Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
+        
+        transform.RotateAround(target.position, target.right, _rotationInY * rotationSpeed * Time.deltaTime);
+        
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
+    }
+    private void ModifyPosition()
+    {
+        var rotatedOffset = target.rotation * Quaternion.Euler(transform.eulerAngles.x, 0, 0) * offset;
         var offsetEmulatingTransformPoint = target.position + rotatedOffset;
 
         transform.position = Vector3.Slerp(transform.position, offsetEmulatingTransformPoint, Time.deltaTime * followSpeed);
-
-        var desiredRotation = target.rotation
-                       * Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
-        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
     }
 }

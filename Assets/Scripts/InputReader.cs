@@ -6,12 +6,19 @@ namespace Movement
     public class InputReader : MonoBehaviour
     {
         [SerializeField] private Player player;
+        [SerializeField] private CameraBehaviour _cameraBehaviour;
         private void Awake()
         {
             if (player == null)
             {
                 Debug.LogError($"{name}: {nameof(player)} is null!" +
                                $"\nThis class is dependant on a {nameof(player)} component!");
+            }
+
+            if (_cameraBehaviour == null)
+            {
+                Debug.LogError($"{name}: {nameof(_cameraBehaviour)} is null!" +
+                               $"\nThis class is dependant on a {nameof(_cameraBehaviour)} component!");
             }
         }
 
@@ -29,6 +36,7 @@ namespace Movement
             if(player != null)
             {
                 player.LookChange(lookInput);
+                _cameraBehaviour.OnRotateYAngle(lookInput.y);
             }
         }
 
