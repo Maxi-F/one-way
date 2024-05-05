@@ -6,27 +6,30 @@ using UnityEngine.SceneManagement;
 
 namespace Manager
 {
+    public enum SceneNames
+    {
+        Boot,
+        Gameplay
+    }
+    
     public class SceneryManager : MonoBehaviour
     {
-        [SerializeField] private int[] _scenes;
-        [SerializeField] private int _initScene;
+        [SerializeField] private SceneNames _initScene;
         [SerializeField] private UnityEvent _onGameplayLoaded;
         
         public void InitScenes()
         {
-            int scene = _scenes[_initScene];
-
-            LoadScene(scene);
+            LoadScene(_initScene);
         }
 
-        public void LoadScene(int index)
+        public void LoadScene(SceneNames name)
         {
-            switch (index)
+            switch (name)
             {
-                case 0:
+                case SceneNames.Boot:
                     break;
-                case 1:
-                    SceneManager.LoadScene(index, LoadSceneMode.Additive);
+                case SceneNames.Gameplay:
+                    SceneManager.LoadScene((int) SceneNames.Gameplay, LoadSceneMode.Additive);
                     _onGameplayLoaded.Invoke();
                     break;  
             }
