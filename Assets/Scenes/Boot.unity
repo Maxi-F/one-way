@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44917196, g: 0.49590164, b: 0.55776894, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 369674541}
   m_Layer: 0
   m_Name: SceneryManager
-  m_TagString: Untagged
+  m_TagString: SceneManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,8 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef1fa649a20808419823423e4d8f01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scenes: 0000000001000000
-  _initScene: 1
+  _initScene: 2
   _onGameplayLoaded:
     m_PersistentCalls:
       m_Calls:
@@ -196,7 +195,7 @@ GameObject:
   - component: {fileID: 1001639244}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
