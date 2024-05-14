@@ -19,6 +19,12 @@ namespace Manager
     {
         [SerializeField] private SceneNames _initScene;
 
+        public Action OnCreditsAdded;
+
+        public Action OnGameplayAdded;
+
+        public Action OnMenuAdded;
+        
         private readonly List<SceneNames> _activeScenes = new List<SceneNames>();
         
         public void InitScenes()
@@ -34,16 +40,16 @@ namespace Manager
                 case SceneNames.Boot:
                     break;
                 case SceneNames.Gameplay:
-                    UnloadScene(SceneNames.Menu);
+                    OnGameplayAdded?.Invoke();
                     AddScene(SceneNames.Gameplay);
                     break;  
                 case SceneNames.Credits:
-                    UnloadScene(SceneNames.Menu);
+                    OnCreditsAdded?.Invoke();
+                    Debug.Log(OnCreditsAdded?.GetInvocationList()?.Length);
                     AddScene(SceneNames.Credits);
                     break;
                 case SceneNames.Menu:
-                    UnloadScene(SceneNames.Credits);
-                    UnloadScene(SceneNames.Gameplay);
+                    OnMenuAdded?.Invoke();
                     AddScene(SceneNames.Menu);
                     break;
                 case SceneNames.Exit:
@@ -52,7 +58,7 @@ namespace Manager
             }
         }
 
-        private void UnloadScene(SceneNames sceneName)
+        public void UnloadScene(SceneNames sceneName)
         {
             if (_activeScenes.Exists(scene => scene == sceneName))
             {
