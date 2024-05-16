@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 389926535}
   - component: {fileID: 389926534}
   - component: {fileID: 389926533}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cube 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +483,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 541872690}
-  _cameraBehaviour: {fileID: 963194229}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,7 +1058,7 @@ GameObject:
   - component: {fileID: 1706651073}
   - component: {fileID: 1706651072}
   - component: {fileID: 1706651071}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1164,7 +1163,7 @@ GameObject:
   - component: {fileID: 1866465346}
   - component: {fileID: 1866465345}
   - component: {fileID: 1866465344}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cube 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
