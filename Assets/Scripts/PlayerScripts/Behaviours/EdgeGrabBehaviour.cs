@@ -41,7 +41,6 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
 
     public void Jump()
     {
-        Debug.Log("Jumped!");
         _rigidbody.useGravity = true;
         _shouldJump = true;
     }
@@ -64,7 +63,6 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
     {
         if (_shouldJump)
         {
-            Debug.Log("Adding impulse");
             _rigidbody.AddForce(Vector3.up * edgeJumpImpulse, ForceMode.Impulse);
             _player.SetBehaviour(_edgeJumpBehaviour);
             _shouldJump = false;

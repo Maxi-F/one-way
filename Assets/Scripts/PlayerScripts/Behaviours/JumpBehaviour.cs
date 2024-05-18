@@ -48,7 +48,21 @@ namespace PlayerScripts
         {
             if (_shouldJump && CanJump())
             {
-                _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
+                if (player.useAccumulativeForceOnJump)
+                {
+                    Vector3 upForce = Mathf.Clamp(
+                        force + player.GetAccumulatedForceAndFlush(),
+                        force,
+                        player.GetMaxAccumulatedForce() + force
+                    ) * Vector3.up;
+
+                    Vector3 slowDownForce = -_rigidBody.velocity * 0.8f;
+                    _rigidBody.AddForce(upForce + slowDownForce, ForceMode.Impulse);
+                }
+                else
+                {
+                    _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
+                }
                 _shouldJump = false;
                 _isJumping = true;
             }
@@ -77,6 +91,7 @@ namespace PlayerScripts
         {
             if (IsOnFloor() && _isJumping)
             {
+                player.AccumulateForce(-_rigidBody.velocity.y);
                 player.SetBehaviour(walkingBehaviour);
                 player.TouchesGround();
                 _isJumping = false;
@@ -92,7 +107,6 @@ namespace PlayerScripts
         {
             if (IsOnFloor())
             {
-                Debug.Log($"{name}: Jump!");
                 _shouldJump = true;
                 _timeJumped = Time.time * 1000f;
             }

@@ -8,7 +8,6 @@ namespace PlayerScripts
         [SerializeField] private float acceleration = 15;
         [SerializeField] private float brakeMultiplier = .60f;
         [SerializeField] private float changeDirectionMultiplier = 1.25f;
-        [SerializeField] private float onTouchingGroundImpulse = 10f;
         [SerializeField] private float maxAngleToChangeDirection = 45f;
 
         [SerializeField] private Rigidbody rigidBody;
@@ -73,6 +72,7 @@ namespace PlayerScripts
         {
             if (jumpBehaviour.IsOnFloor())
             {
+                player.AccumulateForce(GetCurrentHorizontalSpeed());
                 player.SetBehaviour(jumpBehaviour);
                 player.Jump();
             }
@@ -83,6 +83,13 @@ namespace PlayerScripts
             return "Walking Behaviour";
         }
 
+        private float GetCurrentHorizontalSpeed()
+        {
+            Vector3 currentHorizontalVelocity = rigidBody.velocity;
+            currentHorizontalVelocity.y = 0;
+            return currentHorizontalVelocity.magnitude;
+        }
+        
         public void OnBehaviourFixedUpdate()
         {
             Vector3 currentHorizontalVelocity = rigidBody.velocity;
@@ -105,7 +112,7 @@ namespace PlayerScripts
             }
             if(_isTouchingGround)
             {
-                rigidBody.AddForce(_desiredDirection.normalized * onTouchingGroundImpulse, ForceMode.Impulse);
+                rigidBody.AddForce(_desiredDirection.normalized * player.GetAccumulatedForceAndFlush(), ForceMode.Impulse);
                 _isTouchingGround = false;
             }
         }

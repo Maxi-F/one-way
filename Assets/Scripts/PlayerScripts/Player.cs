@@ -7,15 +7,25 @@ namespace PlayerScripts
     public class Player : MonoBehaviour
     {
         private IBehaviour _behaviour;
+        [Header("Behaviours")]
         [FormerlySerializedAs("_rotationBehaviour")] [SerializeField] private RotationBehaviour rotationBehaviour;
+        
+        [Header("PlayerData")]
         [SerializeField] private CapsuleCollider capsuleCollider;
-        [SerializeField] private float groundedDistance = 0.1f;
-        [SerializeField] Transform feetPivot;
         [SerializeField] private LayerMask floor;
+        [SerializeField] Transform feetPivot;
+        
+        [Header("Jump Settings")]
+        [SerializeField] private float groundedDistance = 0.1f;
 
+        [Header("Accumulated force settings")] 
+        [SerializeField] private float maxAccumulatedForce;
+        
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;
-        
+        private float _accumulatedForce = 0f;
+        public bool useAccumulativeForceOnJump { get; set; }
+
         public void Awake()
         {
             if (rotationBehaviour == null)
@@ -38,7 +48,6 @@ namespace PlayerScripts
 
         public void SetBehaviour(IBehaviour newBehaviour)
         {
-            Debug.Log($"{name}: Behaviour change to {newBehaviour.GetName()}");
             _behaviour = newBehaviour;
         }
 
@@ -68,7 +77,7 @@ namespace PlayerScripts
         {
             _behaviour.Jump();
         }
-
+        
         public void Update()
         {
             _behaviour.OnBehaviourUpdate();
@@ -91,10 +100,27 @@ namespace PlayerScripts
             _shouldStop = true;
         }
 
+        public void AccumulateForce(float addedForce)
+        {
+             _accumulatedForce = Mathf.Clamp(_accumulatedForce + addedForce, 0f, maxAccumulatedForce);
+        }
+
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawRay(feetPivot.position, Vector3.down * groundedDistance);
+        }
+
+        public float GetAccumulatedForceAndFlush()
+        {
+            float force = _accumulatedForce; 
+            _accumulatedForce = 0f;
+            return force;
+        }
+
+        public float GetMaxAccumulatedForce()
+        {
+            return maxAccumulatedForce;
         }
     }
 }
