@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace PlayerScripts
@@ -20,6 +21,8 @@ namespace PlayerScripts
 
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
+
+        [Header("Events")] [SerializeField] private UnityEvent onWinboxCollided;
         
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;
@@ -121,6 +124,14 @@ namespace PlayerScripts
         public float GetMaxAccumulatedForce()
         {
             return maxAccumulatedForce;
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("WinBox"))
+            {
+                onWinboxCollided.Invoke();
+            }
         }
     }
 }

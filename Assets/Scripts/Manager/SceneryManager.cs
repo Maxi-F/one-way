@@ -12,6 +12,10 @@ namespace Manager
         Gameplay,
         Menu,
         Credits,
+        LevelOne,
+        LevelTwo,
+        LevelThree,
+        LevelFour,
         Exit
     }
     
@@ -69,7 +73,7 @@ namespace Manager
                 Debug.LogWarning($"{sceneName} not active!");
             }
         }
-        private void AddScene(SceneNames sceneName)
+        public void AddScene(SceneNames sceneName)
         {
             SceneManager.LoadScene((int) sceneName, LoadSceneMode.Additive);
             _activeScenes.Add(sceneName);

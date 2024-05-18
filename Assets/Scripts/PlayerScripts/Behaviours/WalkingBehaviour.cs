@@ -72,7 +72,7 @@ namespace PlayerScripts
         {
             if (jumpBehaviour.IsOnFloor())
             {
-                player.AccumulateForce(GetCurrentHorizontalSpeed());
+                player.AccumulateForce(GetCurrentHorizontalSpeed() / 2);
                 player.SetBehaviour(jumpBehaviour);
                 player.Jump();
             }

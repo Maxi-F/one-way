@@ -1,24 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using PlayerScripts;
+using Manager;
 using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    [SerializeField] private Player player;
-
-    private Vector3 _startingPosition;
+    private SceneNames _activeLevelScene;
+    private SceneryManager _sceneryManager;
     
-    void Start()
+    void Awake()
     {
-        _startingPosition = player.transform.position;
+        _activeLevelScene = SceneNames.LevelOne;
+        _sceneryManager ??= FindObjectOfType<SceneryManager>();
+        _sceneryManager.AddScene(_activeLevelScene);
     }
-    
-    public void HandleDeath()
-    {
-        Debug.Log("dead!");
 
-        player.transform.position = _startingPosition;
-        player.Stop();
+    public void LevelPassed(SceneNames nextLevel)
+    {
+        _sceneryManager.UnloadScene(_activeLevelScene);
+        _sceneryManager.AddScene(nextLevel);
     }
 }
