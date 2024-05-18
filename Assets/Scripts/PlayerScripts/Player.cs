@@ -12,7 +12,7 @@ namespace PlayerScripts
         [SerializeField] private float groundedDistance = 0.1f;
         [SerializeField] Transform feetPivot;
         [SerializeField] private LayerMask floor;
-        
+
         public void Awake()
         {
             if (rotationBehaviour == null)

@@ -11,21 +11,18 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
     
     [Header("Player data")]
     [SerializeField] private Transform feetPivot;
-
-    [Header("Player Behaviours")]
-    [SerializeField] private JumpBehaviour jumpBehaviour;
-    [SerializeField] WalkingBehaviour walkingBehaviour;
     
     private Vector3 _edgePosition;
     private Player _player;
     private Rigidbody _rigidbody;
     private bool _shouldJump = false;
+    private EdgeJumpBehaviour _edgeJumpBehaviour;
 
     public void Start()
     {
         _rigidbody ??= GetComponent<Rigidbody>();
         _player ??= GetComponent<Player>();
-        walkingBehaviour ??= GetComponent<WalkingBehaviour>();
+        _edgeJumpBehaviour ??= GetComponent<EdgeJumpBehaviour>();
     }
     
     public string GetName()
@@ -38,7 +35,7 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
         if (Vector3.Dot(direction, transform.forward) < 0)
         {
             _rigidbody.useGravity = true;
-            _player.SetBehaviour(walkingBehaviour);
+            _player.SetBehaviour(_edgeJumpBehaviour);
         }
     }
 
@@ -69,7 +66,7 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
         {
             Debug.Log("Adding impulse");
             _rigidbody.AddForce(Vector3.up * edgeJumpImpulse, ForceMode.Impulse);
-            _player.SetBehaviour(walkingBehaviour);
+            _player.SetBehaviour(_edgeJumpBehaviour);
             _shouldJump = false;
         }
         else
@@ -78,8 +75,8 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
         }
     }
     
-    public void SetEdgePosition(Transform transform)
+    public void SetEdgePosition(Transform aTransform)
     {
-        _edgePosition = transform.position;
+        _edgePosition = aTransform.position;
     }
 }

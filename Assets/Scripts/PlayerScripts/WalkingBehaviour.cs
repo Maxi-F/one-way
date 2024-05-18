@@ -66,8 +66,11 @@ namespace PlayerScripts
 
         public void Jump()
         {
-            player.SetBehaviour(jumpBehaviour);
-            player.Jump();
+            if (jumpBehaviour.IsOnFloor())
+            {
+                player.SetBehaviour(jumpBehaviour);
+                player.Jump();
+            }
         }
 
         public string GetName()
