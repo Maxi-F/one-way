@@ -4,6 +4,6 @@ namespace PlayerScripts
 {
     public interface IEdgeGrabBehaviour : IBehaviour
     {
-        void SetCollider(Collider collider);
+        void SetEdgePosition(Transform transform);
     }
 }

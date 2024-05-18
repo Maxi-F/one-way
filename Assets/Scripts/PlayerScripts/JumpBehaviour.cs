@@ -83,7 +83,7 @@ namespace PlayerScripts
             } else if (IsOnEdge())
             {
                 player.SetBehaviour(_edgeGrabBehaviour);
-                _edgeGrabBehaviour.SetCollider(_edgeRaycastHit.collider);
+                _edgeGrabBehaviour.SetEdgePosition(transform);
                 _isJumping = false;
             }
         }

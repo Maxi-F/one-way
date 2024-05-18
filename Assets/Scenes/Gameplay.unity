@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 541872685}
   - component: {fileID: 541872684}
   - component: {fileID: 541872683}
+  - component: {fileID: 541872691}
   - component: {fileID: 541872682}
   - component: {fileID: 541872688}
   - component: {fileID: 541872689}
@@ -420,10 +421,12 @@ MonoBehaviour:
   floor:
     serializedVersion: 2
     m_Bits: 8
-  groundedDistance: 0.1
   jumpingMiliseconds: 10
   walkingBehaviour: {fileID: 541872682}
   player: {fileID: 541872690}
+  edgeGrabUpLineStartDistance: 1.5
+  edgeGrabUpLineEndDistance: 0.5
+  edgeGrabYdistance: 0.1
 --- !u!114 &541872690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,7 +439,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17053c4a3c8ab1e4188ec7f0fa4a176c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationBehaviour: {fileID: 541872688}
+  rotationBehaviour: {fileID: 541872688}
+  capsuleCollider: {fileID: 541872683}
+  groundedDistance: 0.15
+  feetPivot: {fileID: 560250940}
+  floor:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &541872691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541872681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1c5e9a47ff3b941bd968bb783bf151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feetPivot: {fileID: 560250940}
 --- !u!1 &549805779
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +486,7 @@ Transform:
   m_GameObject: {fileID: 549805779}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4275235, y: -0.7687849, z: 1.7363726}
+  m_LocalPosition: {x: -1.61, y: -0.29, z: 1.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1145,8 +1167,8 @@ Transform:
   m_GameObject: {fileID: 1706651070}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.73, y: 0.57, z: 9.89}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.53, y: 1.73, z: 11.63}
+  m_LocalScale: {x: 9.3007, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1164,7 +1186,7 @@ GameObject:
   - component: {fileID: 1866465345}
   - component: {fileID: 1866465344}
   m_Layer: 3
-  m_Name: cube 2
+  m_Name: edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1249,9 +1271,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1866465343}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1, y: 0.57, z: 9.89}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.1, y: 1.53, z: 8.41}
+  m_LocalScale: {x: 6.4475, y: 0.76137, z: 0.58811}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1266,5 +1288,5 @@ SceneRoots:
   - {fileID: 1582959852}
   - {fileID: 541872687}
   - {fileID: 1706651074}
-  - {fileID: 1866465347}
   - {fileID: 389926536}
+  - {fileID: 1866465347}

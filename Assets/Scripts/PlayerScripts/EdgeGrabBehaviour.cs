@@ -2,21 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using PlayerScripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
 {
-    [SerializeField] Transform feetPivot;
+    [Header("Edge grabbing settings")] 
+    [SerializeField] private float edgeJumpImpulse;
     
-    private Collider _collider;
+    [Header("Player data")]
+    [SerializeField] private Transform feetPivot;
+
+    [Header("Player Behaviours")]
+    [SerializeField] private JumpBehaviour jumpBehaviour;
+    [SerializeField] WalkingBehaviour walkingBehaviour;
+    
+    private Vector3 _edgePosition;
     private Player _player;
-    private WalkingBehaviour _walkingBehaviour;
     private Rigidbody _rigidbody;
+    private bool _shouldJump = false;
 
     public void Start()
     {
         _rigidbody ??= GetComponent<Rigidbody>();
         _player ??= GetComponent<Player>();
-        _walkingBehaviour ??= GetComponent<WalkingBehaviour>();
+        walkingBehaviour ??= GetComponent<WalkingBehaviour>();
     }
     
     public string GetName()
@@ -26,10 +35,18 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
 
     public void Move(Vector3 direction)
     {
+        if (Vector3.Dot(direction, transform.forward) < 0)
+        {
+            _rigidbody.useGravity = true;
+            _player.SetBehaviour(walkingBehaviour);
+        }
     }
 
     public void Jump()
     {
+        Debug.Log("Jumped!");
+        _rigidbody.useGravity = true;
+        _shouldJump = true;
     }
 
     public void LookChange()
@@ -42,33 +59,27 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
 
     public void OnBehaviourUpdate()
     {
-        _rigidbody.useGravity = false;
-
-        if (feetPivot.position.y - _collider.transform.position.y < 0.5f)
-        {
-            var vector3 = transform.position;
-            vector3.y += 10.0f * Time.deltaTime;
-            transform.position = vector3;
-        } else if (!_player.IsRaycastOnFloor())
-        {
-            transform.position =
-                Vector3.Slerp(transform.position, _collider.transform.position, 10.0f * Time.deltaTime);
-        }
-        else
-        {
-            _rigidbody.useGravity = true;
-            _player.SetBehaviour(_walkingBehaviour);
-            _player.TouchesGround();
-        }
+        if(!_shouldJump) 
+            transform.position = _edgePosition;
     }
 
     public void OnBehaviourFixedUpdate()
     {
-        
+        if (_shouldJump)
+        {
+            Debug.Log("Adding impulse");
+            _rigidbody.AddForce(Vector3.up * edgeJumpImpulse, ForceMode.Impulse);
+            _player.SetBehaviour(walkingBehaviour);
+            _shouldJump = false;
+        }
+        else
+        {
+            _rigidbody.useGravity = false;
+        }
     }
     
-    public void SetCollider(Collider collider)
+    public void SetEdgePosition(Transform transform)
     {
-        _collider = collider;
+        _edgePosition = transform.position;
     }
 }
