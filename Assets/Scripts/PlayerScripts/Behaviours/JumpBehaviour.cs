@@ -95,7 +95,11 @@ namespace PlayerScripts
                 Debug.Log($"{name}: Jump!");
                 _shouldJump = true;
                 _timeJumped = Time.time * 1000f;
-            } 
+            }
+            else
+            {
+                _isJumping = true;
+            }
         }
 
         private bool JumpingBreakTime()

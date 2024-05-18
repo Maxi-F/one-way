@@ -42,6 +42,11 @@ namespace PlayerScripts
 
         public void OnBehaviourUpdate()
         {
+            if (!jumpBehaviour.IsOnFloor())
+            {
+                player.SetBehaviour(jumpBehaviour);
+                player.Jump();
+            }
         }
 
         public void Move(Vector3 direction)

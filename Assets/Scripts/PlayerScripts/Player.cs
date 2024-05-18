@@ -13,6 +13,9 @@ namespace PlayerScripts
         [SerializeField] Transform feetPivot;
         [SerializeField] private LayerMask floor;
 
+        private Rigidbody _rigidbody;
+        private bool _shouldStop = false;
+        
         public void Awake()
         {
             if (rotationBehaviour == null)
@@ -25,6 +28,7 @@ namespace PlayerScripts
         {
             _behaviour ??= GetComponent<WalkingBehaviour>();
             rotationBehaviour ??= GetComponent<RotationBehaviour>();
+            _rigidbody ??= GetComponent<Rigidbody>();
         }
 
         public float GetBoxSize()
@@ -72,7 +76,19 @@ namespace PlayerScripts
 
         public void FixedUpdate()
         {
-            _behaviour.OnBehaviourFixedUpdate();
+            if (_shouldStop)
+            {
+                _rigidbody.AddForce(-_rigidbody.velocity, ForceMode.Impulse);
+                _shouldStop = false;
+            }
+            else {
+                _behaviour.OnBehaviourFixedUpdate();
+            }
+        }
+
+        public void Stop()
+        {
+            _shouldStop = true;
         }
 
         public void OnDrawGizmos()
