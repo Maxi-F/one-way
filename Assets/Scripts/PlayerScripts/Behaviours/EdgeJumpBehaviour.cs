@@ -6,9 +6,14 @@ using UnityEngine;
 
 public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
 {
+    [Header("Edge jump settings")] 
+    [SerializeField] private float timeUntilWalkingIsEnabled = 0.5f;
+    
     private WalkingBehaviour _walkingBehaviour;
     private JumpBehaviour _jumpBehaviour;
     private Player _player;
+    private float _timePassed = 0f;
+    
     public void Start()
     {
         _player = GetComponent<Player>();
@@ -45,6 +50,7 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
         {
             _player.SetBehaviour(_walkingBehaviour);
             _player.TouchesGround();
+            _timePassed = 0f;
         }
     }
 
@@ -52,7 +58,14 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
     {
         if (!_jumpBehaviour.IsOnFloor())
         {
-            _walkingBehaviour.OnBehaviourFixedUpdate();
+            if (_timePassed < timeUntilWalkingIsEnabled)
+            {
+                _timePassed += Time.fixedDeltaTime;
+            }
+            else
+            {
+                _walkingBehaviour.OnBehaviourFixedUpdate();
+            }
         }
     }
 }
