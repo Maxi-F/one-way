@@ -18,7 +18,7 @@ namespace PlayerScripts
         
         [Header("Jump Settings")]
         [SerializeField] private float groundedDistance = 0.1f;
-
+        
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
 
@@ -54,7 +54,7 @@ namespace PlayerScripts
             _behaviour = newBehaviour;
         }
 
-        public bool IsRaycastOnFloor()
+        public bool CanJump()
         {
             return Physics.Raycast(feetPivot.position, Vector3.down, out var hit, groundedDistance, floor);
         }

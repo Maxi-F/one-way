@@ -4,20 +4,27 @@ namespace PlayerScripts
 {
     public class WalkingBehaviour : MonoBehaviour, IBehaviour
     {
+        [Header("Walking properties")]
         [SerializeField] private float speed = 12;
         [SerializeField] private float acceleration = 15;
         [SerializeField] private float brakeMultiplier = .60f;
         [SerializeField] private float changeDirectionMultiplier = 1.25f;
         [SerializeField] private float maxAngleToChangeDirection = 45f;
-
+        [SerializeField] private float coyoteTime = 0.5f;
+        
+        [Header("Player Data")]
         [SerializeField] private Rigidbody rigidBody;
         [SerializeField] private Player player;
+        
+        [Header("Behaviours")]
         [SerializeField] private JumpBehaviour jumpBehaviour;
-
+        
         private Vector3 _obtainedDirection;
         private Vector3 _desiredDirection;
         private bool _shouldBrake;
+        private bool _justTouchedGround;
         private bool _isTouchingGround;
+        private float _timePassedWithoutTouchingGround = 0f;
 
         public float CurrentSpeed
         {
@@ -43,8 +50,16 @@ namespace PlayerScripts
         {
             if (!jumpBehaviour.IsOnFloor())
             {
-                player.SetBehaviour(jumpBehaviour);
-                player.Jump();
+                _timePassedWithoutTouchingGround += Time.deltaTime;
+                if(_timePassedWithoutTouchingGround > coyoteTime)
+                {
+                    player.SetBehaviour(jumpBehaviour); 
+                    player.Jump();
+                }
+            }
+            else
+            {
+                _timePassedWithoutTouchingGround = 0f;
             }
         }
 
@@ -65,12 +80,12 @@ namespace PlayerScripts
 
         public void TouchesGround()
         {
-            _isTouchingGround = true;
+            _justTouchedGround = true;
         }
 
         public void Jump()
         {
-            if (jumpBehaviour.IsOnFloor())
+            if (jumpBehaviour.IsOnFloor() || !CoyoteTimePassed())
             {
                 player.AccumulateForce(GetCurrentHorizontalSpeed() / 2);
                 player.SetBehaviour(jumpBehaviour);
@@ -110,11 +125,21 @@ namespace PlayerScripts
                 rigidBody.AddForce(-currentHorizontalVelocity * brakeMultiplier, ForceMode.Impulse);
                 _shouldBrake = false;
             }
-            if(_isTouchingGround)
+            if(_justTouchedGround)
             {
                 rigidBody.AddForce(_desiredDirection.normalized * player.GetAccumulatedForceAndFlush(), ForceMode.Impulse);
-                _isTouchingGround = false;
+                _justTouchedGround = false;
             }
+        }
+
+        public bool CoyoteTimePassed()
+        {
+            return _timePassedWithoutTouchingGround < float.Epsilon || _timePassedWithoutTouchingGround > coyoteTime;
+        }
+
+        public void ResetCoyoteTime()
+        {
+            _timePassedWithoutTouchingGround = 0f;
         }
     }
 }

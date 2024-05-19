@@ -64,6 +64,7 @@ namespace PlayerScripts
                     _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
                 }
                 _shouldJump = false;
+                walkingBehaviour.ResetCoyoteTime();
                 _isJumping = true;
             }
         }
@@ -105,7 +106,7 @@ namespace PlayerScripts
 
         public void Jump()
         {
-            if (IsOnFloor())
+            if (IsOnFloor() || IsOnCoyoteTimeFloor())
             {
                 _shouldJump = true;
                 _timeJumped = Time.time * 1000f;
@@ -123,7 +124,7 @@ namespace PlayerScripts
 
         private bool IsRaycastOnFloor()
         {
-            return player.IsRaycastOnFloor();
+            return player.CanJump();
         }
 
         private bool IsOnEdge()
@@ -148,9 +149,14 @@ namespace PlayerScripts
             return IsRaycastOnFloor() && JumpingBreakTime();
         }
 
+        public bool IsOnCoyoteTimeFloor()
+        {
+            return !walkingBehaviour.CoyoteTimePassed() && JumpingBreakTime();
+        }
+
         public bool CanJump()
         {
-            return feetPivot && IsRaycastOnFloor();
+            return (feetPivot && IsRaycastOnFloor()) || IsOnCoyoteTimeFloor();
         }
 
         private void OnDrawGizmos()

@@ -173,8 +173,8 @@ MonoBehaviour:
   acceleration: 10
   brakeMultiplier: 0.75
   changeDirectionMultiplier: 1.25
-  onTouchingGroundImpulse: 10
   maxAngleToChangeDirection: 45
+  coyoteTime: 2.81
   rigidBody: {fileID: 1043284311323206191}
   player: {fileID: 6314569198464105875}
   jumpBehaviour: {fileID: 4675619761088723259}
@@ -240,11 +240,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationBehaviour: {fileID: 3324144561718692340}
   capsuleCollider: {fileID: 8357420409828004751}
-  groundedDistance: 0.15
-  feetPivot: {fileID: 8381841678615415956}
   floor:
     serializedVersion: 2
     m_Bits: 8
+  feetPivot: {fileID: 8381841678615415956}
+  groundedDistance: 0.15
+  maxAccumulatedForce: 0
+  onWinboxCollided:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4157538118521161800
 GameObject:
   m_ObjectHideFlags: 0
