@@ -174,7 +174,7 @@ MonoBehaviour:
   brakeMultiplier: 0.75
   changeDirectionMultiplier: 1.25
   maxAngleToChangeDirection: 45
-  coyoteTime: 0.5
+  coyoteTime: 0.25
   rigidBody: {fileID: 1043284311323206191}
   player: {fileID: 6314569198464105875}
   jumpBehaviour: {fileID: 4675619761088723259}
