@@ -45,11 +45,9 @@ namespace Movement
         {
             if (player && context.started)
             {
-                Debug.Log("Shift pressed");
                 player.useAccumulativeForceOnJump = true;
             } else if (player && context.canceled)
             {
-                Debug.Log("Shift released");
                 player.useAccumulativeForceOnJump = false;
             }
         }

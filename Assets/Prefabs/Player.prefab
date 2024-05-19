@@ -174,7 +174,7 @@ MonoBehaviour:
   brakeMultiplier: 0.75
   changeDirectionMultiplier: 1.25
   maxAngleToChangeDirection: 45
-  coyoteTime: 2.81
+  coyoteTime: 0.5
   rigidBody: {fileID: 1043284311323206191}
   player: {fileID: 6314569198464105875}
   jumpBehaviour: {fileID: 4675619761088723259}
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e195865bb26c84eacac4d54f25832e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeUntilWalkingIsEnabled: 0.5
 --- !u!114 &3324144561718692340
 MonoBehaviour:
   m_ObjectHideFlags: 0

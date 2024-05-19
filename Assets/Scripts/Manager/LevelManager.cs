@@ -19,8 +19,6 @@ namespace Manager
     
         public void HandleDeath()
         {
-            Debug.Log("dead!");
-
             player.transform.position = _startingPosition;
             player.Stop();
         }

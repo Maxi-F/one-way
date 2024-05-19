@@ -113,13 +113,15 @@ namespace PlayerScripts
 
             float angleBetweenVelocityAndDirection = Vector3.Angle(currentHorizontalVelocity, _desiredDirection);
 
+            Vector3 desiredForceToApply = _desiredDirection.normalized *
+                                          (acceleration *
+                                           (angleBetweenVelocityAndDirection > maxAngleToChangeDirection
+                                               ? changeDirectionMultiplier
+                                               : 1.0f)
+                                           );
+            
             if (currentSpeed < speed)
-                rigidBody.AddForce(
-                    _desiredDirection.normalized * 
-                    (acceleration * 
-                     (angleBetweenVelocityAndDirection > maxAngleToChangeDirection ? changeDirectionMultiplier : 1.0f)),
-                    ForceMode.Force
-                );
+                rigidBody.AddForce(desiredForceToApply, ForceMode.Force);
             if (_shouldBrake)
             {
                 rigidBody.AddForce(-currentHorizontalVelocity * brakeMultiplier, ForceMode.Impulse);

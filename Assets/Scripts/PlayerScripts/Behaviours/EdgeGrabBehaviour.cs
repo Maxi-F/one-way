@@ -76,5 +76,6 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
     public void SetEdgePosition(Transform aTransform)
     {
         _edgePosition = aTransform.position;
+        _rigidbody.AddForce(-_rigidbody.velocity, ForceMode.Impulse);
     }
 }
