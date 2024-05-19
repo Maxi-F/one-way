@@ -13,6 +13,7 @@ public class GameplayManager : MonoBehaviour
         _activeLevelScene = SceneNames.LevelOne;
         _sceneryManager ??= FindObjectOfType<SceneryManager>();
         _sceneryManager.AddScene(_activeLevelScene);
+        _sceneryManager.OnMenuAdded += UnloadGameplay;
     }
 
     public void LevelPassed(SceneNames nextLevel)
@@ -20,5 +21,16 @@ public class GameplayManager : MonoBehaviour
         _sceneryManager.UnloadScene(_activeLevelScene);
         _sceneryManager.AddScene(nextLevel);
         _activeLevelScene = nextLevel;
+    }
+
+    public void HandleWin()
+    {
+        _sceneryManager.LoadScene(SceneNames.Menu);
+    }
+
+    private void UnloadGameplay()
+    {
+        _sceneryManager.UnloadScene(_activeLevelScene);
+        _sceneryManager.UnloadScene(SceneNames.Gameplay);
     }
 }

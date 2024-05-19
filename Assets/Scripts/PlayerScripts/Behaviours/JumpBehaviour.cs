@@ -18,11 +18,6 @@ namespace PlayerScripts
         [Header("Player scripts")]
         [SerializeField] private WalkingBehaviour walkingBehaviour;
         [SerializeField] private Player player;
-    
-        [Header("Edge Grabbing Settings")]
-        [SerializeField] private float edgeGrabUpLineStartDistance = 1.5f;
-        [SerializeField] private float edgeGrabUpLineEndDistance = 0.5f;
-        [SerializeField] private float edgeGrabYdistance = 0.1f;
 
         private EdgeGrabBehaviour _edgeGrabBehaviour;
         
@@ -33,8 +28,7 @@ namespace PlayerScripts
         private bool _shouldJump = false;
         private float _timeJumped = 0f;
 
-        private Vector3 _edgeLineCastStart;
-        private Vector3 _edgeLineCastEnd;
+
 
         private void Start()
         {
@@ -48,7 +42,7 @@ namespace PlayerScripts
         {
             if (_shouldJump && CanJump())
             {
-                if (player.useAccumulativeForceOnJump)
+                if (player.UseAccumulativeForceOnJump)
                 {
                     Vector3 upForce = Mathf.Clamp(
                         force + player.GetAccumulatedForceAndFlush(),
@@ -129,19 +123,7 @@ namespace PlayerScripts
 
         private bool IsOnEdge()
         {
-            RaycastHit upHit;
-            _edgeLineCastStart = transform.position + transform.up * edgeGrabUpLineStartDistance + transform.forward;
-            _edgeLineCastEnd = transform.position + transform.up * edgeGrabUpLineEndDistance + transform.forward;
-
-            if (_rigidBody.velocity.y < 0 && Physics.Linecast(_edgeLineCastStart, _edgeLineCastEnd, out upHit, floor))
-            {
-                Vector3 forwardCastStart = new Vector3(transform.position.x, upHit.point.y - edgeGrabYdistance,
-                    transform.position.z);
-                Vector3 forwardCastEnd = forwardCastStart + transform.forward;
-
-                return Physics.Linecast(forwardCastStart, forwardCastEnd, out _edgeRaycastHit, floor);
-            };
-            return false;
+            return player.IsOnEdge();
         }
 
         public bool IsOnFloor()
@@ -157,12 +139,6 @@ namespace PlayerScripts
         public bool CanJump()
         {
             return (feetPivot && IsRaycastOnFloor()) || IsOnCoyoteTimeFloor();
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(_edgeLineCastStart, _edgeLineCastEnd);
         }
     }
 }

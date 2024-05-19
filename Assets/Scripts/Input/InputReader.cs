@@ -45,10 +45,10 @@ namespace Movement
         {
             if (player && context.started)
             {
-                player.useAccumulativeForceOnJump = true;
+                player.UseAccumulativeForceOnJump = true;
             } else if (player && context.canceled)
             {
-                player.useAccumulativeForceOnJump = false;
+                player.UseAccumulativeForceOnJump = false;
             }
         }
     }

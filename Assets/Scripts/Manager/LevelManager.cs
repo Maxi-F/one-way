@@ -27,5 +27,10 @@ namespace Manager
         {
             _gameplayManager.LevelPassed(nextLevel);
         }
+
+        public void HandleWinGame()
+        {
+            _gameplayManager.HandleWin();
+        }
     }
 }

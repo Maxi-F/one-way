@@ -11,6 +11,7 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
     
     private WalkingBehaviour _walkingBehaviour;
     private JumpBehaviour _jumpBehaviour;
+    private EdgeGrabBehaviour _edgeGrabBehaviour;
     private Player _player;
     private float _timePassed = 0f;
     
@@ -19,6 +20,7 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
         _player = GetComponent<Player>();
         _walkingBehaviour ??= GetComponent<WalkingBehaviour>();
         _jumpBehaviour ??= GetComponent<JumpBehaviour>();
+        _edgeGrabBehaviour ??= GetComponent<EdgeGrabBehaviour>();
     }
 
     public string GetName()
@@ -51,6 +53,10 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
             _player.SetBehaviour(_walkingBehaviour);
             _player.TouchesGround();
             _timePassed = 0f;
+        } else if (_player.IsOnEdge())
+        {
+            _player.SetBehaviour(_edgeGrabBehaviour);
+            _edgeGrabBehaviour.SetEdgePosition(transform);
         }
     }
 

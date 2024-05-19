@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5124049825903794453}
   - component: {fileID: 2072462980861998905}
   - component: {fileID: 7860297644336390857}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: WinBox
   m_TagString: WinBox
   m_Icon: {fileID: 0}

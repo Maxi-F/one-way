@@ -24,11 +24,19 @@ namespace PlayerScripts
 
         [Header("Events")] [SerializeField] private UnityEvent onWinboxCollided;
         
+        [Header("Edge Grabbing Settings")]
+        [SerializeField] private float edgeGrabUpLineStartDistance = 1.5f;
+        [SerializeField] private float edgeGrabUpLineEndDistance = 0.5f;
+        [SerializeField] private float edgeGrabYdistance = 0.1f;
+        public bool UseAccumulativeForceOnJump { get; set; }
+        
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;
         private float _accumulatedForce = 0f;
-        public bool useAccumulativeForceOnJump { get; set; }
 
+        private Vector3 _edgeLineCastStart;
+        private Vector3 _edgeLineCastEnd;
+        
         public void Awake()
         {
             if (rotationBehaviour == null)
@@ -112,6 +120,8 @@ namespace PlayerScripts
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawRay(feetPivot.position, Vector3.down * groundedDistance);
+            
+            Gizmos.DrawLine(_edgeLineCastStart, _edgeLineCastEnd);
         }
 
         public float GetAccumulatedForceAndFlush()
@@ -124,6 +134,23 @@ namespace PlayerScripts
         public float GetMaxAccumulatedForce()
         {
             return maxAccumulatedForce;
+        }
+
+        public bool IsOnEdge()
+        {
+            RaycastHit upHit;
+            _edgeLineCastStart = transform.position + transform.up * edgeGrabUpLineStartDistance + transform.forward;
+            _edgeLineCastEnd = transform.position + transform.up * edgeGrabUpLineEndDistance + transform.forward;
+
+            if (_rigidbody.velocity.y < 0 && Physics.Linecast(_edgeLineCastStart, _edgeLineCastEnd, out upHit, floor))
+            {
+                Vector3 forwardCastStart = new Vector3(transform.position.x, upHit.point.y - edgeGrabYdistance,
+                    transform.position.z);
+                Vector3 forwardCastEnd = forwardCastStart + transform.forward;
+
+                return Physics.Linecast(forwardCastStart, forwardCastEnd, out var hit, floor);
+            };
+            return false;
         }
 
         public void OnTriggerEnter(Collider other)
