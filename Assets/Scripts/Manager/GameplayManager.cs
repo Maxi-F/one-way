@@ -32,5 +32,6 @@ public class GameplayManager : MonoBehaviour
     {
         _sceneryManager.UnloadScene(_activeLevelScene);
         _sceneryManager.UnloadScene(SceneNames.Gameplay);
+        _sceneryManager.OnMenuAdded -= UnloadGameplay;
     }
 }
