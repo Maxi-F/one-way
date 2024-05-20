@@ -2,7 +2,7 @@ using PlayerScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Movement
+namespace Input
 {
     public class InputReader : MonoBehaviour
     {
