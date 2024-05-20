@@ -23,7 +23,9 @@ namespace PlayerScripts
         [Header("Events")]
         [SerializeField] private UnityEvent OnMove;
         [SerializeField] private UnityEvent OnBreak;
-        
+        [SerializeField] private UnityEvent OnJump;
+        [SerializeField] private UnityEvent OnFalling;
+            
         private Vector3 _obtainedDirection;
         private Vector3 _desiredDirection;
         private bool _shouldBrake;
@@ -60,6 +62,7 @@ namespace PlayerScripts
                 {
                     player.SetBehaviour(jumpBehaviour); 
                     player.Jump();
+                    OnFalling.Invoke();
                 }
             }
             else
@@ -103,6 +106,7 @@ namespace PlayerScripts
                 player.AccumulateForce(GetCurrentHorizontalSpeed() / 2);
                 player.SetBehaviour(jumpBehaviour);
                 player.Jump();
+                OnJump.Invoke();
             }
         }
 

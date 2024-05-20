@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PlayerScripts
 {
@@ -18,6 +19,9 @@ namespace PlayerScripts
         [Header("Player scripts")]
         [SerializeField] private WalkingBehaviour walkingBehaviour;
         [SerializeField] private Player player;
+
+        [Header("Events")]
+        [SerializeField] private UnityEvent OnLand;
 
         private EdgeGrabBehaviour _edgeGrabBehaviour;
         
@@ -89,6 +93,7 @@ namespace PlayerScripts
                 player.AccumulateForce(-_rigidBody.velocity.y);
                 player.SetBehaviour(walkingBehaviour);
                 player.TouchesGround();
+                OnLand.Invoke();
                 _isJumping = false;
             } else if (IsOnEdge())
             {

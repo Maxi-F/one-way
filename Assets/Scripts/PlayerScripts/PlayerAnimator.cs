@@ -19,7 +19,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void HandleWalk()
     {
-        Debug.Log($"{_player.velocity}, {velocityToRun}, {_player.velocity < velocityToRun}");
+        Debug.Log("Handle walk");
         if(_player.velocity < velocityToRun)
         {
             animator.SetBool("isWalking", true);
@@ -32,7 +32,9 @@ public class PlayerAnimator : MonoBehaviour
 
     public void HandleJump()
     {
+        Debug.Log("Handle jump");
         animator.SetBool("isJumping", true);
+        animator.SetBool("isFalling", true);
     }
 
     public void HandlePowerJump()
@@ -42,6 +44,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void HandleFall()
     {
+        Debug.Log("Handle fall");
         animator.SetBool("isJumping", false);
         animator.SetBool("isPowerJumping", false);
         animator.SetBool("isFalling", true);
@@ -49,11 +52,15 @@ public class PlayerAnimator : MonoBehaviour
 
     public void HandleInFloor()
     {
+        Debug.Log("Handle in floor");
         animator.SetBool("isFalling", false);
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isPowerJumping", false);
     }
 
     public void HandleBreak()
     {
+        Debug.Log("Handle break");
         animator.SetBool("isWalking", false);
         animator.SetBool("isRunning", false);
     }
