@@ -29,6 +29,8 @@ namespace PlayerScripts
         [SerializeField] private float edgeGrabUpLineEndDistance = 0.5f;
         [SerializeField] private float edgeGrabYdistance = 0.1f;
         public bool UseAccumulativeForceOnJump { get; set; }
+
+        public float velocity { get { return _rigidbody.velocity.magnitude; } }
         
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;

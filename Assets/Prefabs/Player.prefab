@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3324144561718692340}
   - component: {fileID: 4675619761088723259}
   - component: {fileID: 6314569198464105875}
+  - component: {fileID: 8523795145773584938}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -179,6 +180,36 @@ MonoBehaviour:
   rigidBody: {fileID: 1043284311323206191}
   player: {fileID: 6314569198464105875}
   jumpBehaviour: {fileID: 4675619761088723259}
+  OnMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleWalk
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnBreak:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleBreak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5047444755805319353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,13 +275,27 @@ MonoBehaviour:
     m_Bits: 8
   feetPivot: {fileID: 8381841678615415956}
   groundedDistance: 0.15
-  maxAccumulatedForce: 0
+  maxAccumulatedForce: 20
   onWinboxCollided:
     m_PersistentCalls:
       m_Calls: []
   edgeGrabUpLineStartDistance: 1.5
   edgeGrabUpLineEndDistance: 0.5
   edgeGrabYdistance: 0.1
+--- !u!114 &8523795145773584938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539672749144961965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7053566f9dffe6b499a24d5a7458ba66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7100294875650141152}
+  velocityToRun: 10
 --- !u!1 &4157538118521161800
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,5 +496,10 @@ PrefabInstance:
 --- !u!4 &3776686404811813274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9e744a956f1c4fc4b890c401c924f558, type: 3}
+  m_PrefabInstance: {fileID: 3739048977076033137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7100294875650141152 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 9e744a956f1c4fc4b890c401c924f558, type: 3}
   m_PrefabInstance: {fileID: 3739048977076033137}
   m_PrefabAsset: {fileID: 0}

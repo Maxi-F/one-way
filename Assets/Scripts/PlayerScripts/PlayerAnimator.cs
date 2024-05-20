@@ -1,3 +1,4 @@
+using PlayerScripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +7,27 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    public void HandleWalk()
+    [Header("Animation properties")]
+    [SerializeField] private float velocityToRun;
+
+    private Player _player;
+
+    public void Start()
     {
-        animator.SetBool("isWalking", true);
-        animator.SetBool("isRunning", false);
+        _player ??= GetComponent<Player>();
     }
 
-    public void HandleRun()
+    public void HandleWalk()
     {
-        animator.SetBool("isWalking", true);
-        animator.SetBool("isRunning", true);
+        Debug.Log($"{_player.velocity}, {velocityToRun}, {_player.velocity < velocityToRun}");
+        if(_player.velocity < velocityToRun)
+        {
+            animator.SetBool("isWalking", true);
+        } else
+        {
+            animator.SetBool("isRunning", true);
+        }
+
     }
 
     public void HandleJump()
