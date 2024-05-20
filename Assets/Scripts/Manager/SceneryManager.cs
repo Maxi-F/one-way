@@ -57,6 +57,7 @@ namespace Manager
                     AddScene(SceneNames.Menu);
                     break;
                 case SceneNames.Exit:
+                    Debug.Log("Quitting...");
                     Application.Quit();
                     break;
             }
