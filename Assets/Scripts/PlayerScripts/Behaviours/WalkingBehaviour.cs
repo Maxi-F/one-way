@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PlayerScripts
 {
@@ -18,6 +19,10 @@ namespace PlayerScripts
         
         [Header("Behaviours")]
         [SerializeField] private JumpBehaviour jumpBehaviour;
+
+        [Header("Events")]
+        [SerializeField] private UnityEvent OnMove;
+        [SerializeField] private UnityEvent OnBreak;
         
         private Vector3 _obtainedDirection;
         private Vector3 _desiredDirection;
@@ -60,6 +65,14 @@ namespace PlayerScripts
             else
             {
                 _timePassedWithoutTouchingGround = 0f;
+
+                if(rigidBody.velocity.magnitude > 0.0001f)
+                {
+                    OnMove.Invoke();
+                } else
+                {
+                    OnBreak.Invoke();
+                }
             }
         }
 
