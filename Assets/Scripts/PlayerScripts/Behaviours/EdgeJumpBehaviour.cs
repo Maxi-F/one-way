@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using PlayerScripts;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
 {
     [Header("Edge jump settings")] 
     [SerializeField] private float timeUntilWalkingIsEnabled = 0.5f;
+
+    [Header("Events")] [SerializeField] private UnityEvent OnTouchFloor;
+    [SerializeField] private UnityEvent OnEdgeGrab;
     
     private WalkingBehaviour _walkingBehaviour;
     private JumpBehaviour _jumpBehaviour;
@@ -53,10 +57,12 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
             _player.SetBehaviour(_walkingBehaviour);
             _player.TouchesGround();
             _timePassed = 0f;
+            OnTouchFloor.Invoke();
         } else if (_player.IsOnEdge())
         {
             _player.SetBehaviour(_edgeGrabBehaviour);
             _edgeGrabBehaviour.SetEdgePosition(transform);
+            OnEdgeGrab.Invoke();
         }
     }
 

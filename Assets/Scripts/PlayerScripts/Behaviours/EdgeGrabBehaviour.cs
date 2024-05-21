@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PlayerScripts;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
@@ -11,6 +12,11 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
     
     [Header("Player data")]
     [SerializeField] private Transform feetPivot;
+
+    [Header("Events")] 
+    [SerializeField] private UnityEvent OnEdgePositionSetted;
+
+    [SerializeField] private UnityEvent OnEdgeJump;
     
     private Vector3 _edgePosition;
     private Player _player;
@@ -66,6 +72,7 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
             _rigidbody.AddForce(Vector3.up * edgeJumpImpulse, ForceMode.Impulse);
             _player.SetBehaviour(_edgeJumpBehaviour);
             _shouldJump = false;
+            OnEdgeJump.Invoke();
         }
         else
         {
@@ -77,5 +84,6 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
     {
         _edgePosition = aTransform.position;
         _rigidbody.AddForce(-_rigidbody.velocity, ForceMode.Impulse);
+        OnEdgePositionSetted.Invoke();
     }
 }
