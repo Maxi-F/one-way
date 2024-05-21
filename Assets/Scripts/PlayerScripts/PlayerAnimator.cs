@@ -35,6 +35,8 @@ public class PlayerAnimator : MonoBehaviour
         Debug.Log("Handle jump");
         animator.SetBool("isJumping", true);
         animator.SetBool("isFalling", true);
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRunning", false);
     }
 
     public void HandlePowerJump()
