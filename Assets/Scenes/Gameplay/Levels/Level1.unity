@@ -334,6 +334,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17053c4a3c8ab1e4188ec7f0fa4a176c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &541872696 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5157922495966074360, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
+  m_PrefabInstance: {fileID: 1114940954966582230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbebb190d230d384faac4abd0f612db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &541872701 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 982660316640988711, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
+  m_PrefabInstance: {fileID: 1114940954966582230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b6e6971688f9c489fe0cd67864d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &549805779
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,6 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 541872690}
+  cheatManager: {fileID: 1359004488}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,6 +532,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a2fa5ac6-8dca-47ea-9461-820f68676267
     m_ActionName: Player/PowerJump[/Keyboard/shift,/DualSenseGamepadHID/leftShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 549805781}
+        m_TargetAssemblyTypeName: Input.InputReader, Assembly-CSharp
+        m_MethodName: HandlePassLevel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 10d96c71-fb5a-4a0e-846f-480b6eb05aad
+    m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 549805781}
+        m_TargetAssemblyTypeName: Input.InputReader, Assembly-CSharp
+        m_MethodName: HandleFly
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8537d91d-f7eb-43fd-945b-dc11e3bdbf27
+    m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -904,6 +959,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97161d2746a67f44c9a121d1bc79e20a, type: 3}
+--- !u!114 &1359004488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+  m_PrefabInstance: {fileID: 7346907246542318171}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260ebf0d81b1c7a438cbaf8e0266a0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1368196969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1286,6 +1352,79 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d34775a96f5b9e342957171978ec38da, type: 3}
+--- !u!1001 &7346907246542318171
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 541872690}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 775887539}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: _flyBehaviour
+      value: 
+      objectReference: {fileID: 541872701}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: _walkingBehaviour
+      value: 
+      objectReference: {fileID: 541872696}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.3263566
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.7273345
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.3459148
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908522634812977545, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: m_Name
+      value: CheatManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1304,3 +1443,4 @@ SceneRoots:
   - {fileID: 3095388691378226593}
   - {fileID: 619823897}
   - {fileID: 1626826887}
+  - {fileID: 7346907246542318171}

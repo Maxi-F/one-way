@@ -31,7 +31,8 @@ namespace PlayerScripts
         public bool UseAccumulativeForceOnJump { get; set; }
 
         public float velocity { get { return _rigidbody.velocity.magnitude; } }
-        
+        public bool isFlying { get; set; }
+
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;
         private float _accumulatedForce = 0f;
@@ -161,6 +162,11 @@ namespace PlayerScripts
             {
                 onWinboxCollided.Invoke();
             }
+        }
+
+        public void SetGravity(bool active)
+        {
+            _rigidbody.useGravity = active;
         }
     }
 }

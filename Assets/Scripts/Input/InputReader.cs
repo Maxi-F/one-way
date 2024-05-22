@@ -7,12 +7,20 @@ namespace Input
     public class InputReader : MonoBehaviour
     {
         [SerializeField] private Player player;
+        [SerializeField] private CheatManager cheatManager;
+        
         private void Awake()
         {
             if (player == null)
             {
                 Debug.LogError($"{name}: {nameof(player)} is null!" +
                                $"\nThis class is dependant on a {nameof(player)} component!");
+            }
+
+            if (cheatManager == null)
+            {
+                Debug.LogError($"{name}: {nameof(cheatManager)} is null!" +
+                               $"\nThis class is dependant on a {nameof(cheatManager)} component!");
             }
         }
 
@@ -49,6 +57,22 @@ namespace Input
             } else if (player && context.canceled)
             {
                 player.UseAccumulativeForceOnJump = false;
+            }
+        }
+
+        public void HandleFly(InputAction.CallbackContext context)
+        {
+            if (cheatManager && context.started)
+            {
+                cheatManager.ToggleFly();
+            }
+        }
+
+        public void HandlePassLevel(InputAction.CallbackContext context)
+        {
+            if (cheatManager && context.started)
+            {
+                cheatManager.PassLevel();
             }
         }
     }
