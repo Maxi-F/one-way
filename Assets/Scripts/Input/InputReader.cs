@@ -88,7 +88,7 @@ namespace Input
         {
             if(levelManager && context.started)
             {
-                levelManager.BackToMenu();
+                levelManager.TogglePause();
             }
         }
     }

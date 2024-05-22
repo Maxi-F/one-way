@@ -8,9 +8,11 @@ namespace Manager
     {
         [SerializeField] private Player player;
         [SerializeField] private SceneNames nextLevel;
+        [SerializeField] private GameObject pauseCanvas;
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
+        private bool _isPaused = false;
         
         void Start()
         {
@@ -37,6 +39,13 @@ namespace Manager
         public void BackToMenu()
         {
             _gameplayManager.BackToMenu();
+        }
+
+        public void TogglePause()
+        {
+            Time.timeScale = _isPaused ? 1f : 0f;
+            pauseCanvas.SetActive(!_isPaused);
+            _isPaused = !_isPaused;
         }
     }
 }
