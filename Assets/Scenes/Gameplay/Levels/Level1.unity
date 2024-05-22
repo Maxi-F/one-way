@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.76880455, g: 0.46603215, b: 0.38838986, a: 1}
+  m_IndirectSpecularColor: {r: 0.7688047, g: 0.46603203, b: 0.3883904, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -403,6 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 541872690}
   cheatManager: {fileID: 1359004488}
+  levelManager: {fileID: 775887539}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +565,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8537d91d-f7eb-43fd-945b-dc11e3bdbf27
     m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 549805781}
+        m_TargetAssemblyTypeName: Input.InputReader, Assembly-CSharp
+        m_MethodName: HandlePause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f1407881-7774-4456-a79d-759f23e115e6
+    m_ActionName: Player/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1221,34 +1238,6 @@ PrefabInstance:
     - target: {fileID: 1539672749144961965, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 775887539}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: HandleWin
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Manager.LevelManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8366486467374037403, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
       propertyPath: m_LocalPosition.x

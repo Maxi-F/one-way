@@ -1,4 +1,5 @@
 using PlayerScripts;
+using Manager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ namespace Input
     {
         [SerializeField] private Player player;
         [SerializeField] private CheatManager cheatManager;
+        [SerializeField] private LevelManager levelManager;
         
         private void Awake()
         {
@@ -21,6 +23,12 @@ namespace Input
             {
                 Debug.LogError($"{name}: {nameof(cheatManager)} is null!" +
                                $"\nThis class is dependant on a {nameof(cheatManager)} component!");
+            }
+
+            if(levelManager == null)
+            {
+                Debug.LogError($"{name}: {nameof(levelManager)} is null!" +
+                               $"\nThis class is dependant on a {nameof(levelManager)} component!");
             }
         }
 
@@ -73,6 +81,14 @@ namespace Input
             if (cheatManager && context.started)
             {
                 cheatManager.PassLevel();
+            }
+        }
+
+        public void HandlePause(InputAction.CallbackContext context)
+        {
+            if(levelManager && context.started)
+            {
+                levelManager.BackToMenu();
             }
         }
     }

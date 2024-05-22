@@ -15,7 +15,8 @@ namespace PlayerScripts
     
         [Header("Jump Settings")]
         [SerializeField] private float jumpingMiliseconds = 100f;
-    
+        [SerializeField] [Range(0.01f, 20f)] private float movingInAirAcceleration;
+
         [Header("Player scripts")]
         [SerializeField] private WalkingBehaviour walkingBehaviour;
         [SerializeField] private Player player;
@@ -64,7 +65,15 @@ namespace PlayerScripts
                 _shouldJump = false;
                 walkingBehaviour.ResetCoyoteTime();
                 _isJumping = true;
+            } else
+            {
+                MoveInAir();
             }
+        }
+
+        public void MoveInAir()
+        {
+            walkingBehaviour.MoveInAir(movingInAirAcceleration);
         }
 
         public void TouchesGround()

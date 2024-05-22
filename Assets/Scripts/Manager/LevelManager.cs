@@ -1,4 +1,5 @@
 using PlayerScripts;
+using System;
 using UnityEngine;
 
 namespace Manager
@@ -31,6 +32,11 @@ namespace Manager
         public void HandleWinGame()
         {
             _gameplayManager.HandleWin();
+        }
+
+        public void BackToMenu()
+        {
+            _gameplayManager.BackToMenu();
         }
     }
 }

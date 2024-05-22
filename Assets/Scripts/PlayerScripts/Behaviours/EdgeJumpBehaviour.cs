@@ -76,7 +76,7 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
             }
             else
             {
-                _walkingBehaviour.OnBehaviourFixedUpdate();
+                _jumpBehaviour.MoveInAir();
             }
         }
     }

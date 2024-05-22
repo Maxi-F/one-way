@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
@@ -33,5 +34,10 @@ public class GameplayManager : MonoBehaviour
         _sceneryManager.UnloadScene(_activeLevelScene);
         _sceneryManager.UnloadScene(SceneNames.Gameplay);
         _sceneryManager.OnMenuAdded -= UnloadGameplay;
+    }
+
+    public void BackToMenu()
+    {
+        _sceneryManager.LoadScene(SceneNames.Menu);
     }
 }

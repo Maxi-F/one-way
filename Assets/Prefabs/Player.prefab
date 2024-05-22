@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 6314569198464105875}
   - component: {fileID: 8523795145773584938}
   - component: {fileID: 982660316640988711}
+  - component: {fileID: 4584001700024916501}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -130,7 +131,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539672749144961965}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e1734ee27cdc6604aa06e6446887ee02, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -145,7 +146,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.03, z: 0}
 --- !u!114 &1418169733700417691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d2b205f36489f42a9632609b86dc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 50
+  sensitivity: 10
 --- !u!114 &4675619761088723259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,6 +346,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   jumpingMiliseconds: 10
+  movingInAirAcceleration: 3
   walkingBehaviour: {fileID: 5157922495966074360}
   player: {fileID: 6314569198464105875}
   OnLand:
@@ -415,6 +417,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 10
+--- !u!135 &4584001700024916501
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539672749144961965}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.15
+  m_Center: {x: 0, y: -0.85, z: 0}
 --- !u!1 &4157538118521161800
 GameObject:
   m_ObjectHideFlags: 0

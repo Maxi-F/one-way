@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4892164, g: 0.5436337, b: 0.6090308, a: 1}
+  m_IndirectSpecularColor: {r: 0.48921722, g: 0.543634, b: 0.60903037, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -251,6 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 541872690}
   cheatManager: {fileID: 1312727283}
+  levelManager: {fileID: 775887539}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +413,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8537d91d-f7eb-43fd-945b-dc11e3bdbf27
     m_ActionName: Player/Fly[/Keyboard/f11]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 549805781}
+        m_TargetAssemblyTypeName: Input.InputReader, Assembly-CSharp
+        m_MethodName: HandlePause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f1407881-7774-4456-a79d-759f23e115e6
+    m_ActionName: Player/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
