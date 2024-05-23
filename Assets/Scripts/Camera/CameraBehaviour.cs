@@ -6,6 +6,8 @@ public class CameraBehaviour : MonoBehaviour
     public Vector3 offset = new Vector3(0, 1.5f, -5);
     public float followSpeed = 5;
     public float rotationSpeed = 5;
+
+    private float _rotationMultiplier = 100f;
     
     private void FixedUpdate()
     {
@@ -27,5 +29,10 @@ public class CameraBehaviour : MonoBehaviour
         var offsetEmulatingTransformPoint = target.position + rotatedOffset;
 
         transform.position = Vector3.Slerp(transform.position, offsetEmulatingTransformPoint, Time.fixedDeltaTime * followSpeed);
+    }
+
+    public void SetRotationSpeed(float newSpeed)
+    {
+        rotationSpeed = newSpeed * _rotationMultiplier;
     }
 }

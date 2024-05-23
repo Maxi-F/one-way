@@ -163,7 +163,6 @@ namespace PlayerScripts
 
         public void MoveInAir(float accelerationToUse)
         {
-            Debug.Log(_desiredDirection.normalized * accelerationToUse);
             rigidBody.AddForce(_desiredDirection.normalized * accelerationToUse, ForceMode.Force);
         }
     }

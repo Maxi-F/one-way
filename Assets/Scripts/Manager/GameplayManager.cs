@@ -8,17 +8,21 @@ public class GameplayManager : MonoBehaviour
 {
     private SceneNames _activeLevelScene;
     private SceneryManager _sceneryManager;
-    
+    [SerializeField] private float initSensibility = 0.1f;
+    public float Sensibility { get; set; }
+
     void Awake()
     {
         _activeLevelScene = SceneNames.LevelOne;
         _sceneryManager ??= FindObjectOfType<SceneryManager>();
         _sceneryManager.AddScene(_activeLevelScene);
         _sceneryManager.OnMenuAdded += UnloadGameplay;
+        Sensibility = initSensibility;
     }
 
     public void LevelPassed(SceneNames nextLevel)
     {
+        if (_activeLevelScene == nextLevel) return;
         _sceneryManager.UnloadScene(_activeLevelScene);
         _sceneryManager.AddScene(nextLevel);
         _activeLevelScene = nextLevel;

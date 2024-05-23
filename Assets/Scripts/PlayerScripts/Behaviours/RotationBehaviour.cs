@@ -1,12 +1,19 @@
+using System;
 using UnityEngine;
 
 namespace PlayerScripts
 {
     public class RotationBehaviour : MonoBehaviour
     {
-        [SerializeField] private float sensitivity = 1;
         private float _desiredRotation = 0;
-    
+        private float _rotationMultiplier = 100f;
+        private Player _player;
+
+        private void Start()
+        {
+            _player ??= GetComponent<Player>();
+        }
+
         public void RotateInAngles(float angles)
         {
             _desiredRotation = angles;
@@ -15,7 +22,7 @@ namespace PlayerScripts
         // Update is called once per frame
         void Update()
         {
-            transform.Rotate(Vector3.up, _desiredRotation * sensitivity * Time.deltaTime);
+            transform.Rotate(Vector3.up, _desiredRotation * _player.Sensibility  * _rotationMultiplier * Time.deltaTime);
         }
     }
 }

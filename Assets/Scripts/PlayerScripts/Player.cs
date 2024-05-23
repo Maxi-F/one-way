@@ -39,6 +39,7 @@ namespace PlayerScripts
 
         private Vector3 _edgeLineCastStart;
         private Vector3 _edgeLineCastEnd;
+        public float Sensibility { get; set; }
         
         public void Awake()
         {
