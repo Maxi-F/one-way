@@ -9,5 +9,11 @@ namespace Manager
         {
             _sceneryManager.InitScenes();
         }
+
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 }
