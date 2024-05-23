@@ -11,7 +11,7 @@ namespace PlayerScripts
         [Header("Behaviours")]
         [FormerlySerializedAs("_rotationBehaviour")] [SerializeField] private RotationBehaviour rotationBehaviour;
         
-        [Header("PlayerData")] //asd
+        [Header("PlayerData")]
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] private LayerMask floor;
         [SerializeField] Transform feetPivot;

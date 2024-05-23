@@ -19,6 +19,11 @@ namespace Manager
             _startingPosition = player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
             player.Sensibility = _gameplayManager.GetSensibility();
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            Time.timeScale = 1f;
         }
     
         public void HandleDeath()
@@ -50,9 +55,23 @@ namespace Manager
 
         public void TogglePause()
         {
-            Time.timeScale = _isPaused ? 1f : 0f;
-            pauseCanvas.SetActive(!_isPaused);
-            _isPaused = !_isPaused;
+            if (_isPaused)
+            {
+                Debug.Log("AAAA");
+                Time.timeScale = 1f;
+                pauseCanvas.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                _isPaused = false;
+            }
+            else
+            {
+                Time.timeScale = 0f;
+                pauseCanvas.SetActive(true);
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+                _isPaused = true;
+            }
         }
     }
 }

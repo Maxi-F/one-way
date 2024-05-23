@@ -24,9 +24,4 @@ public class DeathBox : MonoBehaviour
             onHandleDeath.Invoke();
         }
     }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log(other.gameObject.name);
-    }
 }
