@@ -2,22 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
+using ScriptableObjects;
+using UnityEditor;
 using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
     private SceneNames _activeLevelScene;
     private SceneryManager _sceneryManager;
-    [SerializeField] private float initSensibility = 0.1f;
-    public float Sensibility { get; set; }
-
+    [SerializeField] private SensibilitySettings _playerSettings;
     void Awake()
     {
         _activeLevelScene = SceneNames.LevelOne;
         _sceneryManager ??= FindObjectOfType<SceneryManager>();
         _sceneryManager.AddScene(_activeLevelScene);
         _sceneryManager.OnMenuAdded += UnloadGameplay;
-        Sensibility = initSensibility;
     }
 
     public void LevelPassed(SceneNames nextLevel)
@@ -43,5 +42,15 @@ public class GameplayManager : MonoBehaviour
     public void BackToMenu()
     {
         _sceneryManager.LoadScene(SceneNames.Menu);
+    }
+
+    public void SetSensibility(float newSensibility)
+    {
+        _playerSettings.sensibility = newSensibility;
+    }
+
+    public float GetSensibility()
+    {
+        return _playerSettings.sensibility;
     }
 }

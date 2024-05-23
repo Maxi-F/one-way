@@ -18,7 +18,7 @@ namespace Manager
         {
             _startingPosition = player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
-            player.Sensibility = _gameplayManager.Sensibility;
+            player.Sensibility = _gameplayManager.GetSensibility();
         }
     
         public void HandleDeath()
@@ -29,7 +29,6 @@ namespace Manager
 
         public void HandleWin()
         {
-            Debug.Log("WHY");
             _gameplayManager.LevelPassed(nextLevel);
         }
 
@@ -46,7 +45,7 @@ namespace Manager
         public void SetSensibility(float newSensibility)
         {
             player.Sensibility = newSensibility;
-            _gameplayManager.Sensibility = newSensibility;
+            _gameplayManager.SetSensibility(newSensibility);
         }
 
         public void TogglePause()
