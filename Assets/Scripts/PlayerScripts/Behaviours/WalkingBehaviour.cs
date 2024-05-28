@@ -12,6 +12,7 @@ namespace PlayerScripts
         [SerializeField] private float changeDirectionMultiplier = 1.25f;
         [SerializeField] private float maxAngleToChangeDirection = 45f;
         [SerializeField] private float coyoteTime = 0.5f;
+        [SerializeField] private float breakAngle = 90f;
         
         [Header("Player Data")]
         [SerializeField] private Rigidbody rigidBody;
@@ -81,7 +82,7 @@ namespace PlayerScripts
 
         public void Move(Vector3 direction)
         {
-            if (direction.magnitude < 0.0001f && jumpBehaviour.IsOnFloor())
+            if ((direction.magnitude < 0.0001f || Vector3.Angle(direction, _desiredDirection) > breakAngle) && jumpBehaviour.IsOnFloor())
             {
                 _shouldBrake = true;
             }
