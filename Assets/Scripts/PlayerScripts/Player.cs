@@ -39,6 +39,7 @@ namespace PlayerScripts
 
         private Vector3 _edgeLineCastStart;
         private Vector3 _edgeLineCastEnd;
+        private RaycastHit _edgeHit;
         public float Sensibility { get; set; }
         
         public void Awake()
@@ -140,6 +141,11 @@ namespace PlayerScripts
             return maxAccumulatedForce;
         }
 
+        public bool IsEdgeGrabbing()
+        {
+            return _behaviour.GetName() == "Edge Grab Behaviour";
+        }
+
         public bool IsOnEdge()
         {
             RaycastHit upHit;
@@ -152,9 +158,14 @@ namespace PlayerScripts
                     transform.position.z);
                 Vector3 forwardCastEnd = forwardCastStart + transform.forward;
 
-                return Physics.Linecast(forwardCastStart, forwardCastEnd, out var hit, floor);
+                return Physics.Linecast(forwardCastStart, forwardCastEnd, out _edgeHit, floor);
             };
             return false;
+        }
+
+        public RaycastHit GetEdgeHit()
+        {
+            return _edgeHit;
         }
 
         public void OnTriggerEnter(Collider other)

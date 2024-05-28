@@ -38,11 +38,7 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
 
     public void Move(Vector3 direction)
     {
-        if (Vector3.Dot(direction, transform.forward) < 0)
-        {
-            _rigidbody.useGravity = true;
-            _player.SetBehaviour(_edgeJumpBehaviour);
-        }
+        // TODO climb up
     }
 
     public void Jump()
@@ -80,10 +76,14 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
         }
     }
     
-    public void SetEdgePosition(Transform aTransform)
+    public void SetEdgePosition(Transform aTransform, RaycastHit edgeHit)
     {
         _edgePosition = aTransform.position;
         _rigidbody.AddForce(-_rigidbody.velocity, ForceMode.Impulse);
+        
+        transform.LookAt(edgeHit.transform.position);
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
         OnEdgePositionSetted.Invoke();
     }
 }

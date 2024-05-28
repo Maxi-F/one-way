@@ -107,7 +107,7 @@ namespace PlayerScripts
             } else if (IsOnEdge())
             {
                 player.SetBehaviour(_edgeGrabBehaviour);
-                _edgeGrabBehaviour.SetEdgePosition(transform);
+                _edgeGrabBehaviour.SetEdgePosition(transform, player.GetEdgeHit());
                 _isJumping = false;
             }
         }

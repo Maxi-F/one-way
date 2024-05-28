@@ -22,7 +22,8 @@ namespace PlayerScripts
         // Update is called once per frame
         void Update()
         {
-            transform.Rotate(Vector3.up, _desiredRotation * _player.Sensibility  * _rotationMultiplier * Time.deltaTime);
+            if(!_player.IsEdgeGrabbing())
+                transform.Rotate(Vector3.up, _desiredRotation * _player.Sensibility  * _rotationMultiplier * Time.deltaTime);
         }
     }
 }
