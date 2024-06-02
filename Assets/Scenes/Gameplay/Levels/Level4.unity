@@ -688,6 +688,7 @@ MonoBehaviour:
   player: {fileID: 541872690}
   cheatManager: {fileID: 1336943852}
   levelManager: {fileID: 775887539}
+  cameraBehaviour: {fileID: 963194229}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1121,10 +1122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c460deba27cf0a4ca3de8be82e2203a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 541872690}
   target: {fileID: 541872687}
   offset: {x: 0, y: 1, z: -7}
   followSpeed: 10
-  rotationSpeed: 10
+  xMinMaxRotation: {x: 0, y: 50}
 --- !u!45 &963194230
 Skybox:
   m_ObjectHideFlags: 0

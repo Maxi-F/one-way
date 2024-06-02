@@ -217,10 +217,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 6496295265531208467}
   m_HandleRect: {fileID: 7262563573329656160}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 30
   m_WholeNumbers: 0
-  m_Value: 0.1
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1089,7 +1089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b6153783039f9445ab626a60fbf392a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseCanvas: {fileID: 5768437486792725384}
 --- !u!1001 &8138805020318415711
 PrefabInstance:
   m_ObjectHideFlags: 0
