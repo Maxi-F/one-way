@@ -38,12 +38,15 @@ namespace PlayerScripts
         private Vector3 _edgeLineCastStart;
         private Vector3 _edgeLineCastEnd;
         private RaycastHit _edgeHit;
+
+        private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
         
         public void Start()
         {
             _behaviour ??= GetComponent<WalkingBehaviour>();
             _rigidbody ??= GetComponent<Rigidbody>();
+            _rotationBehaviour ??= GetComponent<RotationBehaviour>();
         }
 
         public float GetBoxSize()
@@ -84,6 +87,7 @@ namespace PlayerScripts
         public void Update()
         {
             _behaviour.OnBehaviourUpdate();
+            _rotationBehaviour.LookInDirection(); 
         }
 
         public void FixedUpdate()
