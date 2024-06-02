@@ -10,9 +10,16 @@ namespace Input
         [SerializeField] private Player player;
         [SerializeField] private CheatManager cheatManager;
         [SerializeField] private LevelManager levelManager;
+        [SerializeField] private CameraBehaviour cameraBehaviour;
         
         private void Awake()
         {
+            if (cameraBehaviour == null)
+            {
+                Debug.LogError($"{name}: {nameof(cameraBehaviour)} is null!" +
+                               $"\nThis class is dependant on a {nameof(cameraBehaviour)} component!");
+            }
+            
             if (player == null)
             {
                 Debug.LogError($"{name}: {nameof(player)} is null!" +
@@ -45,6 +52,7 @@ namespace Input
             Vector2 lookInput = context.ReadValue<Vector2>();
             if(player != null)
             {
+                cameraBehaviour.RotateCamera(lookInput);
                 player.LookChange(lookInput);
             }
         }
