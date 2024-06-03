@@ -29,14 +29,14 @@ public class CameraBehaviour : MonoBehaviour
     private void ModifyRotation()
     {
         transform.RotateAround(target.position, Vector3.up, _desiredRotation.x * player.Sensibility * Time.deltaTime);
-        transform.RotateAround(target.position, Vector3.right, _desiredRotation.y * player.Sensibility * Time.deltaTime);
         
-        // TODO resolve bug with camera repositioning (On xAngle = 0 and z axis parallel)
-        transform.rotation = Quaternion.Euler(
-            Math.Clamp(transform.rotation.eulerAngles.x, xMinMaxRotation.x, xMinMaxRotation.y),
-            transform.rotation.eulerAngles.y,
-            0
-            );
+        Quaternion previousRotationInX = transform.rotation;
+        transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * Time.deltaTime);
+
+        if (transform.rotation.eulerAngles.x < xMinMaxRotation.x || transform.rotation.eulerAngles.x > xMinMaxRotation.y)
+        {
+            transform.rotation = previousRotationInX;
+        }
     }
 
     private void ModifyPosition()
