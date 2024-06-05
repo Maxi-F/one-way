@@ -5,25 +5,31 @@ namespace PlayerScripts
 {
     public class RotationBehaviour : MonoBehaviour
     {
-        private float _desiredRotation = 0;
-        private float _rotationMultiplier = 100f;
-        private Player _player;
+        [SerializeField] private float rotationVelocity = 5.0f;
+
+        private WalkingBehaviour _walkingBehaviour;
+        private Vector3 _lookingDirection;
+        private Vector3 _desiredLookingDirection = Vector3.zero;
 
         private void Start()
         {
-            _player ??= GetComponent<Player>();
+            _walkingBehaviour ??= GetComponent<WalkingBehaviour>();
+            _lookingDirection = transform.forward;
         }
 
-        public void RotateInAngles(float angles)
+        public void Update()
         {
-            _desiredRotation = angles;
+            if (_desiredLookingDirection == new Vector3(0, transform.position.y, 0)) return;
+
+            _lookingDirection = Vector3.Lerp(_lookingDirection, _desiredLookingDirection, rotationVelocity * Time.deltaTime);
+
+            transform.LookAt(transform.position + _lookingDirection);
         }
 
-        // Update is called once per frame
-        void Update()
+        public void LookInDirection()
         {
-            if(!_player.IsEdgeGrabbing())
-                transform.Rotate(Vector3.up, _desiredRotation * _player.Sensibility  * _rotationMultiplier * Time.deltaTime);
+            if(_walkingBehaviour.direction == Vector3.zero) return;
+            _desiredLookingDirection = _walkingBehaviour.direction;
         }
     }
 }

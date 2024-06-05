@@ -1,38 +1,54 @@
+using System;
+using PlayerScripts;
 using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour
 {
-    public Transform target;
-    public Vector3 offset = new Vector3(0, 1.5f, -5);
-    public float followSpeed = 5;
-    public float rotationSpeed = 5;
-
-    private float _rotationMultiplier = 100f;
+    [SerializeField] private Player player;
+    
+    [Header("Follow Properties")]
+    [SerializeField] private Transform target;
+    [SerializeField] private Vector3 offset = new Vector3(0, 1.5f, -5);
+    [SerializeField] private float followSpeed = 5;
+    
+    [Header("Rotation properties")]
+    [SerializeField] private Vector2 xMinMaxRotation = new Vector2(0f, 50f);
+    
+    private Vector2 _desiredRotation;
     
     private void FixedUpdate()
     {
-        ModifyRotation();
         ModifyPosition();
+    }
+
+    private void LateUpdate()
+    {
+        ModifyRotation();
     }
 
     private void ModifyRotation()
     {
-        var desiredRotation = target.rotation
-                              * Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0);
+        transform.RotateAround(target.position, Vector3.up, _desiredRotation.x * player.Sensibility * Time.deltaTime);
+        
+        Quaternion previousRotationInX = transform.rotation;
+        transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * Time.deltaTime);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, Time.fixedDeltaTime * rotationSpeed);
+        if (transform.rotation.eulerAngles.x < xMinMaxRotation.x || transform.rotation.eulerAngles.x > xMinMaxRotation.y)
+        {
+            transform.rotation = previousRotationInX;
+        }
     }
 
     private void ModifyPosition()
     {
-        var rotatedOffset = target.rotation * Quaternion.Euler(transform.rotation.eulerAngles.x, 0, 0) * offset;
+        var rotatedOffset = transform.rotation * offset;
         var offsetEmulatingTransformPoint = target.position + rotatedOffset;
 
         transform.position = Vector3.Slerp(transform.position, offsetEmulatingTransformPoint, Time.fixedDeltaTime * followSpeed);
     }
 
-    public void SetRotationSpeed(float newSpeed)
+    public void RotateCamera(Vector2 lookInput)
     {
-        rotationSpeed = newSpeed * _rotationMultiplier;
+        _desiredRotation = lookInput;
     }
 }

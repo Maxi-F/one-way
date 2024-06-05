@@ -9,8 +9,6 @@ namespace PlayerScripts
     {
         private IBehaviour _behaviour;
         [Header("Behaviours")]
-        [FormerlySerializedAs("_rotationBehaviour")] [SerializeField] private RotationBehaviour rotationBehaviour;
-        
         [Header("PlayerData")]
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] private LayerMask floor;
@@ -40,21 +38,15 @@ namespace PlayerScripts
         private Vector3 _edgeLineCastStart;
         private Vector3 _edgeLineCastEnd;
         private RaycastHit _edgeHit;
+
+        private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
         
-        public void Awake()
-        {
-            if (rotationBehaviour == null)
-            {
-                Debug.LogError($"{name}: {nameof(rotationBehaviour)} is null!" +
-                               $"\nThis class is dependant on a {nameof(rotationBehaviour)} component!");
-            }
-        }
         public void Start()
         {
             _behaviour ??= GetComponent<WalkingBehaviour>();
-            rotationBehaviour ??= GetComponent<RotationBehaviour>();
             _rigidbody ??= GetComponent<Rigidbody>();
+            _rotationBehaviour ??= GetComponent<RotationBehaviour>();
         }
 
         public float GetBoxSize()
@@ -79,9 +71,7 @@ namespace PlayerScripts
 
         public void LookChange(Vector2 eulers)
         {
-        
             _behaviour.LookChange();
-            rotationBehaviour.RotateInAngles(eulers.x);
         }
 
         public void TouchesGround()
@@ -97,6 +87,7 @@ namespace PlayerScripts
         public void Update()
         {
             _behaviour.OnBehaviourUpdate();
+            _rotationBehaviour.LookInDirection(); 
         }
 
         public void FixedUpdate()

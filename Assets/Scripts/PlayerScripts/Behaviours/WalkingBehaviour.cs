@@ -42,6 +42,11 @@ namespace PlayerScripts
             }
         }
 
+        public Vector3 direction
+        {
+            get { return _desiredDirection; }
+        }
+
         private void Reset()
         {
             rigidBody ??= GetComponent<Rigidbody>();
@@ -50,8 +55,7 @@ namespace PlayerScripts
 
         public void LookChange()
         {
-            _desiredDirection = transform.TransformDirection(_obtainedDirection);
-            _desiredDirection.y = 0;
+            MoveThowardsCamera();
         }
 
         public void OnBehaviourUpdate()
@@ -87,6 +91,11 @@ namespace PlayerScripts
                 _shouldBrake = true;
             }
             _obtainedDirection = direction;
+            MoveThowardsCamera();
+        }
+
+        private void MoveThowardsCamera()
+        {
             Transform localTransform = transform;
             var mainCamera = Camera.main;
             if (mainCamera != null)
