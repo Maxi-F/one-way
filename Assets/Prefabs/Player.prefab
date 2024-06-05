@@ -204,11 +204,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
+  maxSpeedForDirChange: 8
   acceleration: 10
   brakeMultiplier: 0.75
-  changeDirectionMultiplier: 1.25
-  maxAngleToChangeDirection: 45
+  changeDirectionMultiplier: 0.4
+  maxAngleToChangeDirection: 54
   coyoteTime: 0.25
+  breakAngle: 90
   rigidBody: {fileID: 1043284311323206191}
   player: {fileID: 6314569198464105875}
   jumpBehaviour: {fileID: 4675619761088723259}
@@ -327,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d2b205f36489f42a9632609b86dc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 10
+  rotationVelocity: 5
 --- !u!114 &4675619761088723259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17053c4a3c8ab1e4188ec7f0fa4a176c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationBehaviour: {fileID: 3324144561718692340}
   capsuleCollider: {fileID: 8357420409828004751}
   floor:
     serializedVersion: 2

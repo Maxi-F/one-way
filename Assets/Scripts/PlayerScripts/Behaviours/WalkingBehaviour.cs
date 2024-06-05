@@ -7,6 +7,7 @@ namespace PlayerScripts
     {
         [Header("Walking properties")]
         [SerializeField] private float speed = 12;
+        [SerializeField] private float maxSpeedForDirChange = 4f;
         [SerializeField] private float acceleration = 15;
         [SerializeField] private float brakeMultiplier = .60f;
         [SerializeField] private float changeDirectionMultiplier = 1.25f;
@@ -140,20 +141,28 @@ namespace PlayerScripts
 
             float angleBetweenVelocityAndDirection = Vector3.Angle(currentHorizontalVelocity, _desiredDirection);
 
-            Vector3 desiredForceToApply = _desiredDirection.normalized *
-                                          (acceleration *
-                                           (angleBetweenVelocityAndDirection > maxAngleToChangeDirection
-                                               ? changeDirectionMultiplier
-                                               : 1.0f)
-                                           );
-            
-            if (currentSpeed < speed)
+            Vector3 desiredForceToApply = _desiredDirection.normalized * acceleration;
+
+            Vector3 brakeForceVector = -currentHorizontalVelocity * brakeMultiplier;
+
+            Debug.Log($"{angleBetweenVelocityAndDirection}");
+
+            if (currentSpeed < speed && angleBetweenVelocityAndDirection < maxAngleToChangeDirection)
+            {
                 rigidBody.AddForce(desiredForceToApply, ForceMode.Force);
+            }
+
+            if(angleBetweenVelocityAndDirection > maxAngleToChangeDirection && !_shouldBrake)
+            {
+                rigidBody.AddForce(brakeForceVector + _desiredDirection.normalized * currentSpeed * changeDirectionMultiplier, ForceMode.Impulse);
+            }
+
             if (_shouldBrake)
             {
-                rigidBody.AddForce(-currentHorizontalVelocity * brakeMultiplier, ForceMode.Impulse);
+                rigidBody.AddForce(brakeForceVector, ForceMode.Impulse);
                 _shouldBrake = false;
             }
+
             if(_justTouchedGround)
             {
                 rigidBody.AddForce(_desiredDirection.normalized * player.GetAccumulatedForceAndFlush(), ForceMode.Impulse);
