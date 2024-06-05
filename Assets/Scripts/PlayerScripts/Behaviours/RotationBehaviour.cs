@@ -14,7 +14,7 @@ namespace PlayerScripts
         private void Start()
         {
             _walkingBehaviour ??= GetComponent<WalkingBehaviour>();
-            _lookingDirection = transform.position + transform.forward;
+            _lookingDirection = transform.forward;
         }
 
         public void Update()
@@ -22,15 +22,14 @@ namespace PlayerScripts
             if (_desiredLookingDirection == new Vector3(0, transform.position.y, 0)) return;
 
             _lookingDirection = Vector3.Lerp(_lookingDirection, _desiredLookingDirection, rotationVelocity * Time.deltaTime);
-            _lookingDirection.y = transform.position.y;
 
-            transform.LookAt(_lookingDirection);
+            transform.LookAt(transform.position + _lookingDirection);
         }
 
         public void LookInDirection()
         {
             if(_walkingBehaviour.direction == Vector3.zero) return;
-            _desiredLookingDirection = transform.position + _walkingBehaviour.direction;
+            _desiredLookingDirection = _walkingBehaviour.direction;
         }
     }
 }
