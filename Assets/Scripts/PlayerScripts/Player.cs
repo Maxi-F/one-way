@@ -37,8 +37,9 @@ namespace PlayerScripts
 
         private Vector3 _edgeLineCastStart;
         private Vector3 _edgeLineCastEnd;
-        private RaycastHit _edgeHit;
-
+        private RaycastHit _edgeForwardHit;
+        private RaycastHit _edgeDownHit;
+        
         private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
         
@@ -139,24 +140,18 @@ namespace PlayerScripts
 
         public bool IsOnEdge()
         {
-            RaycastHit upHit;
             _edgeLineCastStart = transform.position + transform.up * edgeGrabUpLineStartDistance + transform.forward;
             _edgeLineCastEnd = transform.position + transform.up * edgeGrabUpLineEndDistance + transform.forward;
 
-            if (_rigidbody.velocity.y < 0 && Physics.Linecast(_edgeLineCastStart, _edgeLineCastEnd, out upHit, floor))
+            if (_rigidbody.velocity.y < 0 && Physics.Linecast(_edgeLineCastStart, _edgeLineCastEnd, out _edgeDownHit, floor))
             {
-                Vector3 forwardCastStart = new Vector3(transform.position.x, upHit.point.y - edgeGrabYdistance,
+                Vector3 forwardCastStart = new Vector3(transform.position.x, _edgeDownHit.point.y - edgeGrabYdistance,
                     transform.position.z);
                 Vector3 forwardCastEnd = forwardCastStart + transform.forward;
 
-                return Physics.Linecast(forwardCastStart, forwardCastEnd, out _edgeHit, floor);
+                return Physics.Linecast(forwardCastStart, forwardCastEnd, out _edgeForwardHit, floor);
             };
             return false;
-        }
-
-        public RaycastHit GetEdgeHit()
-        {
-            return _edgeHit;
         }
 
         public void OnTriggerEnter(Collider other)
@@ -170,6 +165,16 @@ namespace PlayerScripts
         public void SetGravity(bool active)
         {
             _rigidbody.useGravity = active;
+        }
+
+        public RaycastHit GetForwardEdgeHit()
+        {
+            return _edgeForwardHit;
+        }
+
+        public RaycastHit GetDownEdgeHit()
+        {
+            return _edgeDownHit;
         }
     }
 }

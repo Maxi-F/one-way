@@ -61,7 +61,7 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
         } else if (_player.IsOnEdge())
         {
             _player.SetBehaviour(_edgeGrabBehaviour);
-            _edgeGrabBehaviour.SetEdgePosition(transform, _player.GetEdgeHit());
+            _edgeGrabBehaviour.SetEdgePosition(transform, _player.GetForwardEdgeHit(), _player.GetDownEdgeHit());
             OnEdgeGrab.Invoke();
         }
     }

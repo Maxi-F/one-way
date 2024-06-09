@@ -9,6 +9,9 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
 {
     [Header("Edge grabbing settings")] 
     [SerializeField] private float edgeJumpImpulse;
+
+    [SerializeField] private float powerJumpImpulse;
+    [SerializeField] private Vector2 edgeOffset = new Vector2(0.1f, 1);
     
     [Header("Player data")]
     [SerializeField] private Transform feetPivot;
@@ -23,6 +26,7 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
     private Rigidbody _rigidbody;
     private bool _shouldJump = false;
     private EdgeJumpBehaviour _edgeJumpBehaviour;
+    private Vector3 _edgeNormal;
 
     public void Start()
     {
@@ -57,15 +61,18 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
 
     public void OnBehaviourUpdate()
     {
-        if(!_shouldJump) 
+        if (!_shouldJump)
+        {
             transform.position = _edgePosition;
+            transform.forward = -_edgeNormal;
+        }
     }
 
     public void OnBehaviourFixedUpdate()
     {
         if (_shouldJump)
         {
-            _rigidbody.AddForce(Vector3.up * edgeJumpImpulse, ForceMode.Impulse);
+            _rigidbody.AddForce(Vector3.up * (_player.UseAccumulativeForceOnJump ? powerJumpImpulse : edgeJumpImpulse), ForceMode.Impulse);
             _player.SetBehaviour(_edgeJumpBehaviour);
             _shouldJump = false;
             OnEdgeJump.Invoke();
@@ -76,14 +83,17 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
         }
     }
     
-    public void SetEdgePosition(Transform aTransform, RaycastHit edgeHit)
+    public void SetEdgePosition(Transform aTransform, RaycastHit edgeForwardHit, RaycastHit edgeDownHit)
     {
-        _edgePosition = aTransform.position;
         _rigidbody.AddForce(-_rigidbody.velocity, ForceMode.Impulse);
-        
-        transform.LookAt(edgeHit.transform.position);
-        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
 
+        Vector3 hangPosition = new Vector3(edgeForwardHit.point.x, edgeDownHit.point.y, edgeForwardHit.point.z);
+        Vector3 offset = transform.forward * -edgeOffset.x + transform.up * -edgeOffset.y;
+        hangPosition += offset;
+        
+        _edgePosition = hangPosition;
+        _edgeNormal = edgeForwardHit.normal;
+        
         OnEdgePositionSetted.Invoke();
     }
 }

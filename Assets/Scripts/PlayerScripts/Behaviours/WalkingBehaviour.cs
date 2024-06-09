@@ -179,8 +179,6 @@ namespace PlayerScripts
             Vector3 lastHorizontalVelocity = rigidBody.velocity;
             lastHorizontalVelocity.y = 0;
             
-            Debug.Log(lastHorizontalVelocity.magnitude);
-            
             rigidBody.AddForce(_desiredDirection.normalized * accelerationToUse, ForceMode.Force);
 
             Vector3 newHorizontalVelocity = rigidBody.velocity;

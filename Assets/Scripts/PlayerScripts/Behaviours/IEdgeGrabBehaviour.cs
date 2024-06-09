@@ -4,6 +4,6 @@ namespace PlayerScripts
 {
     public interface IEdgeGrabBehaviour : IBehaviour
     {
-        void SetEdgePosition(Transform transform, RaycastHit edgeHit);
+        void SetEdgePosition(Transform transform, RaycastHit forwardEdgeHit, RaycastHit downEdgeHit);
     }
 }
