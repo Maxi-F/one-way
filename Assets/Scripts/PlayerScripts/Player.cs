@@ -16,6 +16,8 @@ namespace PlayerScripts
         
         [Header("Jump Settings")]
         [SerializeField] private float groundedDistance = 0.1f;
+
+        [SerializeField] private float sphereCastRadius = 4.0f;
         
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
@@ -62,7 +64,13 @@ namespace PlayerScripts
 
         public bool CanJump()
         {
-            return Physics.Raycast(feetPivot.position, Vector3.down, out var hit, groundedDistance, floor);
+            return Physics.SphereCast(
+                feetPivot.position,
+                sphereCastRadius,
+                Vector3.down,
+                out var hit,
+                groundedDistance,
+                floor);
         }
         
         public void Move(Vector3 direction)
@@ -116,7 +124,7 @@ namespace PlayerScripts
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawRay(feetPivot.position, Vector3.down * groundedDistance);
+            Gizmos.DrawSphere(feetPivot.position + groundedDistance * Vector3.down, sphereCastRadius);
             
             Gizmos.DrawLine(_edgeLineCastStart, _edgeLineCastEnd);
         }

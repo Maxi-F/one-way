@@ -385,7 +385,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   feetPivot: {fileID: 8381841678615415956}
-  groundedDistance: 0.15
+  groundedDistance: 0.3
+  sphereCastRadius: 0.06
   maxAccumulatedForce: 20
   onWinboxCollided:
     m_PersistentCalls:
@@ -440,7 +441,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.15
-  m_Center: {x: 0, y: -0.85, z: 0}
+  m_Center: {x: 0, y: -0.83, z: 0}
 --- !u!1 &4157538118521161800
 GameObject:
   m_ObjectHideFlags: 0
