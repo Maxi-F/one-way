@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -144,17 +145,10 @@ namespace PlayerScripts
             Vector3 desiredForceToApply = _desiredDirection.normalized * acceleration;
 
             Vector3 brakeForceVector = -currentHorizontalVelocity * brakeMultiplier;
-
-            Debug.Log($"{angleBetweenVelocityAndDirection}");
-
-            if (currentSpeed < speed && angleBetweenVelocityAndDirection < maxAngleToChangeDirection)
+            
+            if (currentSpeed < speed)
             {
                 rigidBody.AddForce(desiredForceToApply, ForceMode.Force);
-            }
-
-            if(angleBetweenVelocityAndDirection > maxAngleToChangeDirection && !_shouldBrake)
-            {
-                rigidBody.AddForce(brakeForceVector + _desiredDirection.normalized * currentSpeed * changeDirectionMultiplier, ForceMode.Impulse);
             }
 
             if (_shouldBrake)
@@ -182,7 +176,22 @@ namespace PlayerScripts
 
         public void MoveInAir(float accelerationToUse)
         {
+            Vector3 lastHorizontalVelocity = rigidBody.velocity;
+            lastHorizontalVelocity.y = 0;
+            
+            Debug.Log(lastHorizontalVelocity.magnitude);
+            
             rigidBody.AddForce(_desiredDirection.normalized * accelerationToUse, ForceMode.Force);
+
+            Vector3 newHorizontalVelocity = rigidBody.velocity;
+            newHorizontalVelocity.y = 0;
+            
+            rigidBody.velocity = newHorizontalVelocity.normalized * lastHorizontalVelocity.magnitude + new Vector3(0, rigidBody.velocity.y, 0);
+        }
+
+        public void OnDrawGizmos()
+        {
+            Gizmos.DrawLine(transform.position, transform.position + rigidBody.velocity);
         }
     }
 }

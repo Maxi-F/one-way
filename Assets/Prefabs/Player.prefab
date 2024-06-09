@@ -208,9 +208,9 @@ MonoBehaviour:
   acceleration: 10
   brakeMultiplier: 0.75
   changeDirectionMultiplier: 0.4
-  maxAngleToChangeDirection: 54
+  maxAngleToChangeDirection: 30
   coyoteTime: 0.25
-  breakAngle: 90
+  breakAngle: 50
   rigidBody: {fileID: 1043284311323206191}
   player: {fileID: 6314569198464105875}
   jumpBehaviour: {fileID: 4675619761088723259}
@@ -348,7 +348,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   jumpingMiliseconds: 10
-  movingInAirAcceleration: 3
+  movingInAirAcceleration: 2.96
   walkingBehaviour: {fileID: 5157922495966074360}
   player: {fileID: 6314569198464105875}
   OnLand:
