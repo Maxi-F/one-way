@@ -1,5 +1,6 @@
 using PlayerScripts;
 using System;
+using UI;
 using UnityEngine;
 
 namespace Manager
@@ -9,6 +10,7 @@ namespace Manager
         [SerializeField] private Player player;
         [SerializeField] private SceneNames nextLevel;
         [SerializeField] private GameObject pauseCanvas;
+        [SerializeField] private SliderBehaviour pauseSensibilitySlider;
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
@@ -19,6 +21,9 @@ namespace Manager
             _startingPosition = player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
             player.Sensibility = _gameplayManager.GetSensibility();
+            pauseSensibilitySlider ??= GetComponent<SliderBehaviour>();
+            
+            pauseSensibilitySlider.UseValue(player.Sensibility);
             
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

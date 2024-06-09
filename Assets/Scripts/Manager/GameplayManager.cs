@@ -47,6 +47,7 @@ public class GameplayManager : MonoBehaviour
     public void SetSensibility(float newSensibility)
     {
         _playerSettings.sensibility = newSensibility;
+        PlayerPrefs.SetFloat("Sensibility", _playerSettings.sensibility);
     }
 
     public float GetSensibility()
