@@ -2,6 +2,7 @@ using PlayerScripts;
 using System;
 using UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Manager
 {
@@ -11,6 +12,7 @@ namespace Manager
         [SerializeField] private SceneNames nextLevel;
         [SerializeField] private GameObject pauseCanvas;
         [SerializeField] private SliderBehaviour pauseSensibilitySlider;
+        [SerializeField] private UnityEvent OnDeath;
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
@@ -34,6 +36,8 @@ namespace Manager
         public void HandleDeath()
         {
             player.transform.position = _startingPosition;
+            
+            OnDeath.Invoke();
             player.Stop();
         }
 

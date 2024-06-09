@@ -37,10 +37,15 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool("isRunning", false);
     }
 
-    public void HandlePowerJump()
+    public void HandleDeath()
     {
-        animator.SetBool("isPowerJumping", true);
-    }
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isFalling", false);
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isHanging", false);
+    } 
 
     public void HandleFall()
     {
