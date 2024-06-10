@@ -50,6 +50,14 @@ namespace PlayerScripts
             _rotationBehaviour ??= GetComponent<RotationBehaviour>();
         }
 
+        public float GetHorizontalVelocity()
+        {
+            Vector3 velocity = _rigidbody.velocity;
+            velocity.y = 0;
+
+            return velocity.magnitude;
+        }
+
         public float GetBoxSize()
         {
             return capsuleCollider.radius;
