@@ -33,7 +33,6 @@ namespace PlayerScripts
 
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;
-        private float _accumulatedForce = 0f;
 
         private Vector3 _edgeLineCastStart;
         private Vector3 _edgeLineCastEnd;
@@ -121,24 +120,12 @@ namespace PlayerScripts
             _shouldStop = true;
         }
 
-        public void AccumulateForce(float addedForce)
-        {
-             _accumulatedForce = Mathf.Clamp(_accumulatedForce + addedForce, 0f, maxAccumulatedForce);
-        }
-
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawRay(feetPivot.position, Vector3.down * groundedDistance);
             
             Gizmos.DrawLine(_edgeLineCastStart, _edgeLineCastEnd);
-        }
-
-        public float GetAccumulatedForceAndFlush()
-        {
-            float force = _accumulatedForce; 
-            _accumulatedForce = 0f;
-            return force;
         }
 
         public float GetMaxAccumulatedForce()

@@ -16,7 +16,8 @@ namespace PlayerScripts
         [SerializeField] private float coyoteTime = 0.5f;
         [SerializeField] private float breakAngle = 90f;
         [SerializeField] [Range(1.0f, 2.0f)] private float accumulatedForceDivisor = 2.0f;
-        
+        [SerializeField] [Range(1.0f, 5.0f)] private float touchingGroundImpulse = 2.0f;
+
         [Header("Player Data")]
         [SerializeField] private Rigidbody rigidBody;
         [SerializeField] private Player player;
@@ -33,8 +34,7 @@ namespace PlayerScripts
         private Vector3 _obtainedDirection;
         private Vector3 _desiredDirection;
         private bool _shouldBrake;
-        private bool _justTouchedGround;
-        private bool _isTouchingGround;
+        private bool _justTouchedGround = false;
         private float _timePassedWithoutTouchingGround = 0f;
 
         public float CurrentSpeed
@@ -92,7 +92,6 @@ namespace PlayerScripts
             if ((direction.magnitude < 0.0001f || Vector3.Angle(direction, player.GetHorizontalVelocity()) > breakAngle) && jumpBehaviour.IsOnFloor())
             {
                 _shouldBrake = true;
-                Debug.Log("hello?");
             }
             _obtainedDirection = direction;
             MoveThowardsCamera();
@@ -117,7 +116,6 @@ namespace PlayerScripts
         {
             if (jumpBehaviour.IsOnFloor() || !CoyoteTimePassed())
             {
-                player.AccumulateForce(GetCurrentHorizontalSpeed() / accumulatedForceDivisor);
                 player.SetBehaviour(jumpBehaviour);
                 player.Jump();
                 OnJump.Invoke();
@@ -127,13 +125,6 @@ namespace PlayerScripts
         public string GetName()
         {
             return "Walking Behaviour";
-        }
-
-        private float GetCurrentHorizontalSpeed()
-        {
-            Vector3 currentHorizontalVelocity = rigidBody.velocity;
-            currentHorizontalVelocity.y = 0;
-            return currentHorizontalVelocity.magnitude;
         }
         
         public void OnBehaviourFixedUpdate()
@@ -158,10 +149,9 @@ namespace PlayerScripts
                 rigidBody.AddForce(brakeForceVector, ForceMode.Impulse);
                 _shouldBrake = false;
             }
-
-            if(_justTouchedGround)
+            if (_justTouchedGround)
             {
-                rigidBody.AddForce(_desiredDirection.normalized * player.GetAccumulatedForceAndFlush(), ForceMode.Impulse);
+                rigidBody.AddForce(_desiredDirection.normalized * touchingGroundImpulse, ForceMode.Impulse);
                 _justTouchedGround = false;
             }
         }
