@@ -25,11 +25,11 @@ public class PlayerAnimator : MonoBehaviour
         {
             animator.SetBool("isWalking", true);
             animator.SetBool("isRunning", false);
-            animator.SetFloat("walkingSpeed", Mathf.Clamp(_player.GetHorizontalVelocity() * walkingVelocityPercentage, 1, 2));
+            animator.SetFloat("walkingSpeed", Mathf.Clamp(_player.GetHorizontalVelocityMagnitude() * walkingVelocityPercentage, 1, 2));
         } else
         {
             animator.SetBool("isRunning", true);
-            animator.SetFloat("runningSpeed", Mathf.Clamp(_player.GetHorizontalVelocity() * runningVelocityPercentage, 1, 2));
+            animator.SetFloat("runningSpeed", Mathf.Clamp(_player.GetHorizontalVelocityMagnitude() * runningVelocityPercentage, 1, 2));
         }
 
     }

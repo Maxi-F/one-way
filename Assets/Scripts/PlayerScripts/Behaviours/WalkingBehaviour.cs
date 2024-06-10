@@ -15,6 +15,7 @@ namespace PlayerScripts
         [SerializeField] private float maxAngleToChangeDirection = 45f;
         [SerializeField] private float coyoteTime = 0.5f;
         [SerializeField] private float breakAngle = 90f;
+        [SerializeField] [Range(1.0f, 2.0f)] private float accumulatedForceDivisor = 2.0f;
         
         [Header("Player Data")]
         [SerializeField] private Rigidbody rigidBody;
@@ -88,9 +89,10 @@ namespace PlayerScripts
 
         public void Move(Vector3 direction)
         {
-            if ((direction.magnitude < 0.0001f || Vector3.Angle(direction, _desiredDirection) > breakAngle) && jumpBehaviour.IsOnFloor())
+            if ((direction.magnitude < 0.0001f || Vector3.Angle(direction, player.GetHorizontalVelocity()) > breakAngle) && jumpBehaviour.IsOnFloor())
             {
                 _shouldBrake = true;
+                Debug.Log("hello?");
             }
             _obtainedDirection = direction;
             MoveThowardsCamera();
@@ -115,7 +117,7 @@ namespace PlayerScripts
         {
             if (jumpBehaviour.IsOnFloor() || !CoyoteTimePassed())
             {
-                player.AccumulateForce(GetCurrentHorizontalSpeed() / 2);
+                player.AccumulateForce(GetCurrentHorizontalSpeed() / accumulatedForceDivisor);
                 player.SetBehaviour(jumpBehaviour);
                 player.Jump();
                 OnJump.Invoke();
