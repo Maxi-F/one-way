@@ -8,6 +8,7 @@ namespace PlayerScripts
     public class Player : MonoBehaviour
     {
         private IBehaviour _behaviour;
+
         [Header("Behaviours")]
         [Header("PlayerData")]
         [SerializeField] private CapsuleCollider capsuleCollider;

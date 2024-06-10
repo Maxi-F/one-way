@@ -5,11 +5,9 @@ namespace PlayerScripts
     public interface IBehaviour
     {
         string GetName();
-        void Move(Vector3 direction);
-        void Jump();
-        void LookChange();
-        void TouchesGround();
+        void Enter();
         void OnBehaviourUpdate();
         void OnBehaviourFixedUpdate();
+        void Exit();
     }
 }

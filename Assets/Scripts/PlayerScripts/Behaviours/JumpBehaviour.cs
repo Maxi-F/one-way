@@ -14,7 +14,6 @@ namespace PlayerScripts
         [SerializeField] private LayerMask floor;
     
         [Header("Jump Settings")]
-        [SerializeField] private float jumpingMiliseconds = 100f;
         [SerializeField] [Range(0.01f, 20f)] private float movingInAirAcceleration;
         [SerializeField] [Range(1.1f, 10f)] private float powerJumpImpulse = 2.0f;
 
@@ -32,9 +31,6 @@ namespace PlayerScripts
         private Rigidbody _rigidBody;
         private bool _isJumping = false;
         private bool _shouldJump = false;
-        private float _timeJumped = 0f;
-
-
 
         private void Start()
         {
@@ -123,24 +119,9 @@ namespace PlayerScripts
             }
         }
 
-        private bool JumpingBreakTime()
-        {
-            return _timeJumped + jumpingMiliseconds < (Time.time * 1000f);
-        }
-
-        private bool IsRaycastOnFloor()
-        {
-            return player.CanJump();
-        }
-
         private bool IsOnEdge()
         {
             return player.IsOnEdge();
-        }
-
-        public bool IsOnFloor()
-        {
-            return IsRaycastOnFloor() && JumpingBreakTime();
         }
 
         public bool IsOnCoyoteTimeFloor()

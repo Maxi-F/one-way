@@ -7,13 +7,13 @@ namespace PlayerScripts
     {
         [SerializeField] private float rotationVelocity = 5.0f;
 
-        private WalkingBehaviour _walkingBehaviour;
+        private MoveController _moveController;
         private Vector3 _lookingDirection;
         private Vector3 _desiredLookingDirection = Vector3.zero;
 
         private void Start()
         {
-            _walkingBehaviour ??= GetComponent<WalkingBehaviour>();
+            _moveController ??= GetComponent<MoveController>();
             _lookingDirection = transform.forward;
         }
 
@@ -28,8 +28,8 @@ namespace PlayerScripts
 
         public void LookInDirection()
         {
-            if(_walkingBehaviour.direction == Vector3.zero) return;
-            _desiredLookingDirection = _walkingBehaviour.direction;
+            if(_moveController.direction == Vector3.zero) return;
+            _desiredLookingDirection = _moveController.direction;
         }
     }
 }
