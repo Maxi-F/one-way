@@ -4,10 +4,11 @@ namespace PlayerScripts
 {
     public interface IBehaviour
     {
-        string GetName();
-        void Enter();
+        MovementBehaviour GetName();
+        void Enter(IBehaviour previousBehaviour);
         void OnBehaviourUpdate();
         void OnBehaviourFixedUpdate();
-        void Exit();
+        void Exit(IBehaviour nextBehaviour);
+        MovementBehaviour[] GetNextBehaviours();
     }
 }

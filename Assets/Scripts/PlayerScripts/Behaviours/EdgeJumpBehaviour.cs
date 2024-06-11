@@ -5,7 +5,8 @@ using PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
+// TODO fix and attach ibehaviour
+public class EdgeJumpBehaviour : MonoBehaviour
 {
     [Header("Edge jump settings")] 
     [SerializeField] private float timeUntilWalkingIsEnabled = 0.5f;
@@ -34,7 +35,8 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
 
     public void Move(Vector3 direction)
     {
-        _walkingBehaviour.Move(direction);
+        // TODO
+        // _walkingBehaviour.Move(direction);
     }
 
     public void Jump()
@@ -52,6 +54,7 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
 
     public void OnBehaviourUpdate()
     {
+        /* TODO
         if (_jumpBehaviour.IsOnFloor())
         {
             _player.SetBehaviour(_walkingBehaviour);
@@ -64,10 +67,12 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
             _edgeGrabBehaviour.SetEdgePosition(transform, _player.GetForwardEdgeHit(), _player.GetDownEdgeHit());
             OnEdgeGrab.Invoke();
         }
+        */
     }
 
     public void OnBehaviourFixedUpdate()
     {
+        /* TODO
         if (!_jumpBehaviour.IsOnFloor())
         {
             if (_timePassed < timeUntilWalkingIsEnabled)
@@ -79,5 +84,6 @@ public class EdgeJumpBehaviour : MonoBehaviour, IBehaviour
                 _jumpBehaviour.MoveInAir();
             }
         }
+        */
     }
 }

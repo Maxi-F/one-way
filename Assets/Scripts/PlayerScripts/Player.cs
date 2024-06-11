@@ -7,8 +7,6 @@ namespace PlayerScripts
 {
     public class Player : MonoBehaviour
     {
-        private IBehaviour _behaviour;
-
         [Header("Behaviours")]
         [Header("PlayerData")]
         [SerializeField] private CapsuleCollider capsuleCollider;
@@ -39,15 +37,18 @@ namespace PlayerScripts
         private Vector3 _edgeLineCastEnd;
         private RaycastHit _edgeForwardHit;
         private RaycastHit _edgeDownHit;
+        private MovementFSM _movementFSM;
         
         private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
         
         public void Start()
         {
-            _behaviour ??= GetComponent<WalkingBehaviour>();
             _rigidbody ??= GetComponent<Rigidbody>();
             _rotationBehaviour ??= GetComponent<RotationBehaviour>();
+
+            IBehaviour[] behaviours = { GetComponent<WalkingBehaviour>(), GetComponent<JumpBehaviour>() };
+            _movementFSM = new MovementFSM(behaviours, behaviours[0]);
         }
 
         public Vector3 GetHorizontalVelocity()
@@ -70,37 +71,26 @@ namespace PlayerScripts
 
         public void SetBehaviour(IBehaviour newBehaviour)
         {
-            _behaviour = newBehaviour;
         }
 
         public bool CanJump()
         {
             return Physics.Raycast(feetPivot.position, Vector3.down, out var hit, groundedDistance, floor);
         }
-        
-        public void Move(Vector3 direction)
-        {
-            _behaviour.Move(direction);
-        }
-
-        public void LookChange(Vector2 eulers)
-        {
-            _behaviour.LookChange();
-        }
 
         public void TouchesGround()
         {
-            _behaviour.TouchesGround();
+            _movementFSM.changeStateTo(MovementBehaviour.Move);
         }
 
         public void Jump()
         {
-            _behaviour.Jump();
+            _movementFSM.changeStateTo(MovementBehaviour.Jump);
         }
         
         public void Update()
         {
-            _behaviour.OnBehaviourUpdate();
+            _movementFSM.OnUpdate();
             _rotationBehaviour.LookInDirection(); 
         }
 
@@ -112,7 +102,7 @@ namespace PlayerScripts
                 _shouldStop = false;
             }
             else {
-                _behaviour.OnBehaviourFixedUpdate();
+                _movementFSM.OnFixedUpdate();
             }
         }
 
@@ -136,7 +126,7 @@ namespace PlayerScripts
 
         public bool IsEdgeGrabbing()
         {
-            return _behaviour.GetName() == "Edge Grab Behaviour";
+            return _movementFSM.IsCurrentBehaviour(MovementBehaviour.EdgeGrab);
         }
 
         public bool IsOnEdge()

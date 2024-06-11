@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace PlayerScripts
 {
-    public class MoveController : MonoBehaviour
+    public class MoveController : MonoBehaviour, IController
     {
         [Header("Events")]
         [SerializeField] private UnityEvent OnMove;
@@ -17,8 +17,9 @@ namespace PlayerScripts
         [SerializeField] private float breakAngle = 90f;
         [SerializeField] private float speed = 12;
         [SerializeField] [Range(1.0f, 5.0f)] private float touchingGroundImpulse = 2.0f;
+        [SerializeField] [Range(0.01f, 20f)] private float movingInAirAcceleration;
 
-        private Rigidbody _rigidbody;
+        [SerializeField] private Rigidbody _rigidbody;
         private Player _player;
         private PlayerController _playerController;
 
@@ -32,9 +33,10 @@ namespace PlayerScripts
             get { return _desiredDirection; }
         }
 
-        private void Reset()
+        private void Start()
         {
             _rigidbody ??= GetComponent<Rigidbody>();
+            _player ??= GetComponent<Player>();
             _playerController ??= GetComponent<PlayerController>();
         }
 
@@ -84,6 +86,18 @@ namespace PlayerScripts
 
         public void OnFixedUpdate()
         {
+            if(_playerController.IsOnFloor())
+            {
+                MoveInGround();
+            } else
+            {
+                MoveInAir();
+            }
+           
+        }
+
+        private void MoveInGround()
+        {
             Vector3 currentHorizontalVelocity = _rigidbody.velocity;
             currentHorizontalVelocity.y = 0;
             float currentSpeed = currentHorizontalVelocity.magnitude;
@@ -111,12 +125,12 @@ namespace PlayerScripts
             }
         }
 
-        public void MoveInAir(float accelerationToUse)
+        public void MoveInAir()
         {
             Vector3 lastHorizontalVelocity = _rigidbody.velocity;
             lastHorizontalVelocity.y = 0;
 
-            _rigidbody.AddForce(_desiredDirection.normalized * accelerationToUse, ForceMode.Force);
+            _rigidbody.AddForce(_desiredDirection.normalized * movingInAirAcceleration, ForceMode.Force);
 
             Vector3 newHorizontalVelocity = _rigidbody.velocity;
             newHorizontalVelocity.y = 0;
@@ -126,7 +140,11 @@ namespace PlayerScripts
 
         public void OnDrawGizmos()
         {
-            Gizmos.DrawLine(transform.position, transform.position + _rigidbody.velocity);
+            Gizmos.DrawLine(
+                transform.position, 
+                transform.position + 
+                    _rigidbody.velocity
+                );
         }
     }
 }

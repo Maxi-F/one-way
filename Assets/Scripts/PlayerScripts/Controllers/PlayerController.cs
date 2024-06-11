@@ -10,41 +10,60 @@ namespace PlayerScripts
     {
         [SerializeField] private float jumpingMiliseconds = 100f;
         [SerializeField] private float coyoteTime = 0.5f;
+        [SerializeField] Transform feetPivot;
 
+        [Header("Events")]
+        [SerializeField] private UnityEvent OnLand;
         [SerializeField] private UnityEvent OnFalling;
 
-        private float _timeJumped = 0f;
         private Player _player;
         private float _timePassedWithoutTouchingGround = 0f;
+        private MoveController _moveController;
+        private JumpController _jumpController;
+        public bool IsJumping { get; set; }
 
         private void Start()
         {
             _player ??= GetComponent<Player>();
+            _moveController ??= GetComponent<MoveController>();
+            _jumpController ??= GetComponent<JumpController>();
         }
 
-        private void OnUpdate()
+        public void Update()
         {
             if (!IsOnFloor())
             {
                 _timePassedWithoutTouchingGround += Time.deltaTime;
-                if (_timePassedWithoutTouchingGround > coyoteTime)
+                Debug.Log(_timePassedWithoutTouchingGround);
+                if (_timePassedWithoutTouchingGround > coyoteTime && !IsJumping)
                 {
-                    // Transition to Jump state
                     _player.Jump();
-
                     OnFalling.Invoke();
                 }
+            } else if (IsOnFloor() && IsJumping)
+            {
+                _player.TouchesGround();
+                OnLand.Invoke();
+                IsJumping = false;
+            } else if (_player.IsOnEdge())
+            {
+                // TODO transition to edge grab state
+                /*_player.SetBehaviour(_edgeGrabBehaviour);
+                _edgeGrabBehaviour.SetEdgePosition(transform, player.GetForwardEdgeHit(), player.GetDownEdgeHit());
+                IsJumping = false;
+                */
             }
         }
 
         internal void ResetCoyoteTime()
         {
-            _timePassedWithoutTouchingGround = 0f;
+            if(IsOnFloor())
+                _timePassedWithoutTouchingGround = 0f;
         }
 
         private bool JumpingBreakTime()
         {
-            return _timeJumped + jumpingMiliseconds < (Time.time * 1000f);
+            return _jumpController.TimeJumped + jumpingMiliseconds < (Time.time * 1000f);
         }
 
         private bool IsRaycastOnFloor()
@@ -61,6 +80,35 @@ namespace PlayerScripts
         {
             return _timePassedWithoutTouchingGround < float.Epsilon || _timePassedWithoutTouchingGround > coyoteTime;
         }
-    }
 
+        public bool IsOnCoyoteTimeFloor()
+        {
+            return !CoyoteTimePassed() && JumpingBreakTime();
+        }
+
+        public bool CanJump()
+        {
+            return (feetPivot && IsRaycastOnFloor()) || IsOnCoyoteTimeFloor();
+        }
+
+        public Transform GetFeetPivot()
+        {
+            return feetPivot;
+        }
+
+        public bool ShouldPowerJump()
+        {
+            return _player.UseAccumulativeForceOnJump;
+        }
+
+        public void Move(Vector3 direction)
+        {
+            _moveController.Move(direction);
+        }
+
+        public void LookChange(Vector2 eulers)
+        {
+            _moveController.LookChange();
+        }
+    }
 }

@@ -22,6 +22,9 @@ GameObject:
   - component: {fileID: 8523795145773584938}
   - component: {fileID: 982660316640988711}
   - component: {fileID: 4584001700024916501}
+  - component: {fileID: 724443307700666401}
+  - component: {fileID: 8764804099893427093}
+  - component: {fileID: 3784442256423975583}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -205,68 +208,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbebb190d230d384faac4abd0f612db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  maxSpeedForDirChange: 8
-  acceleration: 10
-  brakeMultiplier: 0.75
-  changeDirectionMultiplier: 0.4
-  maxAngleToChangeDirection: 30
-  coyoteTime: 0.25
-  breakAngle: 50
-  rigidBody: {fileID: 1043284311323206191}
-  player: {fileID: 6314569198464105875}
-  jumpBehaviour: {fileID: 4675619761088723259}
-  OnMove:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8523795145773584938}
-        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
-        m_MethodName: HandleWalk
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnBreak:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8523795145773584938}
-        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
-        m_MethodName: HandleBreak
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  moveController: {fileID: 3784442256423975583}
+  jumpController: {fileID: 8764804099893427093}
   OnJump:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8523795145773584938}
         m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
         m_MethodName: HandleJump
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnFalling:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8523795145773584938}
-        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
-        m_MethodName: HandleFall
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -344,30 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a7b9a3111ff48479812bbc4ac9d4c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  feetPivot: {fileID: 8381841678615415956}
-  force: 5
-  floor:
-    serializedVersion: 2
-    m_Bits: 8
-  jumpingMiliseconds: 10
-  movingInAirAcceleration: 2.96
-  walkingBehaviour: {fileID: 5157922495966074360}
-  player: {fileID: 6314569198464105875}
-  OnLand:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8523795145773584938}
-        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
-        m_MethodName: HandleInFloor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &6314569198464105875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,7 +314,19 @@ MonoBehaviour:
   maxAccumulatedForce: 20
   onWinboxCollided:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Manager.LevelManager, Assembly-CSharp
+        m_MethodName: HandleWin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   edgeGrabUpLineStartDistance: 1.5
   edgeGrabUpLineEndDistance: 0.5
   edgeGrabYdistance: 0.1
@@ -407,6 +344,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 7100294875650141152}
   velocityToRun: 10
+  walkingVelocityPercentage: 0.1
+  runningVelocityPercentage: 0.1
 --- !u!114 &982660316640988711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +380,114 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.15
   m_Center: {x: 0, y: -0.85, z: 0}
+--- !u!114 &724443307700666401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539672749144961965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 203388413bd04ea4bb62f04d739b377b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpingMiliseconds: 100
+  coyoteTime: 0.5
+  feetPivot: {fileID: 8381841678615415956}
+  OnLand:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleInFloor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnFalling:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleFall
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8764804099893427093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539672749144961965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbcf4a2e0703de445af1ec5dc4300e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 10
+  powerJumpImpulse: 6
+--- !u!114 &3784442256423975583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539672749144961965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc8d43f999956e4792dc52f06646d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnMove:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleWalk
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnBreak:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleBreak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  acceleration: 15
+  brakeMultiplier: 0.6
+  breakAngle: 90
+  speed: 12
+  touchingGroundImpulse: 2
+  movingInAirAcceleration: 0.5
+  _rigidbody: {fileID: 1043284311323206191}
 --- !u!1 &4157538118521161800
 GameObject:
   m_ObjectHideFlags: 0

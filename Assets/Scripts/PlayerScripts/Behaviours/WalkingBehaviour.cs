@@ -8,12 +8,14 @@ namespace PlayerScripts
     {
         [Header("Walk Controller")]
         [SerializeField] private MoveController moveController;
+        [SerializeField] private JumpController jumpController;
 
         [SerializeField] private UnityEvent OnJump;
 
-        public void Enter()
+        public void Enter(IBehaviour previousBehaviour)
         {
-            moveController.TouchesGround();
+            if(previousBehaviour.GetName() == MovementBehaviour.Jump)
+                moveController.TouchesGround();
         }
 
         public void OnBehaviourUpdate()
@@ -21,9 +23,9 @@ namespace PlayerScripts
             moveController.OnUpdate();
         }
 
-        public string GetName()
+        public MovementBehaviour GetName()
         {
-            return "Walking Behaviour";
+            return MovementBehaviour.Move;
         }
         
         public void OnBehaviourFixedUpdate()
@@ -31,9 +33,20 @@ namespace PlayerScripts
             moveController.OnFixedUpdate();
         }
 
-        public void Exit()
+        public void Exit(IBehaviour nextBehaviour)
         {
+            if(nextBehaviour.GetName() == MovementBehaviour.Jump)
+            {
+                jumpController.Jump();
+                OnJump.Invoke();
+            }
+        }
 
+        public MovementBehaviour[] GetNextBehaviours()
+        {
+            MovementBehaviour[] nextBehaviours = { MovementBehaviour.Jump };
+
+            return nextBehaviours;
         }
     }
 }

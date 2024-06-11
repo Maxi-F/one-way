@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using PlayerScripts;
 using UnityEngine;
 
-public class FlyBehaviour : MonoBehaviour, IBehaviour
+// TODO fix and attach ibehaviour
+public class FlyBehaviour : MonoBehaviour
 {
     [SerializeField] private float velocity;
     private Vector3 _direction = new Vector3(0, 0, 0);

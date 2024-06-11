@@ -49,6 +49,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void HandleFall()
     {
+        Debug.Log("Hi?");
         animator.SetBool("isJumping", false);
         animator.SetBool("isWalking", false);
         animator.SetBool("isRunning", false);

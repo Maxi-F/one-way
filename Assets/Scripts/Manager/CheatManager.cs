@@ -22,7 +22,8 @@ public class CheatManager : MonoBehaviour
         }
         else
         {
-            player.SetBehaviour(_flyBehaviour);
+            // TODO fix
+            //player.SetBehaviour(_flyBehaviour);
             player.SetGravity(false);
             player.isFlying = true;
         }

@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
+// TODO fix and attach IEdgeGrabBehaviour
+public class EdgeGrabBehaviour : MonoBehaviour
 {
     [Header("Edge grabbing settings")] 
     [SerializeField] private float edgeJumpImpulse;
@@ -70,6 +71,7 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
 
     public void OnBehaviourFixedUpdate()
     {
+        /* TODO fix
         if (_shouldJump)
         {
             _rigidbody.AddForce(Vector3.up * (_player.UseAccumulativeForceOnJump ? powerJumpImpulse : edgeJumpImpulse), ForceMode.Impulse);
@@ -81,6 +83,7 @@ public class EdgeGrabBehaviour : MonoBehaviour, IEdgeGrabBehaviour
         {
             _rigidbody.useGravity = false;
         }
+        */
     }
     
     public void SetEdgePosition(Transform aTransform, RaycastHit edgeForwardHit, RaycastHit edgeDownHit)

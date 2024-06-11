@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.76880455, g: 0.46603215, b: 0.38838986, a: 1}
+  m_IndirectSpecularColor: {r: 0.7688047, g: 0.46603203, b: 0.3883904, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -512,6 +512,7 @@ MonoBehaviour:
   cheatManager: {fileID: 1359004488}
   levelManager: {fileID: 775887539}
   cameraBehaviour: {fileID: 963194229}
+  playerController: {fileID: 733252833}
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,6 +935,17 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &733252833 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 724443307700666401, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
+  m_PrefabInstance: {fileID: 1114940954966582230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 203388413bd04ea4bb62f04d739b377b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &775887539 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7955728586405096038, guid: f20694ace3718064887079c1f7055b9b, type: 3}
@@ -2365,33 +2377,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
       propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 775887539}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: HandleWin
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Manager.LevelManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 8366486467374037403, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

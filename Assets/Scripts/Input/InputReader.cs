@@ -11,7 +11,8 @@ namespace Input
         [SerializeField] private CheatManager cheatManager;
         [SerializeField] private LevelManager levelManager;
         [SerializeField] private CameraBehaviour cameraBehaviour;
-        
+        [SerializeField] private PlayerController playerController;
+
         private void Awake()
         {
             if (cameraBehaviour == null)
@@ -24,6 +25,12 @@ namespace Input
             {
                 Debug.LogError($"{name}: {nameof(player)} is null!" +
                                $"\nThis class is dependant on a {nameof(player)} component!");
+            }
+
+            if (playerController == null)
+            {
+                Debug.LogError($"{name}: {nameof(playerController)} is null!" +
+                               $"\nThis class is dependant on a {nameof(playerController)} component!");
             }
 
             if (cheatManager == null)
@@ -43,17 +50,17 @@ namespace Input
         {
             Vector2 moveInput = context.ReadValue<Vector2>();
             Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-            if (player != null)
-                player.Move(moveDirection);
+            if (playerController != null)
+                playerController.Move(moveDirection);
         }
 
         public void HandleLookInput(InputAction.CallbackContext context)
         {
             Vector2 lookInput = context.ReadValue<Vector2>();
-            if(player != null)
+            if(playerController != null)
             {
                 cameraBehaviour.RotateCamera(lookInput);
-                player.LookChange(lookInput);
+                playerController.LookChange(lookInput);
             }
         }
 
