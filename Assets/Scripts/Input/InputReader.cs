@@ -7,7 +7,6 @@ namespace Input
 {
     public class InputReader : MonoBehaviour
     {
-        [SerializeField] private Player player;
         [SerializeField] private CheatManager cheatManager;
         [SerializeField] private LevelManager levelManager;
         [SerializeField] private CameraBehaviour cameraBehaviour;
@@ -19,12 +18,6 @@ namespace Input
             {
                 Debug.LogError($"{name}: {nameof(cameraBehaviour)} is null!" +
                                $"\nThis class is dependant on a {nameof(cameraBehaviour)} component!");
-            }
-            
-            if (player == null)
-            {
-                Debug.LogError($"{name}: {nameof(player)} is null!" +
-                               $"\nThis class is dependant on a {nameof(player)} component!");
             }
 
             if (playerController == null)
@@ -66,20 +59,20 @@ namespace Input
 
         public void HandleJumpInput(InputAction.CallbackContext context)
         {
-            if(player && context.started)
+            if(playerController && context.started)
             {
-                player.Jump();
+                playerController.Jump();
             }
         }
 
         public void HandlePowerJumpInput(InputAction.CallbackContext context)
         {
-            if (player && context.started)
+            if (playerController && context.started)
             {
-                player.UseAccumulativeForceOnJump = true;
-            } else if (player && context.canceled)
+                playerController.SetPowerJump(true);
+            } else if (playerController && context.canceled)
             {
-                player.UseAccumulativeForceOnJump = false;
+                playerController.SetPowerJump(false);
             }
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PlayerScripts
 {
-    public class JumpController : MonoBehaviour, IController
+    public class JumpController : MonoBehaviour
     {
         [SerializeField] private float force;
         [SerializeField] [Range(1.1f, 10f)] private float powerJumpImpulse = 2.0f;
@@ -17,6 +17,10 @@ namespace PlayerScripts
 
         public float TimeJumped { get { return _timeJumped; } }
 
+        public bool UseAccumulativeForceOnJump { get; set; }
+
+        public bool IsJumping { get; set; }
+
         public void Start()
         {
             _playerController ??= GetComponent<PlayerController>();
@@ -25,9 +29,9 @@ namespace PlayerScripts
 
         public void OnFixedUpdate()
         {
-            if (_shouldJump && _playerController.CanJump())
+            if (_shouldJump)
             {
-                if (_playerController.ShouldPowerJump())
+                if (UseAccumulativeForceOnJump)
                 {
                     Vector3 upForce = (force + powerJumpImpulse) * Vector3.up;
 
@@ -41,8 +45,7 @@ namespace PlayerScripts
                     _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
                 }
                 _shouldJump = false;
-                _playerController.ResetCoyoteTime();
-                _playerController.IsJumping = true;
+                IsJumping = true;
             }
         }
 
@@ -50,17 +53,15 @@ namespace PlayerScripts
         {
         }
 
-        public void Jump()
+        public void SetShouldJumpValues()
         {
-            if (_playerController.IsOnFloor() || _playerController.IsOnCoyoteTimeFloor())
-            {
-                _shouldJump = true;
-                _timeJumped = Time.time * 1000f;
-            }
-            else
-            {
-                _playerController.IsJumping = true;
-            }
+            _shouldJump = true;
+            _timeJumped = Time.time * 1000f;
+        }
+
+        public void SetIsJumping(bool value = true)
+        {
+            IsJumping = value;
         }
     }
 }

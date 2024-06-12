@@ -11,6 +11,7 @@ public class FlyBehaviour : MonoBehaviour
     private bool _isGoingUp = false;
     private Player _player;
     
+    public bool GoDown { get; set; }
     void Start()
     {
         _player ??= GetComponent<Player>();
@@ -48,7 +49,7 @@ public class FlyBehaviour : MonoBehaviour
     public void OnBehaviourUpdate()
     {
         Vector3 upVector = _isGoingUp ? Vector3.up : Vector3.zero;
-        Vector3 downVector = _player.UseAccumulativeForceOnJump ? Vector3.down : Vector3.zero;
+        Vector3 downVector = GoDown ? Vector3.down : Vector3.zero;
         
         transform.position += (_direction + upVector + downVector) * velocity * Time.deltaTime;
     }

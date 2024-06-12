@@ -9,6 +9,7 @@ namespace PlayerScripts
         [Header("Walk Controller")]
         [SerializeField] private MoveController moveController;
         [SerializeField] private JumpController jumpController;
+        [SerializeField] private PlayerController playerController;
 
         [SerializeField] private UnityEvent OnJump;
 
@@ -20,7 +21,8 @@ namespace PlayerScripts
 
         public void OnBehaviourUpdate()
         {
-            moveController.OnUpdate();
+            playerController.ResetCoyoteTime();
+            moveController.Events();
         }
 
         public MovementBehaviour GetName()
@@ -30,14 +32,20 @@ namespace PlayerScripts
         
         public void OnBehaviourFixedUpdate()
         {
-            moveController.OnFixedUpdate();
+            moveController.MoveInGround();
         }
 
         public void Exit(IBehaviour nextBehaviour)
         {
             if(nextBehaviour.GetName() == MovementBehaviour.Jump)
             {
-                jumpController.Jump();
+                if (playerController.IsOnFloor() || playerController.IsOnCoyoteTimeFloor()) {
+                    jumpController.SetShouldJumpValues();
+                } else
+                {
+                    jumpController.SetIsJumping();
+                }
+                
                 OnJump.Invoke();
             }
         }

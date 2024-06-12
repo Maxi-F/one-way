@@ -12,6 +12,7 @@ namespace PlayerScripts
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] private LayerMask floor;
         [SerializeField] Transform feetPivot;
+        [SerializeField] WalkingBehaviour walkBehaviour;
         
         [Header("Jump Settings")]
         [SerializeField] private float groundedDistance = 0.1f;
@@ -25,7 +26,6 @@ namespace PlayerScripts
         [SerializeField] private float edgeGrabUpLineStartDistance = 1.5f;
         [SerializeField] private float edgeGrabUpLineEndDistance = 0.5f;
         [SerializeField] private float edgeGrabYdistance = 0.1f;
-        public bool UseAccumulativeForceOnJump { get; set; }
 
         public float velocity { get { return _rigidbody.velocity.magnitude; } }
         public bool isFlying { get; set; }
@@ -47,8 +47,8 @@ namespace PlayerScripts
             _rigidbody ??= GetComponent<Rigidbody>();
             _rotationBehaviour ??= GetComponent<RotationBehaviour>();
 
-            IBehaviour[] behaviours = { GetComponent<WalkingBehaviour>(), GetComponent<JumpBehaviour>() };
-            _movementFSM = new MovementFSM(behaviours, behaviours[0]);
+            IBehaviour[] behaviours = GetComponents<IBehaviour>();
+            _movementFSM = new MovementFSM(behaviours, walkBehaviour);
         }
 
         public Vector3 GetHorizontalVelocity()

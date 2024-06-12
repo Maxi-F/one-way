@@ -20,7 +20,7 @@ namespace PlayerScripts
         private float _timePassedWithoutTouchingGround = 0f;
         private MoveController _moveController;
         private JumpController _jumpController;
-        public bool IsJumping { get; set; }
+
 
         private void Start()
         {
@@ -35,16 +35,15 @@ namespace PlayerScripts
             {
                 _timePassedWithoutTouchingGround += Time.deltaTime;
                 Debug.Log(_timePassedWithoutTouchingGround);
-                if (_timePassedWithoutTouchingGround > coyoteTime && !IsJumping)
+                if (_timePassedWithoutTouchingGround > coyoteTime && !_jumpController.IsJumping)
                 {
                     _player.Jump();
                     OnFalling.Invoke();
                 }
-            } else if (IsOnFloor() && IsJumping)
+            } else if (IsOnFloor() && _jumpController.IsJumping)
             {
                 _player.TouchesGround();
                 OnLand.Invoke();
-                IsJumping = false;
             } else if (_player.IsOnEdge())
             {
                 // TODO transition to edge grab state
@@ -81,6 +80,14 @@ namespace PlayerScripts
             return _timePassedWithoutTouchingGround < float.Epsilon || _timePassedWithoutTouchingGround > coyoteTime;
         }
 
+        internal void Jump()
+        {
+            if(CanJump())
+            {
+                _player.Jump();
+            }
+        }
+
         public bool IsOnCoyoteTimeFloor()
         {
             return !CoyoteTimePassed() && JumpingBreakTime();
@@ -96,9 +103,9 @@ namespace PlayerScripts
             return feetPivot;
         }
 
-        public bool ShouldPowerJump()
+        public void SetPowerJump(bool value)
         {
-            return _player.UseAccumulativeForceOnJump;
+            _jumpController.UseAccumulativeForceOnJump = value;
         }
 
         public void Move(Vector3 direction)

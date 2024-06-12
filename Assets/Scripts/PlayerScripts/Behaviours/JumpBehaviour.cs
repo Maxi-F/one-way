@@ -18,7 +18,7 @@ namespace PlayerScripts
         public void OnBehaviourFixedUpdate()
         {
             _jumpController.OnFixedUpdate();
-            _moveController.OnFixedUpdate();
+            _moveController.MoveInAir();
         }
 
         public MovementBehaviour GetName()
@@ -32,7 +32,7 @@ namespace PlayerScripts
         }
 
         public void Exit(IBehaviour nextBehaviour) {
-
+            _jumpController.IsJumping = false;
         }
 
         public MovementBehaviour[] GetNextBehaviours()

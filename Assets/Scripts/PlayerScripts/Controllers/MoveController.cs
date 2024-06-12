@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace PlayerScripts
 {
-    public class MoveController : MonoBehaviour, IController
+    public class MoveController : MonoBehaviour
     {
         [Header("Events")]
         [SerializeField] private UnityEvent OnMove;
@@ -21,7 +21,6 @@ namespace PlayerScripts
 
         [SerializeField] private Rigidbody _rigidbody;
         private Player _player;
-        private PlayerController _playerController;
 
         private Vector3 _obtainedDirection;
         private Vector3 _desiredDirection;
@@ -37,7 +36,6 @@ namespace PlayerScripts
         {
             _rigidbody ??= GetComponent<Rigidbody>();
             _player ??= GetComponent<Player>();
-            _playerController ??= GetComponent<PlayerController>();
         }
 
         public void LookChange()
@@ -45,10 +43,8 @@ namespace PlayerScripts
             MoveThowardsCamera();
         }
 
-        public void OnUpdate()
-        {
-            _playerController.ResetCoyoteTime();
-            
+        public void Events()
+        {            
             if (_rigidbody.velocity.magnitude > 0.0001f)
             {
                 OnMove.Invoke();
@@ -66,7 +62,7 @@ namespace PlayerScripts
 
         public void Move(Vector3 direction)
         {
-            if ((direction.magnitude < 0.0001f || Vector3.Angle(direction, _player.GetHorizontalVelocity()) > breakAngle) && _playerController.IsOnFloor())
+            if ((direction.magnitude < 0.0001f || Vector3.Angle(direction, _player.GetHorizontalVelocity()) > breakAngle))
             {
                 _shouldBrake = true;
             }
@@ -84,19 +80,7 @@ namespace PlayerScripts
             _desiredDirection.y = 0;
         }
 
-        public void OnFixedUpdate()
-        {
-            if(_playerController.IsOnFloor())
-            {
-                MoveInGround();
-            } else
-            {
-                MoveInAir();
-            }
-           
-        }
-
-        private void MoveInGround()
+        public void MoveInGround()
         {
             Vector3 currentHorizontalVelocity = _rigidbody.velocity;
             currentHorizontalVelocity.y = 0;
