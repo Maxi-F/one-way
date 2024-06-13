@@ -11,11 +11,7 @@ namespace PlayerScripts
         [Header("PlayerData")]
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] private LayerMask floor;
-        [SerializeField] Transform feetPivot;
         [SerializeField] WalkingBehaviour walkBehaviour;
-        
-        [Header("Jump Settings")]
-        [SerializeField] private float groundedDistance = 0.1f;
         
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
@@ -73,11 +69,6 @@ namespace PlayerScripts
         {
         }
 
-        public bool CanJump()
-        {
-            return Physics.Raycast(feetPivot.position, Vector3.down, out var hit, groundedDistance, floor);
-        }
-
         public void TouchesGround()
         {
             _movementFSM.changeStateTo(MovementBehaviour.Move);
@@ -114,7 +105,6 @@ namespace PlayerScripts
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawRay(feetPivot.position, Vector3.down * groundedDistance);
             
             Gizmos.DrawLine(_edgeLineCastStart, _edgeLineCastEnd);
         }

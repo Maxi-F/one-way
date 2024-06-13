@@ -8,8 +8,11 @@ namespace PlayerScripts
     {
         [SerializeField] private float force;
         [SerializeField] [Range(1.1f, 10f)] private float powerJumpImpulse = 2.0f;
+        [SerializeField] private Transform feetPivot;
+        [SerializeField] private LayerMask floor;
 
-        private PlayerController _playerController;
+        [Header("Jump Settings")]
+        [SerializeField] private float groundedDistance = 0.1f;
         private Rigidbody _rigidBody;
         
         private bool _shouldJump = false;
@@ -23,7 +26,6 @@ namespace PlayerScripts
 
         public void Start()
         {
-            _playerController ??= GetComponent<PlayerController>();
             _rigidBody ??= GetComponent<Rigidbody>();
         }
 
@@ -62,6 +64,17 @@ namespace PlayerScripts
         public void SetIsJumping(bool value = true)
         {
             IsJumping = value;
+        }
+
+        public bool CanJump()
+        {
+            return Physics.Raycast(feetPivot.position, Vector3.down, out var hit, groundedDistance, floor);
+        }
+
+        public void OnDrawGizmos()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(feetPivot.position, Vector3.down * groundedDistance);
         }
     }
 }

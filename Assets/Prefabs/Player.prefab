@@ -310,8 +310,7 @@ MonoBehaviour:
   floor:
     serializedVersion: 2
     m_Bits: 8
-  feetPivot: {fileID: 8381841678615415956}
-  groundedDistance: 0.15
+  walkBehaviour: {fileID: 5157922495966074360}
   maxAccumulatedForce: 20
   onWinboxCollided:
     m_PersistentCalls:
@@ -395,7 +394,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpingMiliseconds: 100
   coyoteTime: 0.5
-  feetPivot: {fileID: 8381841678615415956}
   OnLand:
     m_PersistentCalls:
       m_Calls:
@@ -440,6 +438,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 10
   powerJumpImpulse: 6
+  feetPivot: {fileID: 8381841678615415956}
+  floor:
+    serializedVersion: 2
+    m_Bits: 8
+  groundedDistance: 0.2
 --- !u!114 &3784442256423975583
 MonoBehaviour:
   m_ObjectHideFlags: 0

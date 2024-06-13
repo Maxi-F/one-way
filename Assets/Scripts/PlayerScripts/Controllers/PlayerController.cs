@@ -10,7 +10,6 @@ namespace PlayerScripts
     {
         [SerializeField] private float jumpingMiliseconds = 100f;
         [SerializeField] private float coyoteTime = 0.5f;
-        [SerializeField] Transform feetPivot;
 
         [Header("Events")]
         [SerializeField] private UnityEvent OnLand;
@@ -65,14 +64,9 @@ namespace PlayerScripts
             return _jumpController.TimeJumped + jumpingMiliseconds < (Time.time * 1000f);
         }
 
-        private bool IsRaycastOnFloor()
-        {
-            return _player.CanJump();
-        }
-
         public bool IsOnFloor()
         {
-            return IsRaycastOnFloor() && JumpingBreakTime();
+            return _jumpController.CanJump() && JumpingBreakTime();
         }
 
         public bool CoyoteTimePassed()
@@ -80,7 +74,7 @@ namespace PlayerScripts
             return _timePassedWithoutTouchingGround < float.Epsilon || _timePassedWithoutTouchingGround > coyoteTime;
         }
 
-        internal void Jump()
+        public void Jump()
         {
             if(CanJump())
             {
@@ -95,12 +89,7 @@ namespace PlayerScripts
 
         public bool CanJump()
         {
-            return (feetPivot && IsRaycastOnFloor()) || IsOnCoyoteTimeFloor();
-        }
-
-        public Transform GetFeetPivot()
-        {
-            return feetPivot;
+            return _jumpController.CanJump() || IsOnCoyoteTimeFloor();
         }
 
         public void SetPowerJump(bool value)
