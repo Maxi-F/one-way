@@ -35,7 +35,6 @@ namespace PlayerScripts
 
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;
-        private float _accumulatedForce = 0f;
 
         private Vector3 _edgeLineCastStart;
         private Vector3 _edgeLineCastEnd;
@@ -50,6 +49,19 @@ namespace PlayerScripts
             _behaviour ??= GetComponent<WalkingBehaviour>();
             _rigidbody ??= GetComponent<Rigidbody>();
             _rotationBehaviour ??= GetComponent<RotationBehaviour>();
+        }
+
+        public Vector3 GetHorizontalVelocity()
+        {
+            Vector3 velocity = _rigidbody.velocity;
+            velocity.y = 0;
+
+            return velocity;
+        }
+
+        public float GetHorizontalVelocityMagnitude()
+        {
+            return GetHorizontalVelocity().magnitude;
         }
 
         public float GetBoxSize()
@@ -116,24 +128,12 @@ namespace PlayerScripts
             _shouldStop = true;
         }
 
-        public void AccumulateForce(float addedForce)
-        {
-             _accumulatedForce = Mathf.Clamp(_accumulatedForce + addedForce, 0f, maxAccumulatedForce);
-        }
-
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(feetPivot.position + groundedDistance * Vector3.down, sphereCastRadius);
             
             Gizmos.DrawLine(_edgeLineCastStart, _edgeLineCastEnd);
-        }
-
-        public float GetAccumulatedForceAndFlush()
-        {
-            float force = _accumulatedForce; 
-            _accumulatedForce = 0f;
-            return force;
         }
 
         public float GetMaxAccumulatedForce()

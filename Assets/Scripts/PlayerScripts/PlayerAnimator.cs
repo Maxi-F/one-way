@@ -9,6 +9,8 @@ public class PlayerAnimator : MonoBehaviour
 
     [Header("Animation properties")]
     [SerializeField] private float velocityToRun;
+    [SerializeField] [Range(0.0f, 1.0f)] private float walkingVelocityPercentage = 0.1f;
+    [SerializeField] [Range(0.0f, 1.0f)] private float runningVelocityPercentage = 0.1f;
 
     private Player _player;
 
@@ -22,9 +24,12 @@ public class PlayerAnimator : MonoBehaviour
         if(_player.velocity < velocityToRun)
         {
             animator.SetBool("isWalking", true);
+            animator.SetBool("isRunning", false);
+            animator.SetFloat("walkingSpeed", Mathf.Clamp(_player.GetHorizontalVelocityMagnitude() * walkingVelocityPercentage, 1, 2));
         } else
         {
             animator.SetBool("isRunning", true);
+            animator.SetFloat("runningSpeed", Mathf.Clamp(_player.GetHorizontalVelocityMagnitude() * runningVelocityPercentage, 1, 2));
         }
 
     }

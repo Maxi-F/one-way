@@ -16,6 +16,7 @@ namespace PlayerScripts
         [Header("Jump Settings")]
         [SerializeField] private float jumpingMiliseconds = 100f;
         [SerializeField] [Range(0.01f, 20f)] private float movingInAirAcceleration;
+        [SerializeField] [Range(1.1f, 10f)] private float powerJumpImpulse = 2.0f;
 
         [Header("Player scripts")]
         [SerializeField] private WalkingBehaviour walkingBehaviour;
@@ -49,13 +50,11 @@ namespace PlayerScripts
             {
                 if (player.UseAccumulativeForceOnJump)
                 {
-                    Vector3 upForce = Mathf.Clamp(
-                        force + player.GetAccumulatedForceAndFlush(),
-                        force,
-                        player.GetMaxAccumulatedForce() + force
-                    ) * Vector3.up;
+                    Vector3 upForce = (force + powerJumpImpulse) * Vector3.up;
 
-                    Vector3 slowDownForce = -_rigidBody.velocity * 0.8f;
+                    Vector3 slowDownForce = -_rigidBody.velocity;
+                    slowDownForce.y = 0;
+
                     _rigidBody.AddForce(upForce + slowDownForce, ForceMode.Impulse);
                 }
                 else
@@ -99,7 +98,6 @@ namespace PlayerScripts
         {
             if (IsOnFloor() && _isJumping)
             {
-                player.AccumulateForce(-_rigidBody.velocity.y);
                 player.SetBehaviour(walkingBehaviour);
                 player.TouchesGround();
                 OnLand.Invoke();
