@@ -15,6 +15,8 @@ namespace PlayerScripts
         [SerializeField] private UnityEvent OnLand;
         [SerializeField] private UnityEvent OnFalling;
         [SerializeField] private UnityEvent OnEdgePositionSetted;
+        [SerializeField] private UnityEvent OnEdgeJump;
+        [SerializeField] private UnityEvent OnJump;
         
         private Player _player;
         private float _timePassedWithoutTouchingGround = 0f;
@@ -32,7 +34,7 @@ namespace PlayerScripts
 
         public void Update()
         {
-            if (!IsOnFloor() && !_edgeGrabController.IsOnEdge())
+            if (!IsOnFloor() && !_edgeGrabController.IsEdgeGrabbing)
             {
                 _timePassedWithoutTouchingGround += Time.deltaTime;
                 if (_timePassedWithoutTouchingGround > coyoteTime && !_jumpController.IsJumping)
@@ -80,6 +82,15 @@ namespace PlayerScripts
         {
             if(CanJump())
             {
+                if (_edgeGrabController.IsEdgeGrabbing)
+                {
+                    OnEdgeJump?.Invoke();
+                }
+                else
+                {
+                    OnJump?.Invoke();
+                }
+                
                 _player.Jump();
             }
         }
@@ -91,7 +102,7 @@ namespace PlayerScripts
 
         public bool CanJump()
         {
-            return _jumpController.CanJump() || IsOnCoyoteTimeFloor();
+            return _jumpController.CanJump() || IsOnCoyoteTimeFloor() || _edgeGrabController.IsEdgeGrabbing;
         }
 
         public void SetPowerJump(bool value)

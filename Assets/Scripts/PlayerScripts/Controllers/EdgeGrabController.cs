@@ -14,9 +14,7 @@ public class EdgeGrabController : MonoBehaviour
     [SerializeField] private float powerJumpImpulse;
     [SerializeField] private Vector2 edgeOffset = new Vector2(0.1f, 1);
     [SerializeField] private float edgeJumpImpulse = 5.0f;
-    
-    [Header("Events")]
-    [SerializeField] private UnityEvent OnEdgeJump;
+    [SerializeField] private float secondsUntilEdgeGrabAvailable = 2.0f;
     
     private Vector3 _edgeLineCastStart;
     private Vector3 _edgeLineCastEnd;
@@ -24,12 +22,13 @@ public class EdgeGrabController : MonoBehaviour
     private RaycastHit _edgeDownHit;
 
     private Rigidbody _rigidbody;
-    
+
+    private float _timeUntilEdgeGrabAvailable = 0.0f;
     private Vector3 _edgePosition;
     private bool _shouldJump = false;
-    private EdgeJumpBehaviour _edgeJumpBehaviour;
     private Vector3 _edgeNormal;
     public bool ForceJump { get; set; }
+    public bool IsEdgeGrabbing { get; set; }
 
     void Start()
     {
@@ -38,6 +37,8 @@ public class EdgeGrabController : MonoBehaviour
     
     public bool IsOnEdge()
     {
+        if (!IsEdgeGrabAvailable()) return false;
+        
         _edgeLineCastStart = transform.position + transform.up * edgeGrabUpLineStartDistance + transform.forward;
         _edgeLineCastEnd = transform.position + transform.up * edgeGrabUpLineEndDistance + transform.forward;
 
@@ -61,11 +62,8 @@ public class EdgeGrabController : MonoBehaviour
     
     public void StayInPlace()
     {
-        if (!_shouldJump)
-        {
-            transform.position = _edgePosition;
-            transform.forward = -_edgeNormal;
-        }
+        transform.position = _edgePosition;
+        transform.forward = -_edgeNormal;
     }
     
     public void EdgeGrab()
@@ -73,8 +71,6 @@ public class EdgeGrabController : MonoBehaviour
         if (_shouldJump)
         {
             _rigidbody.AddForce(Vector3.up * (ForceJump ? powerJumpImpulse : edgeJumpImpulse), ForceMode.Impulse);
-            _shouldJump = false;
-            OnEdgeJump.Invoke();
         }
         else
         {
@@ -82,7 +78,7 @@ public class EdgeGrabController : MonoBehaviour
         }
     }
     
-    public void SetEdgePosition(Transform aTransform)
+    public void SetEdgePosition()
     {
         _rigidbody.AddForce(-_rigidbody.velocity, ForceMode.Impulse);
 
@@ -92,5 +88,16 @@ public class EdgeGrabController : MonoBehaviour
         
         _edgePosition = hangPosition;
         _edgeNormal = _edgeForwardHit.normal;
+    }
+
+    private bool IsEdgeGrabAvailable()
+    {
+        return _timeUntilEdgeGrabAvailable < Time.time;
+    } 
+    
+    public void SetEdgeGrabTimer()
+    {
+        _timeUntilEdgeGrabAvailable = Time.time + secondsUntilEdgeGrabAvailable;
+        _rigidbody.useGravity = true;
     }
 }

@@ -9,10 +9,13 @@ namespace PlayerScripts
         private JumpController _jumpController;
         private MoveController _moveController;
 
-        public void Enter(IBehaviour previousBehaviour)
+        public void Start()
         {
             _jumpController ??= GetComponent<JumpController>();
             _moveController ??= GetComponent<MoveController>();
+        }
+        public void Enter(IBehaviour previousBehaviour)
+        {
         }
 
         public void OnBehaviourFixedUpdate()

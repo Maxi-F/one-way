@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class EdgeGrabBehaviour : MonoBehaviour, IBehaviour
 {
-    private EdgeJumpController _edgeJumpController;
+    private JumpController _jumpController;
     private EdgeGrabController _edgeGrabController;
     
     public void Start()
     {
         _edgeGrabController ??= GetComponent<EdgeGrabController>();
-        _edgeJumpController ??= GetComponent<EdgeJumpController>();
+        _jumpController ??= GetComponent<JumpController>();
     }
     
     public MovementBehaviour GetName()
@@ -21,7 +21,8 @@ public class EdgeGrabBehaviour : MonoBehaviour, IBehaviour
 
     public void Enter(IBehaviour previousBehaviour)
     {
-        _edgeGrabController.SetEdgePosition(transform);
+        _edgeGrabController.SetEdgePosition();
+        _edgeGrabController.IsEdgeGrabbing = true;
     }
 
     public void OnBehaviourUpdate()
@@ -36,11 +37,14 @@ public class EdgeGrabBehaviour : MonoBehaviour, IBehaviour
 
     public void Exit(IBehaviour nextBehaviour)
     {
+        _edgeGrabController.SetEdgeGrabTimer();
+        _edgeGrabController.IsEdgeGrabbing = false;
+        _jumpController.SetShouldJumpValues();
     }
 
     public MovementBehaviour[] GetNextBehaviours()
     {
-        MovementBehaviour[] nextBehaviours = { MovementBehaviour.EdgeJump };
+        MovementBehaviour[] nextBehaviours = { MovementBehaviour.Jump };
 
         return nextBehaviours;
     }

@@ -10,7 +10,7 @@ namespace PlayerScripts
         Move = 0,
         Jump,
         EdgeGrab,
-        EdgeJump
+        Fly
     }
 
     public class MovementFSM
