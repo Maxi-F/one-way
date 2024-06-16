@@ -27,7 +27,7 @@ namespace PlayerScripts
         private bool _shouldBrake;
         private bool _justTouchedGround = false;
 
-        public Vector3 direction
+        public Vector3 Direction
         {
             get { return _desiredDirection; }
         }
@@ -85,9 +85,7 @@ namespace PlayerScripts
             Vector3 currentHorizontalVelocity = _rigidbody.velocity;
             currentHorizontalVelocity.y = 0;
             float currentSpeed = currentHorizontalVelocity.magnitude;
-
-            float angleBetweenVelocityAndDirection = Vector3.Angle(currentHorizontalVelocity, _desiredDirection);
-
+            
             Vector3 desiredForceToApply = _desiredDirection.normalized * acceleration;
 
             Vector3 brakeForceVector = -currentHorizontalVelocity * brakeMultiplier;

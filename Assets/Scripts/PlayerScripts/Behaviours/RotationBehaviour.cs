@@ -28,8 +28,8 @@ namespace PlayerScripts
 
         public void LookInDirection()
         {
-            if(_moveController.direction == Vector3.zero) return;
-            _desiredLookingDirection = _moveController.direction;
+            if(_moveController.Direction == Vector3.zero) return;
+            _desiredLookingDirection = _moveController.Direction;
         }
     }
 }

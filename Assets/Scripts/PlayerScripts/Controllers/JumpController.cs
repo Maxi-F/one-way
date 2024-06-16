@@ -51,10 +51,6 @@ namespace PlayerScripts
             }
         }
 
-        public void OnUpdate()
-        {
-        }
-
         public void SetShouldJumpValues()
         {
             _shouldJump = true;

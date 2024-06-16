@@ -14,42 +14,44 @@ namespace PlayerScripts
         [Header("Events")]
         [SerializeField] private UnityEvent OnLand;
         [SerializeField] private UnityEvent OnFalling;
-
+        [SerializeField] private UnityEvent OnEdgePositionSetted;
+        
         private Player _player;
         private float _timePassedWithoutTouchingGround = 0f;
         private MoveController _moveController;
         private JumpController _jumpController;
-
+        private EdgeGrabController _edgeGrabController;
 
         private void Start()
         {
             _player ??= GetComponent<Player>();
             _moveController ??= GetComponent<MoveController>();
             _jumpController ??= GetComponent<JumpController>();
+            _edgeGrabController ??= GetComponent<EdgeGrabController>();
         }
 
         public void Update()
         {
-            if (!IsOnFloor())
+            if (!IsOnFloor() && !_edgeGrabController.IsOnEdge())
             {
                 _timePassedWithoutTouchingGround += Time.deltaTime;
-                Debug.Log(_timePassedWithoutTouchingGround);
                 if (_timePassedWithoutTouchingGround > coyoteTime && !_jumpController.IsJumping)
                 {
                     _player.Jump();
                     OnFalling.Invoke();
                 }
-            } else if (IsOnFloor() && _jumpController.IsJumping)
+            } 
+            
+            if (IsOnFloor() && _jumpController.IsJumping)
             {
                 _player.TouchesGround();
                 OnLand.Invoke();
-            } else if (_player.IsOnEdge())
+            } 
+            
+            if (_edgeGrabController.IsOnEdge())
             {
-                // TODO transition to edge grab state
-                /*_player.SetBehaviour(_edgeGrabBehaviour);
-                _edgeGrabBehaviour.SetEdgePosition(transform, player.GetForwardEdgeHit(), player.GetDownEdgeHit());
-                IsJumping = false;
-                */
+                _player.EdgeGrab();
+                OnEdgePositionSetted.Invoke();
             }
         }
 
@@ -95,6 +97,7 @@ namespace PlayerScripts
         public void SetPowerJump(bool value)
         {
             _jumpController.UseAccumulativeForceOnJump = value;
+            _edgeGrabController.ForceJump = value;
         }
 
         public void Move(Vector3 direction)

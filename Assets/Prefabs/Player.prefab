@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4404187109162425102}
   - component: {fileID: 1043284311323206191}
   - component: {fileID: 8357420409828004751}
+  - component: {fileID: 4584001700024916501}
   - component: {fileID: 1418169733700417691}
   - component: {fileID: 5157922495966074360}
   - component: {fileID: 5047444755805319353}
@@ -21,10 +22,11 @@ GameObject:
   - component: {fileID: 6314569198464105875}
   - component: {fileID: 8523795145773584938}
   - component: {fileID: 982660316640988711}
-  - component: {fileID: 4584001700024916501}
   - component: {fileID: 724443307700666401}
   - component: {fileID: 8764804099893427093}
   - component: {fileID: 3784442256423975583}
+  - component: {fileID: 1552628158186361008}
+  - component: {fileID: 5638360078217209885}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -150,6 +152,27 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.03, z: 0}
+--- !u!135 &4584001700024916501
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539672749144961965}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.15
+  m_Center: {x: 0, y: -0.85, z: 0}
 --- !u!114 &1418169733700417691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,40 +185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1c5e9a47ff3b941bd968bb783bf151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  edgeJumpImpulse: 8
-  powerJumpImpulse: 15
-  edgeOffset: {x: 0.6, y: 1.3}
-  feetPivot: {fileID: 8381841678615415956}
-  OnEdgePositionSetted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8523795145773584938}
-        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
-        m_MethodName: HandleHang
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnEdgeJump:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8523795145773584938}
-        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
-        m_MethodName: HandleLetGoHang
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &5157922495966074360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,9 +296,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capsuleCollider: {fileID: 8357420409828004751}
-  floor:
-    serializedVersion: 2
-    m_Bits: 8
   walkBehaviour: {fileID: 5157922495966074360}
   maxAccumulatedForce: 20
   onWinboxCollided:
@@ -327,9 +313,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  edgeGrabUpLineStartDistance: 1.5
-  edgeGrabUpLineEndDistance: 0.5
-  edgeGrabYdistance: 0.1
 --- !u!114 &8523795145773584938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,27 +342,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 10
---- !u!135 &4584001700024916501
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1539672749144961965}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.15
-  m_Center: {x: 0, y: -0.85, z: 0}
 --- !u!114 &724443307700666401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +377,21 @@ MonoBehaviour:
       - m_Target: {fileID: 8523795145773584938}
         m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
         m_MethodName: HandleFall
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEdgePositionSetted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleHang
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -492,6 +469,54 @@ MonoBehaviour:
   touchingGroundImpulse: 2
   movingInAirAcceleration: 0.5
   _rigidbody: {fileID: 1043284311323206191}
+--- !u!114 &1552628158186361008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539672749144961965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bab6d44932f3e647985aaa50a268483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floor:
+    serializedVersion: 2
+    m_Bits: 8
+  edgeGrabUpLineStartDistance: 1.5
+  edgeGrabUpLineEndDistance: 0.5
+  edgeGrabYdistance: 0.1
+  powerJumpImpulse: 0
+  edgeOffset: {x: 0.1, y: 1}
+  edgeJumpImpulse: 5
+  OnEdgeJump:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleLetGoHang
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5638360078217209885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539672749144961965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f3a840d36314098ae775afe48adc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4157538118521161800
 GameObject:
   m_ObjectHideFlags: 0
