@@ -87,7 +87,7 @@ public class EdgeGrabController : MonoBehaviour
         hangPosition += offset;
         
         _edgePosition = hangPosition;
-        _edgeNormal = _edgeForwardHit.normal;
+        _edgeNormal = new Vector3(_edgeForwardHit.normal.x, 0, _edgeForwardHit.normal.z);
     }
 
     private bool IsEdgeGrabAvailable()

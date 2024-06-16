@@ -473,7 +473,7 @@ MonoBehaviour:
   edgeGrabUpLineEndDistance: 0.5
   edgeGrabYdistance: 0.1
   powerJumpImpulse: 0
-  edgeOffset: {x: 0.1, y: 1}
+  edgeOffset: {x: 0.7, y: 1}
   edgeJumpImpulse: 5
   secondsUntilEdgeGrabAvailable: 2
 --- !u!114 &8996882851596652759
