@@ -54,10 +54,6 @@ namespace PlayerScripts
             return capsuleCollider.radius;
         }
 
-        public void SetBehaviour(IBehaviour newBehaviour)
-        {
-        }
-
         public void TouchesGround()
         {
             _movementFSM.changeStateTo(MovementBehaviour.Move);
@@ -115,6 +111,11 @@ namespace PlayerScripts
             {
                 _movementFSM.changeStateTo(MovementBehaviour.EdgeGrab);
             }
+        }
+
+        public void Fly()
+        {
+            _movementFSM.changeStateTo(MovementBehaviour.Fly);
         }
     }
 }

@@ -23,17 +23,23 @@ namespace PlayerScripts
         private MoveController _moveController;
         private JumpController _jumpController;
         private EdgeGrabController _edgeGrabController;
+        private FlyController _flyController;
 
+        private bool _cheatsEnabled = false;
+        
         private void Start()
         {
             _player ??= GetComponent<Player>();
             _moveController ??= GetComponent<MoveController>();
             _jumpController ??= GetComponent<JumpController>();
             _edgeGrabController ??= GetComponent<EdgeGrabController>();
+            _flyController ??= GetComponent<FlyController>();
         }
 
         public void Update()
         {
+            if (_cheatsEnabled) return;
+            
             if (!IsOnFloor() && !_edgeGrabController.IsEdgeGrabbing)
             {
                 _timePassedWithoutTouchingGround += Time.deltaTime;
@@ -80,6 +86,12 @@ namespace PlayerScripts
 
         public void Jump()
         {
+            if (_cheatsEnabled)
+            {
+                _flyController.GoUp();
+                return;
+            }
+            
             if(CanJump())
             {
                 if (_edgeGrabController.IsEdgeGrabbing)
@@ -109,6 +121,7 @@ namespace PlayerScripts
         {
             _jumpController.UseAccumulativeForceOnJump = value;
             _edgeGrabController.ForceJump = value;
+            _flyController.GoDown = value;
         }
 
         public void Move(Vector3 direction)
@@ -119,6 +132,11 @@ namespace PlayerScripts
         public void LookChange(Vector2 eulers)
         {
             _moveController.LookChange();
+        }
+
+        public void OnCheatsToggle()
+        {
+            _cheatsEnabled = !_cheatsEnabled;
         }
     }
 }

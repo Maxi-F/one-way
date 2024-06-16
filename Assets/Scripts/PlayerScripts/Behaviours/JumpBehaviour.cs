@@ -40,7 +40,7 @@ namespace PlayerScripts
 
         public MovementBehaviour[] GetNextBehaviours()
         {
-            MovementBehaviour[] nextBehaviours = { MovementBehaviour.Move, MovementBehaviour.EdgeGrab };
+            MovementBehaviour[] nextBehaviours = { MovementBehaviour.Move, MovementBehaviour.EdgeGrab, MovementBehaviour.Fly };
 
             return nextBehaviours;
         }

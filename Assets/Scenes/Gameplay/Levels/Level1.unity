@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7688047, g: 0.46603203, b: 0.3883904, a: 1}
+  m_IndirectSpecularColor: {r: 0.76880455, g: 0.46603215, b: 0.38838986, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -508,11 +508,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9e0e6d416aaf24b84ed94b4faf13a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 541872690}
   cheatManager: {fileID: 1359004488}
   levelManager: {fileID: 775887539}
   cameraBehaviour: {fileID: 963194229}
   playerController: {fileID: 733252833}
+  OnJump:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2665,6 +2667,34 @@ PrefabInstance:
       propertyPath: _walkingBehaviour
       value: 
       objectReference: {fileID: 541872696}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: OnFlyToggled.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: OnFlyToggled.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: OnFlyToggled.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 733252833}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: OnFlyToggled.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: OnFlyToggled.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnCheatsToggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: OnFlyToggled.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerScripts.PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
+      propertyPath: OnFlyToggled.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4426877958726417608, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.3263566

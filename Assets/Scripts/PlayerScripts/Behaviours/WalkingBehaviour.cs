@@ -52,7 +52,7 @@ namespace PlayerScripts
 
         public MovementBehaviour[] GetNextBehaviours()
         {
-            MovementBehaviour[] nextBehaviours = { MovementBehaviour.Jump };
+            MovementBehaviour[] nextBehaviours = { MovementBehaviour.Jump, MovementBehaviour.Fly };
 
             return nextBehaviours;
         }

@@ -4,57 +4,41 @@ using PlayerScripts;
 using UnityEngine;
 
 // TODO fix and attach ibehaviour
-public class FlyBehaviour : MonoBehaviour
+public class FlyBehaviour : MonoBehaviour, IBehaviour
 {
-    [SerializeField] private float velocity;
-    private Vector3 _direction = new Vector3(0, 0, 0);
-    private bool _isGoingUp = false;
-    private Player _player;
-    
-    public bool GoDown { get; set; }
-    void Start()
+    private FlyController _flyController;
+
+    public void Start()
     {
-        _player ??= GetComponent<Player>();
+        _flyController ??= GetComponent<FlyController>();
     }
     
-    public string GetName()
+    public MovementBehaviour GetName()
     {
-        return "Fly Behaviour";
+        return MovementBehaviour.Fly;
     }
 
-    public void Move(Vector3 direction)
+    public void Enter(IBehaviour previousBehaviour)
     {
-        Vector3 _obtainedDirection = direction;
-        Transform localTransform = transform;
-        var mainCamera = Camera.main;
-        if (mainCamera != null)
-            localTransform = mainCamera.transform;
-        _direction = localTransform.TransformDirection(_obtainedDirection);
-        _direction.y = 0;
-    }
-
-    public void Jump()
-    {
-        _isGoingUp = !_isGoingUp;
-    }
-
-    public void LookChange()
-    {
-    }
-
-    public void TouchesGround()
-    {
+        _flyController.StartFly();    
     }
 
     public void OnBehaviourUpdate()
     {
-        Vector3 upVector = _isGoingUp ? Vector3.up : Vector3.zero;
-        Vector3 downVector = GoDown ? Vector3.down : Vector3.zero;
-        
-        transform.position += (_direction + upVector + downVector) * velocity * Time.deltaTime;
     }
 
     public void OnBehaviourFixedUpdate()
     {
+        _flyController.Fly();
+    }
+
+    public void Exit(IBehaviour nextBehaviour)
+    {
+        _flyController.EndFly();
+    }
+
+    public MovementBehaviour[] GetNextBehaviours()
+    {
+        return new[] { MovementBehaviour.Move };
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CheatManager : MonoBehaviour
 {
@@ -12,21 +13,23 @@ public class CheatManager : MonoBehaviour
     [SerializeField] private WalkingBehaviour _walkingBehaviour;
     [SerializeField] private bool isLastLevel;
     
+    [SerializeField] private UnityEvent OnFlyToggled;
+    
     public void ToggleFly()
     {
         if (player.isFlying)
         {
-            player.SetBehaviour(_walkingBehaviour);
-            player.SetGravity(true);
+            player.TouchesGround();
             player.isFlying = false;
         }
         else
         {
-            // TODO fix
-            //player.SetBehaviour(_flyBehaviour);
-            player.SetGravity(false);
+            
+            player.Fly();
             player.isFlying = true;
         }
+        
+        OnFlyToggled?.Invoke();
     }
 
     public void PassLevel()
