@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PlayerScripts;
 using UnityEngine;
 
 public class GroundController : MonoBehaviour
@@ -18,6 +19,7 @@ public class GroundController : MonoBehaviour
     [SerializeField] private float springDamper = 2.0f;
     
     private Rigidbody _rigidbody;
+    private PlayerController _playerController;
     
     private bool _isOnGround;
     private RaycastHit _hit;
@@ -25,6 +27,7 @@ public class GroundController : MonoBehaviour
     private void Start()
     {
         _rigidbody ??= GetComponent<Rigidbody>();
+        _playerController ??= GetComponent<PlayerController>();
     }
 
     private void FixedUpdate()
@@ -51,7 +54,7 @@ public class GroundController : MonoBehaviour
             out _hit, 
             groundedRaycastDistance, 
             floor
-            );
+            ) && _playerController.JumpingBreakTime();
     }
 
     public bool IsOnGround()

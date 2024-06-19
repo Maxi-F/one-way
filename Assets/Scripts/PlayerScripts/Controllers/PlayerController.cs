@@ -8,7 +8,7 @@ namespace PlayerScripts
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private float jumpingMiliseconds = 100f;
+        [SerializeField] private float jumpingMiliseconds = 1000f;
         [SerializeField] private float coyoteTime = 0.5f;
 
         [Header("Events")]
@@ -69,7 +69,7 @@ namespace PlayerScripts
                 _timePassedWithoutTouchingGround = 0f;
         }
 
-        private bool JumpingBreakTime()
+        public bool JumpingBreakTime()
         {
             return _jumpController.TimeJumped + jumpingMiliseconds < (Time.time * 1000f);
         }

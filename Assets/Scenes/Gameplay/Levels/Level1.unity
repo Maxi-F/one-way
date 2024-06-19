@@ -2446,10 +2446,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1552628158186361008, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-      propertyPath: edgeOffset.y
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
       propertyPath: onWinboxCollided.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -15,14 +15,11 @@ namespace PlayerScripts
 
         public void Enter(IBehaviour previousBehaviour)
         {
-            if(previousBehaviour.GetName() == MovementBehaviour.Jump)
-                moveController.TouchesGround();
         }
 
         public void OnBehaviourUpdate()
         {
             playerController.ResetCoyoteTime();
-            moveController.CheckVelocity();
             moveController.Events();
         }
 
@@ -33,7 +30,7 @@ namespace PlayerScripts
         
         public void OnBehaviourFixedUpdate()
         {
-            moveController.MoveInGround();
+            moveController.MovePlayer();
         }
 
         public void Exit(IBehaviour nextBehaviour)

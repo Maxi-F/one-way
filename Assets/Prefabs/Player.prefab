@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203388413bd04ea4bb62f04d739b377b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpingMiliseconds: 100
+  jumpingMiliseconds: 500
   coyoteTime: 0.5
   OnLand:
     m_PersistentCalls:
@@ -443,13 +443,94 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  acceleration: 15
+  acceleration: 200
+  maxSpeed: 12
+  maxAcceleration: 150
+  accelerationFactorFromDot:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.98882174
+      value: 2.50363
+      inSlope: 0.07782084
+      outSlope: 0.07782084
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.6360216
+    - serializedVersion: 3
+      time: 0.00968352
+      value: 1.5840404
+      inSlope: -1.5337667
+      outSlope: -1.5337667
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.24919412
+      value: 0.9999315
+      inSlope: 0.00028669756
+      outSlope: 0.00028669756
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.038008723
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.0030486821
+      outSlope: 0.0030486821
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.22082567
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxAccelerationFactorFromDot:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1.016426
+      value: 2.4942708
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.0574193
+      value: 1.6601095
+      inSlope: -1.1292804
+      outSlope: -1.1292804
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2970686
+      value: 1.0109671
+      inSlope: -0.022061003
+      outSlope: -0.022061003
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0134284
+      value: 1.0056945
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   brakeMultiplier: 0.6
-  breakAngle: 90
-  speed: 12
-  touchingGroundImpulse: 2
-  movingInAirAcceleration: 2.18
-  _rigidbody: {fileID: 1043284311323206191}
 --- !u!114 &1552628158186361008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,10 +582,10 @@ MonoBehaviour:
   floor:
     serializedVersion: 2
     m_Bits: 8
-  groundedRaycastDistance: 1
-  groundedRideDistance: 0.7
+  groundedRaycastDistance: 2
+  groundedRideDistance: 1
   springForce: 15
-  springDamper: 4
+  springDamper: 7
 --- !u!1 &4157538118521161800
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace PlayerScripts
 {
@@ -12,21 +13,21 @@ namespace PlayerScripts
         [SerializeField] private UnityEvent OnMove;
         [SerializeField] private UnityEvent OnBreak;
 
-        [SerializeField] private float acceleration = 15;
+        [Header("Locomotion")]
+        [SerializeField] private float acceleration = 100;
+        [SerializeField] private float maxSpeed = 10;
+        [SerializeField] private float maxAcceleration = 50;
+        [SerializeField] private AnimationCurve accelerationFactorFromDot;
+        [SerializeField] private AnimationCurve maxAccelerationFactorFromDot;
         [SerializeField] private float brakeMultiplier = .60f;
-        [SerializeField] private float breakAngle = 90f;
-        [SerializeField] private float speed = 12;
-        [SerializeField] [Range(1.0f, 5.0f)] private float touchingGroundImpulse = 2.0f;
-        [SerializeField] [Range(0.01f, 20f)] private float movingInAirAcceleration;
 
-        [SerializeField] private Rigidbody _rigidbody;
+        private Rigidbody _rigidbody;
         private Player _player;
 
         private Vector3 _obtainedDirection;
         private Vector3 _desiredDirection;
+        private Vector3 _goalVelocity;
         private bool _shouldBrake;
-        private bool _justTouchedGround = false;
-
         public Vector3 Direction
         {
             get { return _desiredDirection; }
@@ -44,8 +45,8 @@ namespace PlayerScripts
         }
 
         public void Events()
-        {            
-            if (_rigidbody.velocity.magnitude > 0.0001f)
+        {
+            if (GetHorizontalVelocity().magnitude > 0.0001f)
             {
                 OnMove.Invoke();
             }
@@ -55,17 +56,9 @@ namespace PlayerScripts
             }
         }
 
-        public void TouchesGround()
-        {
-            _justTouchedGround = true;
-        }
-
         public void Move(Vector3 direction)
         {
-            if (direction.magnitude < 0.0001f)
-            {
-                _shouldBrake = true;
-            }
+            _shouldBrake = direction.magnitude < 0.0001f;
             _obtainedDirection = direction;
             MoveThowardsCamera();
         }
@@ -80,61 +73,61 @@ namespace PlayerScripts
             _desiredDirection.y = 0;
         }
 
-        public void MoveInGround()
+        private Vector3 GetForceToApply()
         {
-            Vector3 currentHorizontalVelocity = _rigidbody.velocity;
-            currentHorizontalVelocity.y = 0;
-            float currentSpeed = currentHorizontalVelocity.magnitude;
-            
-            Vector3 desiredForceToApply = _desiredDirection.normalized * acceleration;
+            Vector3 unitVelocity = GetHorizontalVelocity().normalized;
 
-            Vector3 brakeForceVector = -currentHorizontalVelocity * brakeMultiplier;
+            float velocityDot = Vector3.Dot(_desiredDirection.normalized, unitVelocity);
             
-            _rigidbody.AddForce(desiredForceToApply, ForceMode.Force);
+            float accelerationToUse = acceleration * accelerationFactorFromDot.Evaluate(velocityDot);
+
+            Vector3 goalVelocity = _desiredDirection.normalized * maxSpeed;
+
+            _goalVelocity = Vector3.MoveTowards(
+                _goalVelocity, 
+                goalVelocity, 
+                accelerationToUse * Time.fixedTime
+            );
+
+            Vector3 forceToApply = _goalVelocity - GetHorizontalVelocity();
+
+            float maxAccelerationToUse = maxAcceleration * maxAccelerationFactorFromDot.Evaluate(velocityDot);
+
+            return Vector3.ClampMagnitude(forceToApply, maxAccelerationToUse);
+        }
+
+        private Vector3 GetHorizontalVelocity()
+        {
+            return new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+        }
+        
+        public void MovePlayer()
+        {
+            Vector3 forceToApply = GetForceToApply();
+            
+            Vector3 brakeForceVector = -GetHorizontalVelocity() * brakeMultiplier;
+            
+            _rigidbody.AddForce(forceToApply, ForceMode.Force);
 
             if (_shouldBrake)
             {
                 _rigidbody.AddForce(brakeForceVector, ForceMode.Impulse);
-                _shouldBrake = false;
+                if(GetHorizontalVelocity().magnitude <= 0.0001f)
+                    _shouldBrake = false;
             }
-            if (_justTouchedGround)
-            {
-                _rigidbody.AddForce(_desiredDirection.normalized * touchingGroundImpulse, ForceMode.Impulse);
-                _justTouchedGround = false;
-            }
-        }
-
-        public void MoveInAir()
-        {
-            Vector3 lastHorizontalVelocity = _rigidbody.velocity;
-            lastHorizontalVelocity.y = 0;
-
-            _rigidbody.AddForce(_desiredDirection.normalized * movingInAirAcceleration, ForceMode.Force);
-
-            Vector3 newHorizontalVelocity = _rigidbody.velocity;
-            newHorizontalVelocity.y = 0;
-
-            _rigidbody.velocity = newHorizontalVelocity.normalized * lastHorizontalVelocity.magnitude + new Vector3(0, _rigidbody.velocity.y, 0);
         }
 
         public void OnDrawGizmos()
         {
-            Gizmos.DrawLine(
-                transform.position, 
-                transform.position + 
-                    _rigidbody.velocity
-                );
-        }
-
-        public void CheckVelocity()
-        {
-            Vector3 flatSpeed = _player.GetHorizontalVelocity();
-            
-            Vector3 limitedSpeed = flatSpeed.magnitude < speed ? flatSpeed : flatSpeed.normalized * speed;
-
-            Vector3 directedSpeed = _desiredDirection.normalized * limitedSpeed.magnitude;
-            
-            _rigidbody.velocity = new Vector3(directedSpeed.x, _rigidbody.velocity.y, directedSpeed.z);
+            if (Application.isPlaying)
+            {
+                Gizmos.DrawLine(
+                    transform.position, 
+                    transform.position + 
+                        _rigidbody.velocity
+                    );
+                
+            }
         }
     }
 }
