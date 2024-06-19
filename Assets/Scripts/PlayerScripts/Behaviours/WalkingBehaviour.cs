@@ -22,6 +22,7 @@ namespace PlayerScripts
         public void OnBehaviourUpdate()
         {
             playerController.ResetCoyoteTime();
+            moveController.CheckVelocity();
             moveController.Events();
         }
 

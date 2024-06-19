@@ -62,7 +62,7 @@ namespace PlayerScripts
 
         public void Move(Vector3 direction)
         {
-            if ((direction.magnitude < 0.0001f || Vector3.Angle(direction, _player.GetHorizontalVelocity()) > breakAngle))
+            if (direction.magnitude < 0.0001f)
             {
                 _shouldBrake = true;
             }
@@ -89,11 +89,8 @@ namespace PlayerScripts
             Vector3 desiredForceToApply = _desiredDirection.normalized * acceleration;
 
             Vector3 brakeForceVector = -currentHorizontalVelocity * brakeMultiplier;
-
-            if (currentSpeed < speed)
-            {
-                _rigidbody.AddForce(desiredForceToApply, ForceMode.Force);
-            }
+            
+            _rigidbody.AddForce(desiredForceToApply, ForceMode.Force);
 
             if (_shouldBrake)
             {
@@ -127,6 +124,17 @@ namespace PlayerScripts
                 transform.position + 
                     _rigidbody.velocity
                 );
+        }
+
+        public void CheckVelocity()
+        {
+            Vector3 flatSpeed = _player.GetHorizontalVelocity();
+            
+            Vector3 limitedSpeed = flatSpeed.magnitude < speed ? flatSpeed : flatSpeed.normalized * speed;
+
+            Vector3 directedSpeed = _desiredDirection.normalized * limitedSpeed.magnitude;
+            
+            _rigidbody.velocity = new Vector3(directedSpeed.x, _rigidbody.velocity.y, directedSpeed.z);
         }
     }
 }
