@@ -32,7 +32,7 @@ public class GroundController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isOnGround)
+        if (_isOnGround && _rigidbody.useGravity)
         {
             Vector3 velocity = _rigidbody.velocity;
             Vector3 downRayDirection = feetPivot.transform.TransformDirection(Vector3.down);

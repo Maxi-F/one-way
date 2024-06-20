@@ -16,9 +16,7 @@ namespace PlayerScripts
         private float _timeJumped = 0.0f;
 
         public float TimeJumped { get { return _timeJumped; } }
-
-        public bool UseAccumulativeForceOnJump { get; set; }
-
+        
         public bool IsJumping { get; set; }
 
         public void Start()
@@ -31,19 +29,7 @@ namespace PlayerScripts
         {
             if (_shouldJump)
             {
-                if (UseAccumulativeForceOnJump)
-                {
-                    Vector3 upForce = (force + powerJumpImpulse) * Vector3.up;
-
-                    Vector3 slowDownForce = -_rigidBody.velocity;
-                    slowDownForce.y = 0;
-
-                    _rigidBody.AddForce(upForce + slowDownForce, ForceMode.Impulse);
-                }
-                else
-                {
-                    _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
-                }
+                _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
                 _shouldJump = false;
                 IsJumping = true;
             }

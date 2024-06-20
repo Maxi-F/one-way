@@ -1,102 +1,74 @@
 using PlayerScripts;
 using Manager;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Input
 {
     public class InputReader : MonoBehaviour
     {
-        [SerializeField] private CheatManager cheatManager;
-        [SerializeField] private LevelManager levelManager;
-        [SerializeField] private CameraBehaviour cameraBehaviour;
-        [SerializeField] private PlayerController playerController;
-
-        private void Awake()
-        {
-            if (cameraBehaviour == null)
-            {
-                Debug.LogError($"{name}: {nameof(cameraBehaviour)} is null!" +
-                               $"\nThis class is dependant on a {nameof(cameraBehaviour)} component!");
-            }
-
-            if (playerController == null)
-            {
-                Debug.LogError($"{name}: {nameof(playerController)} is null!" +
-                               $"\nThis class is dependant on a {nameof(playerController)} component!");
-            }
-
-            if (cheatManager == null)
-            {
-                Debug.LogError($"{name}: {nameof(cheatManager)} is null!" +
-                               $"\nThis class is dependant on a {nameof(cheatManager)} component!");
-            }
-
-            if(levelManager == null)
-            {
-                Debug.LogError($"{name}: {nameof(levelManager)} is null!" +
-                               $"\nThis class is dependant on a {nameof(levelManager)} component!");
-            }
-        }
+        [SerializeField] private UnityEvent<Vector3> OnMove;
+        [SerializeField] private UnityEvent<Vector2> OnLook;
+        [SerializeField] private UnityEvent OnJump;
+        [SerializeField] private UnityEvent<bool> OnGoDown;
+        [SerializeField] private UnityEvent OnFly;
+        [SerializeField] private UnityEvent OnPassLevel;
+        [SerializeField] private UnityEvent OnPause;
 
         public void HandleMoveInput(InputAction.CallbackContext context)
         {
             Vector2 moveInput = context.ReadValue<Vector2>();
             Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-            if (playerController != null)
-                playerController.Move(moveDirection);
+            OnMove?.Invoke(moveDirection);
         }
 
         public void HandleLookInput(InputAction.CallbackContext context)
         {
             Vector2 lookInput = context.ReadValue<Vector2>();
-            if(playerController != null)
-            {
-                cameraBehaviour.RotateCamera(lookInput);
-                playerController.LookChange(lookInput);
-            }
+            OnLook?.Invoke(lookInput);
         }
 
         public void HandleJumpInput(InputAction.CallbackContext context)
         {
-            if(playerController && context.started)
+            if(context.started)
             {
-                playerController.Jump();
+                OnJump?.Invoke();
             }
         }
 
-        public void HandlePowerJumpInput(InputAction.CallbackContext context)
+        public void HandleGoDownInput(InputAction.CallbackContext context)
         {
-            if (playerController && context.started)
+            if (context.started)
             {
-                playerController.SetPowerJump(true);
-            } else if (playerController && context.canceled)
+                OnGoDown?.Invoke(true);
+            } else if (context.canceled)
             {
-                playerController.SetPowerJump(false);
+                OnGoDown?.Invoke(false);
             }
         }
 
         public void HandleFly(InputAction.CallbackContext context)
         {
-            if (cheatManager && context.started)
+            if (context.started)
             {
-                cheatManager.ToggleFly();
+                OnFly?.Invoke();
             }
         }
 
         public void HandlePassLevel(InputAction.CallbackContext context)
         {
-            if (cheatManager && context.started)
+            if (context.started)
             {
-                cheatManager.PassLevel();
+                OnPassLevel?.Invoke();
             }
         }
 
         public void HandlePause(InputAction.CallbackContext context)
         {
-            if(levelManager && context.started)
+            if(context.started)
             {
-                levelManager.TogglePause();
+                OnPause?.Invoke();
             }
         }
     }

@@ -117,10 +117,8 @@ namespace PlayerScripts
             return _jumpController.CanJump() || IsOnCoyoteTimeFloor() || _edgeGrabController.IsEdgeGrabbing;
         }
 
-        public void SetPowerJump(bool value)
+        public void SetFly(bool value)
         {
-            _jumpController.UseAccumulativeForceOnJump = value;
-            _edgeGrabController.ForceJump = value;
             _flyController.GoDown = value;
         }
 

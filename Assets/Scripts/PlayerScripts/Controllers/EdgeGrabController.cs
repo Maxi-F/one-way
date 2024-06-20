@@ -27,7 +27,6 @@ public class EdgeGrabController : MonoBehaviour
     private Vector3 _edgePosition;
     private bool _shouldJump = false;
     private Vector3 _edgeNormal;
-    public bool ForceJump { get; set; }
     public bool IsEdgeGrabbing { get; set; }
 
     void Start()
@@ -70,7 +69,7 @@ public class EdgeGrabController : MonoBehaviour
     {
         if (_shouldJump)
         {
-            _rigidbody.AddForce(Vector3.up * (ForceJump ? powerJumpImpulse : edgeJumpImpulse), ForceMode.Impulse);
+            _rigidbody.AddForce(Vector3.up * edgeJumpImpulse, ForceMode.Impulse);
         }
         else
         {

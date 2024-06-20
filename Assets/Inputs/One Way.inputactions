@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PowerJump",
-                    "type": "Button",
-                    "id": "a2fa5ac6-8dca-47ea-9461-820f68676267",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "PassLevel",
                     "type": "Button",
                     "id": "10d96c71-fb5a-4a0e-846f-480b6eb05aad",
@@ -63,6 +54,15 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "f1407881-7774-4456-a79d-759f23e115e6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FlyDown",
+                    "type": "Button",
+                    "id": "47ec3e07-085b-4bd2-ba1f-792b4b04b20b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -259,28 +259,6 @@
                 },
                 {
                     "name": "",
-                    "id": "2fd3301b-c94c-4b7e-971f-1434a8f85506",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PowerJump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8ee01091-8fbd-4058-9ee8-7301316b2559",
-                    "path": "<DualShockGamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PowerJump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4eda3fc6-31fb-4336-bc3b-462950f5b539",
                     "path": "<Keyboard>/f9",
                     "interactions": "",
@@ -320,6 +298,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d87fd517-fc19-4caf-a814-fb58b918cb75",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FlyDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
