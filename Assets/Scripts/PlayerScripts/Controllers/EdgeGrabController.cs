@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,12 +17,16 @@ public class EdgeGrabController : MonoBehaviour
     [SerializeField] private float edgeJumpImpulse = 5.0f;
     [SerializeField] private float secondsUntilEdgeGrabAvailable = 2.0f;
     
+    [Header("Events")]
+    [SerializeField] private UnityEvent OnEdgePositionSetted;
+    
     private Vector3 _edgeLineCastStart;
     private Vector3 _edgeLineCastEnd;
     private RaycastHit _edgeForwardHit;
     private RaycastHit _edgeDownHit;
 
     private Rigidbody _rigidbody;
+    private Player _player;
 
     private float _timeUntilEdgeGrabAvailable = 0.0f;
     private Vector3 _edgePosition;
@@ -32,6 +37,7 @@ public class EdgeGrabController : MonoBehaviour
     void Start()
     {
         _rigidbody ??= GetComponent<Rigidbody>();
+        _player ??= GetComponent<Player>();
     }
     
     public bool IsOnEdge()
@@ -57,6 +63,15 @@ public class EdgeGrabController : MonoBehaviour
         Gizmos.color = Color.blue;
             
         Gizmos.DrawLine(_edgeLineCastStart, _edgeLineCastEnd);
+    }
+
+    public void CheckEdge()
+    {
+        if (IsOnEdge())
+        {
+            _player.EdgeGrab();
+            OnEdgePositionSetted.Invoke();
+        }
     }
     
     public void StayInPlace()

@@ -310,44 +310,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203388413bd04ea4bb62f04d739b377b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpingMiliseconds: 500
   coyoteTime: 0.5
-  OnLand:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8523795145773584938}
-        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
-        m_MethodName: HandleInFloor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnFalling:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8523795145773584938}
         m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
         m_MethodName: HandleFall
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnEdgePositionSetted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8523795145773584938}
-        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
-        m_MethodName: HandleHang
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -400,7 +369,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 10
-  powerJumpImpulse: 6
+  jumpingMiliseconds: 1000
+  maxDoubleJumpsFromGround: 1
+  OnLand:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleInFloor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3784442256423975583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,6 +538,21 @@ MonoBehaviour:
   edgeOffset: {x: 0.7, y: 1.5}
   edgeJumpImpulse: 5
   secondsUntilEdgeGrabAvailable: 2
+  OnEdgePositionSetted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8523795145773584938}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: HandleHang
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8996882851596652759
 MonoBehaviour:
   m_ObjectHideFlags: 0

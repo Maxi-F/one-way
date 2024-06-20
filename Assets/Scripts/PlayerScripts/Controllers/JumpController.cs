@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 namespace PlayerScripts
 {
     public class JumpController : MonoBehaviour
     {
+        [Header("Jump Settings")]
         [SerializeField] private float force;
-        [SerializeField] [Range(1.1f, 10f)] private float powerJumpImpulse = 2.0f;
-
+        [SerializeField] private float jumpingMiliseconds = 1000f;
+        [SerializeField] [Min(1)] private int maxDoubleJumpsFromGround;
+        
+        [Header("Events")]
+        [SerializeField] private UnityEvent OnLand;
+        
         private Rigidbody _rigidBody;
+        private Player _player;
         private GroundController _groundController;
         
         private bool _shouldJump = false;
+        private int _jumpsLeft;
         private float _timeJumped = 0.0f;
 
         public float TimeJumped { get { return _timeJumped; } }
@@ -21,6 +30,9 @@ namespace PlayerScripts
 
         public void Start()
         {
+            _jumpsLeft = maxDoubleJumpsFromGround;
+
+            _player ??= GetComponent<Player>();
             _rigidBody ??= GetComponent<Rigidbody>();
             _groundController ??= GetComponent<GroundController>();
         }
@@ -35,8 +47,19 @@ namespace PlayerScripts
             }
         }
 
+        public void OnUpdate()
+        {
+            if (IsOnFloor() && IsJumping)
+            {
+                _player.TouchesGround();
+                OnLand.Invoke();
+            }
+        }
+
         public void SetShouldJumpValues()
         {
+            _jumpsLeft = _groundController.IsOnGround() ? maxDoubleJumpsFromGround : maxDoubleJumpsFromGround - 1;
+            
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;
         }
@@ -48,7 +71,30 @@ namespace PlayerScripts
 
         public bool CanJump()
         {
-            return _groundController.IsOnGround();
+            return _jumpsLeft > 0;
+        }
+
+        public void JumpFromAir()
+        {
+            _jumpsLeft--;
+            
+            _shouldJump = true;
+            _timeJumped = Time.time * 1000f;
+        }
+
+        public bool JumpingBreakTime()
+        {
+            return TimeJumped < 0.0001f || TimeJumped + jumpingMiliseconds < (Time.time * 1000f);
+        }
+
+        public bool IsOnFloor()
+        {
+            return _groundController.IsOnGround() && JumpingBreakTime();
+        }
+
+        public void ResetJumps()
+        {
+            _jumpsLeft = maxDoubleJumpsFromGround;
         }
     }
 }

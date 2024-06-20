@@ -8,13 +8,10 @@ namespace PlayerScripts
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private float jumpingMiliseconds = 1000f;
         [SerializeField] private float coyoteTime = 0.5f;
 
         [Header("Events")]
-        [SerializeField] private UnityEvent OnLand;
         [SerializeField] private UnityEvent OnFalling;
-        [SerializeField] private UnityEvent OnEdgePositionSetted;
         [SerializeField] private UnityEvent OnEdgeJump;
         [SerializeField] private UnityEvent OnJump;
         
@@ -38,28 +35,15 @@ namespace PlayerScripts
 
         public void Update()
         {
-            if (_cheatsEnabled) return;
-            
             if (!IsOnFloor() && !_edgeGrabController.IsEdgeGrabbing)
             {
+                Debug.Log($"{IsOnFloor()}, {_edgeGrabController.IsEdgeGrabbing}");
                 _timePassedWithoutTouchingGround += Time.deltaTime;
                 if (_timePassedWithoutTouchingGround > coyoteTime && !_jumpController.IsJumping)
                 {
                     _player.Jump();
                     OnFalling.Invoke();
                 }
-            } 
-            
-            if (IsOnFloor() && _jumpController.IsJumping)
-            {
-                _player.TouchesGround();
-                OnLand.Invoke();
-            } 
-            
-            if (_edgeGrabController.IsOnEdge())
-            {
-                _player.EdgeGrab();
-                OnEdgePositionSetted.Invoke();
             }
         }
 
@@ -71,12 +55,12 @@ namespace PlayerScripts
 
         public bool JumpingBreakTime()
         {
-            return _jumpController.TimeJumped + jumpingMiliseconds < (Time.time * 1000f);
+            return _jumpController.JumpingBreakTime();
         }
 
         public bool IsOnFloor()
         {
-            return _jumpController.CanJump() && JumpingBreakTime();
+            return _jumpController.IsOnFloor();
         }
 
         public bool CoyoteTimePassed()
