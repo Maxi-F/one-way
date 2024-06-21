@@ -17,8 +17,8 @@ namespace PlayerScripts
 
         [Header("Events")] [SerializeField] private UnityEvent onWinboxCollided;
 
-        public float velocity { get { return _rigidbody.velocity.magnitude; } }
-        public bool isFlying { get; set; }
+        public float Velocity { get { return _rigidbody.velocity.magnitude; } }
+        public bool IsFlying { get; set; }
 
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;

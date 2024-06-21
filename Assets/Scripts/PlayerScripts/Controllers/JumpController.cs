@@ -15,6 +15,8 @@ namespace PlayerScripts
         
         [Header("Events")]
         [SerializeField] private UnityEvent OnLand;
+
+        [SerializeField] private UnityEvent OnDoubleJump;
         
         private Rigidbody _rigidBody;
         private Player _player;
@@ -41,10 +43,17 @@ namespace PlayerScripts
         {
             if (_shouldJump)
             {
-                _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
+                Vector3 forceToApply = (Vector3.up * force) - GetYVelocityVector();
+                
+                _rigidBody.AddForce(forceToApply, ForceMode.Impulse);
                 _shouldJump = false;
                 IsJumping = true;
             }
+        }
+
+        private Vector3 GetYVelocityVector()
+        {
+            return new Vector3(0, _rigidBody.velocity.y, 0);
         }
 
         public void OnUpdate()
@@ -77,10 +86,10 @@ namespace PlayerScripts
         public void JumpFromAir()
         {
             _jumpsLeft--;
-            Debug.Log(_jumpsLeft);
             
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;
+            OnDoubleJump?.Invoke();
         }
 
         public bool JumpingBreakTime()

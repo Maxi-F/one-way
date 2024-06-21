@@ -21,7 +21,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void HandleWalk()
     {
-        if(_player.velocity < velocityToRun)
+        if(_player.Velocity < velocityToRun)
         {
             animator.SetBool("isWalking", true);
             animator.SetBool("isRunning", false);
@@ -55,9 +55,15 @@ public class PlayerAnimator : MonoBehaviour
     public void HandleFall()
     {
         animator.SetBool("isJumping", false);
+        animator.SetBool("isDoubleJumping", false);
         animator.SetBool("isWalking", false);
         animator.SetBool("isRunning", false);
         animator.SetBool("isFalling", true);
+    }
+
+    public void HandleDoubleJump()
+    {
+        animator.SetBool("isDoubleJumping", true);
     }
 
     public void HandleInFloor()

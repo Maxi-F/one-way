@@ -17,16 +17,16 @@ public class CheatManager : MonoBehaviour
     
     public void ToggleFly()
     {
-        if (player.isFlying)
+        if (player.IsFlying)
         {
             player.TouchesGround();
-            player.isFlying = false;
+            player.IsFlying = false;
         }
         else
         {
             
             player.Fly();
-            player.isFlying = true;
+            player.IsFlying = true;
         }
         
         OnFlyToggled?.Invoke();

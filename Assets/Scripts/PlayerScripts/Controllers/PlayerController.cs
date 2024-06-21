@@ -23,9 +23,12 @@ namespace PlayerScripts
         private FlyController _flyController;
 
         private bool _cheatsEnabled = false;
+        private bool _isFalling = false;
         
         private void Start()
         {
+            _isFalling = false;
+            
             _player ??= GetComponent<Player>();
             _moveController ??= GetComponent<MoveController>();
             _jumpController ??= GetComponent<JumpController>();
@@ -39,10 +42,17 @@ namespace PlayerScripts
             {
                 Debug.Log($"{IsOnFloor()}, {_edgeGrabController.IsEdgeGrabbing}");
                 _timePassedWithoutTouchingGround += Time.deltaTime;
-                if (_timePassedWithoutTouchingGround > coyoteTime && !_jumpController.IsJumping)
+                if (_timePassedWithoutTouchingGround > coyoteTime)
                 {
-                    _player.Jump();
-                    OnFalling.Invoke();
+                    if(!_jumpController.IsJumping)
+                        _player.Jump();
+                    if(!_isFalling)
+                        OnFalling.Invoke();
+                    _isFalling = true;
+                }
+                else
+                {
+                    _isFalling = false;
                 }
             }
         }
@@ -99,6 +109,12 @@ namespace PlayerScripts
         public bool CanJump()
         {
             return _jumpController.CanJump() || IsOnCoyoteTimeFloor() || _edgeGrabController.IsEdgeGrabbing;
+        }
+
+        public void HandleDoubleJump()
+        {
+            Debug.Log("Hello?");
+            _isFalling = false;
         }
 
         public void SetFly(bool value)
