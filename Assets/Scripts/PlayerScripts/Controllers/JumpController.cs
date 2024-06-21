@@ -77,6 +77,7 @@ namespace PlayerScripts
         public void JumpFromAir()
         {
             _jumpsLeft--;
+            Debug.Log(_jumpsLeft);
             
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;
@@ -95,6 +96,14 @@ namespace PlayerScripts
         public void ResetJumps()
         {
             _jumpsLeft = maxDoubleJumpsFromGround;
+        }
+
+        public void AddJump()
+        {
+            if(IsJumping)
+                _jumpsLeft++;
+            
+            Debug.Log(_jumpsLeft);
         }
     }
 }

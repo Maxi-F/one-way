@@ -42,10 +42,9 @@ namespace PlayerScripts
         }
 
         public void Exit(IBehaviour nextBehaviour) {
-            _jumpController.IsJumping = false;
-
             if (nextBehaviour.GetName() != MovementBehaviour.Jump)
             {
+                _jumpController.IsJumping = false;
                 _jumpController.ResetJumps();
             }
         }

@@ -120,5 +120,10 @@ namespace PlayerScripts
         {
             _cheatsEnabled = !_cheatsEnabled;
         }
+
+        public void AddJump()
+        {
+            _jumpController.AddJump();
+        }
     }
 }
