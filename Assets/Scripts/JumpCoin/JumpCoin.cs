@@ -44,12 +44,18 @@ public class JumpCoin : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().AddJump();
-            
+
             Debug.Log(_eventManager);
+
+            _eventManager.TriggerEvent(
+                "coinObtained",
+                new Dictionary<string, object>()
+                {
+                    { "gameObject", gameObject }
+                });
             
-            _eventManager.TriggerEvent("coinObtained", null);
             
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

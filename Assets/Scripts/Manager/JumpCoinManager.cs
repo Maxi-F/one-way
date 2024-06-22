@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class JumpCoinManager : MonoBehaviour
 {
+    [SerializeField] private float secondsUntilEnableCoin = 4;
+    
     private JumpCoin[] _jumpCoins;
     private EventManager _eventManager;
     
@@ -23,6 +25,15 @@ public class JumpCoinManager : MonoBehaviour
 
     public void OnCoinObtained(Dictionary<string, object> message)
     {
-        Debug.Log("obtained coin!");   
+        GameObject gameObject = (GameObject)message["gameObject"];
+
+        StartCoroutine(EnableCoin(gameObject));
+    }
+
+    IEnumerator EnableCoin(GameObject coinObject)
+    {
+        yield return new WaitForSeconds(secondsUntilEnableCoin);
+        
+        coinObject.SetActive(true);
     }
 }
