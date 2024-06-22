@@ -17,11 +17,14 @@ public class JumpCoin : MonoBehaviour
     
     private Vector3 _center;
     private GameObject _instantiatedNote;
+    private EventManager _eventManager;
     private int _actualDirection = 1;
     
     
     public void Start()
     {
+        _eventManager ??= FindObjectOfType<EventManager>();
+        
         JumpCoinFactory factory = new JumpCoinFactory(config);
 
         _instantiatedNote = factory.CreateJumpCoin(gameObject);
@@ -41,6 +44,11 @@ public class JumpCoin : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().AddJump();
+            
+            Debug.Log(_eventManager);
+            
+            _eventManager.TriggerEvent("coinObtained", null);
+            
             Destroy(gameObject);
         }
     }

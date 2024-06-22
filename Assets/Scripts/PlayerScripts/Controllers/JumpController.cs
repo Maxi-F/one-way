@@ -111,8 +111,6 @@ namespace PlayerScripts
         {
             if(IsJumping)
                 _jumpsLeft++;
-            
-            Debug.Log(_jumpsLeft);
         }
     }
 }
