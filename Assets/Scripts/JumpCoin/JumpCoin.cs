@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using PlayerScripts;
+using ScriptableObjects.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class JumpCoin : MonoBehaviour
 {
-    [Header("Coin Data")]
-    [SerializeField] private List<GameObject> noteObjects;
-    [SerializeField] private List<Material> materialsList;
+    [Header("Coin config")]
+    [SerializeField] private JumpCoinConfig config;
 
     [Header("Hover settings")] 
     [SerializeField] private float hoverVelocity = 5f;
@@ -22,15 +22,9 @@ public class JumpCoin : MonoBehaviour
     
     public void Start()
     {
-        GameObject noteObject = noteObjects[Random.Range(0, noteObjects.Count)];
-        Material material = materialsList[Random.Range(0, materialsList.Count)];
+        JumpCoinFactory factory = new JumpCoinFactory(config);
 
-        _instantiatedNote = Instantiate(noteObject, gameObject.transform);
-        
-        SkinnedMeshRenderer renderer = _instantiatedNote.GetComponentInChildren<SkinnedMeshRenderer>();
-        
-        renderer.material = material;
-        renderer.rootBone = gameObject.transform;
+        _instantiatedNote = factory.CreateJumpCoin(gameObject);
 
         _center = _instantiatedNote.transform.position;
     }
