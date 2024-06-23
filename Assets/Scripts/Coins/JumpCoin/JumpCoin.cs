@@ -6,7 +6,7 @@ using ScriptableObjects.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class JumpCoin : MonoBehaviour
+public class JumpCoin : WithDebugRemover
 {
     [Header("Coin config")]
     [SerializeField] private JumpCoinConfig config;
@@ -23,6 +23,7 @@ public class JumpCoin : MonoBehaviour
     
     public void Start()
     {
+        RemoveDebug();
         _eventManager ??= FindObjectOfType<EventManager>();
         
         JumpCoinFactory factory = new JumpCoinFactory(config);

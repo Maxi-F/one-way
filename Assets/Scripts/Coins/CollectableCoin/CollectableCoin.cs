@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectableCoin : MonoBehaviour
+public class CollectableCoin : WithDebugRemover
 {
     private EventManager _eventManager;
     private void Start()
     {
+        RemoveDebug();
+        
         _eventManager = FindObjectOfType<EventManager>();
 
         if (_eventManager == null)
