@@ -8,40 +8,45 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    private SceneNames _activeLevelScene;
+    private string _activeLevelSceneName;
     private SceneryManager _sceneryManager;
+    
     [SerializeField] private SensibilitySettings _playerSettings;
+    [SerializeField] private string initLevelSceneName = "Level1";
+    [SerializeField] private string menuSceneName = "Menu";
+    [SerializeField] private string gameplaySceneName = "Gameplay";
+    
     void Awake()
     {
-        _activeLevelScene = SceneNames.LevelOne;
+        _activeLevelSceneName = initLevelSceneName;
         _sceneryManager ??= FindObjectOfType<SceneryManager>();
-        _sceneryManager.AddScene(_activeLevelScene);
-        _sceneryManager.OnMenuAdded += UnloadGameplay;
+        _sceneryManager.LoadScene(_activeLevelSceneName);
+        _sceneryManager.SubscribeEventToAddScene(menuSceneName, UnloadGameplay);
     }
 
-    public void LevelPassed(SceneNames nextLevel)
+    public void LevelPassed(string nextLevel)
     {
-        if (_activeLevelScene == nextLevel) return;
-        _sceneryManager.UnloadScene(_activeLevelScene);
-        _sceneryManager.AddScene(nextLevel);
-        _activeLevelScene = nextLevel;
+        if (_activeLevelSceneName == nextLevel) return;
+        _sceneryManager.UnloadScene(_activeLevelSceneName);
+        _sceneryManager.LoadScene(nextLevel);
+        _activeLevelSceneName = nextLevel;
     }
 
     public void HandleWin()
     {
-        _sceneryManager.LoadScene(SceneNames.Menu);
+        _sceneryManager.LoadScene(menuSceneName);
     }
 
     private void UnloadGameplay()
     {
-        _sceneryManager.UnloadScene(_activeLevelScene);
-        _sceneryManager.UnloadScene(SceneNames.Gameplay);
-        _sceneryManager.OnMenuAdded -= UnloadGameplay;
+        _sceneryManager.UnloadScene(_activeLevelSceneName);
+        _sceneryManager.UnloadScene(gameplaySceneName);
+        _sceneryManager.UnsubscribeEventToAddScene(menuSceneName, UnloadGameplay);
     }
 
     public void BackToMenu()
     {
-        _sceneryManager.LoadScene(SceneNames.Menu);
+        _sceneryManager.LoadScene(menuSceneName);
     }
 
     public void SetSensibility(float newSensibility)

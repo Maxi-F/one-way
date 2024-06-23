@@ -6,78 +6,66 @@ using UnityEngine.SceneManagement;
 
 namespace Manager
 {
-    public enum SceneNames
-    {
-        Boot,
-        Gameplay,
-        Menu,
-        Credits,
-        LevelOne,
-        LevelTwo,
-        LevelThree,
-        LevelFour,
-        Exit
-    }
-    
     public class SceneryManager : MonoBehaviour
     {
-        [SerializeField] private SceneNames _initScene;
-
-        public Action OnCreditsAdded;
-
-        public Action OnGameplayAdded;
-
-        public Action OnMenuAdded;
+        [SerializeField] private string _initSceneName;
+        [SerializeField] private ScenesData _scenesData;
         
-        private readonly List<SceneNames> _activeScenes = new List<SceneNames>();
+        private readonly List<SerializableScene> _activeScenes = new List<SerializableScene>();
         
         public void InitScenes()
         {
-            LoadScene(_initScene);
-            _activeScenes.Add(_initScene);
+            LoadScene(_initSceneName);
         }
 
-        public void LoadScene(SceneNames sceneName)
+        public void LoadScene(string sceneName)
         {
-            switch (sceneName)
+            if (sceneName == "Exit")
             {
-                case SceneNames.Boot:
-                    break;
-                case SceneNames.Gameplay:
-                    OnGameplayAdded?.Invoke();
-                    AddScene(SceneNames.Gameplay);
-                    break;  
-                case SceneNames.Credits:
-                    OnCreditsAdded?.Invoke();
-                    Debug.Log(OnCreditsAdded?.GetInvocationList()?.Length);
-                    AddScene(SceneNames.Credits);
-                    break;
-                case SceneNames.Menu:
-                    OnMenuAdded?.Invoke();
-                    AddScene(SceneNames.Menu);
-                    break;
-                case SceneNames.Exit:
-                    Debug.Log("Quitting...");
-                    Application.Quit();
-                    break;
+                Debug.Log("Quitting...");
+                Application.Quit();
+                return;
             }
+            
+            SerializableScene scene = _scenesData.GetSceneByName(sceneName);
+            
+            scene.OnSceneAdded?.Invoke();
+            AddScene(scene);
         }
 
-        public void UnloadScene(SceneNames sceneName)
+        public void UnloadScene(string aSceneName)
         {
-            if (_activeScenes.Exists(scene => scene == sceneName))
+            SerializableScene aScene = _scenesData.GetSceneByName(aSceneName);
+            
+            if (_activeScenes.Exists(scene => scene.name == aScene.name))
             {
-                SceneManager.UnloadSceneAsync((int) sceneName);
+                SceneManager.UnloadSceneAsync(aScene.index);
+                aScene.OnSceneRemoved?.Invoke();
+                _activeScenes.RemoveAt(_activeScenes.FindIndex(scene => scene.name == aScene.name));
             }
             else
             {
-                Debug.LogWarning($"{sceneName} not active!");
+                Debug.LogWarning($"{aScene.name} not active!");
             }
         }
-        public void AddScene(SceneNames sceneName)
+        public void AddScene(SerializableScene scene)
         {
-            SceneManager.LoadScene((int) sceneName, LoadSceneMode.Additive);
-            _activeScenes.Add(sceneName);
+            SceneManager.LoadScene(scene.index, LoadSceneMode.Additive);
+            _activeScenes.Add(scene);
+        }
+
+        public void SubscribeEventToAddScene(string sceneName, Action action)
+        {
+            SerializableScene aScene = _scenesData.GetSceneByName(sceneName);
+
+            aScene.OnSceneAdded += action;
+        }
+        
+        public void UnsubscribeEventToAddScene(string sceneName, Action action)
+        {
+            SerializableScene aScene = _scenesData.GetSceneByName(sceneName);
+
+            aScene.OnSceneAdded -= action;
         }
     }
 }

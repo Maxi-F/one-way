@@ -8,7 +8,7 @@ namespace Button
     public class ButtonHandler : MonoBehaviour
     {
         private SceneryManager _sceneryManager;
-        [SerializeField] private SceneNames _scene;
+        [SerializeField] private string sceneName;
 
         private void Start()
         {
@@ -23,7 +23,7 @@ namespace Button
                 return;
             }
             
-            _sceneryManager.LoadScene(_scene);
+            _sceneryManager.LoadScene(sceneName);
         }
     }
     

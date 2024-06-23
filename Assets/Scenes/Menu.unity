@@ -347,8 +347,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a279ca16c3fe24cb46af8f6f43d6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenesToSubscribeTo: 0100000003000000
-  scene: 2
+  scenesToSubscribeTo:
+  - Gameplay
+  - Credits
+  sceneName: Menu
 --- !u!114 &1181565957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,6 +556,10 @@ PrefabInstance:
     - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
       propertyPath: _scene
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
+      propertyPath: sceneName
+      value: Credits
       objectReference: {fileID: 0}
     - target: {fileID: 5921583599069335045, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
       propertyPath: m_text
@@ -864,6 +870,10 @@ PrefabInstance:
       propertyPath: _scene
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
+      propertyPath: sceneName
+      value: Exit
+      objectReference: {fileID: 0}
     - target: {fileID: 5921583599069335045, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
       propertyPath: m_text
       value: Exit
@@ -1151,6 +1161,10 @@ PrefabInstance:
     - target: {fileID: 4407953111011895664, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
+      propertyPath: sceneName
+      value: Gameplay
       objectReference: {fileID: 0}
     - target: {fileID: 7433398702053263152, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
       propertyPath: m_Name

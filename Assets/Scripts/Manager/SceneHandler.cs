@@ -7,8 +7,8 @@ namespace Manager
 {
     public class SceneHandler : MonoBehaviour
     {
-        [SerializeField] private SceneNames[] scenesToSubscribeTo;
-        [SerializeField] private SceneNames scene;
+        [SerializeField] private string[] scenesToSubscribeTo;
+        [SerializeField] private string sceneName;
 
         private SceneryManager _sceneryManager;
         
@@ -26,45 +26,23 @@ namespace Manager
 
         private void SubscribeToActions()
         {
-            Array.ForEach(scenesToSubscribeTo, (action) =>
+            Array.ForEach(scenesToSubscribeTo, (aSceneName) =>
             {
-                switch (action)
-                {
-                    case SceneNames.Gameplay:
-                        _sceneryManager.OnGameplayAdded += UnloadScene;
-                        break;
-                    case SceneNames.Menu:
-                        _sceneryManager.OnMenuAdded += UnloadScene;
-                        break;
-                    case SceneNames.Credits:
-                        _sceneryManager.OnCreditsAdded += UnloadScene;
-                        break;
-                }
+                _sceneryManager.SubscribeEventToAddScene(aSceneName, UnloadScene);
             });
         }
         
         private void UnsubscribeToActions()
         {
-            Array.ForEach(scenesToSubscribeTo, (action) =>
+            Array.ForEach(scenesToSubscribeTo, (aSceneName) =>
             {
-                switch (action)
-                {
-                    case SceneNames.Gameplay:
-                        _sceneryManager.OnGameplayAdded -= UnloadScene;
-                        break;
-                    case SceneNames.Menu:
-                        _sceneryManager.OnMenuAdded -= UnloadScene;
-                        break;
-                    case SceneNames.Credits:
-                        _sceneryManager.OnCreditsAdded -= UnloadScene;
-                        break;
-                }
+                _sceneryManager.UnsubscribeEventToAddScene(aSceneName, UnloadScene);
             });
         }
         
         private void UnloadScene()
         {
-            _sceneryManager.UnloadScene(scene);
+            _sceneryManager.UnloadScene(sceneName);
         }
     }
 }

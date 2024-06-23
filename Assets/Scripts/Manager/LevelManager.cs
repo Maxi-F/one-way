@@ -9,7 +9,7 @@ namespace Manager
     public class LevelManager : MonoBehaviour
     {
         [SerializeField] private Player player;
-        [SerializeField] private SceneNames nextLevel;
+        [SerializeField] private string nextLevelName;
         [SerializeField] private GameObject pauseCanvas;
         [SerializeField] private SliderBehaviour pauseSensibilitySlider;
         [SerializeField] private UnityEvent OnDeath;
@@ -43,7 +43,7 @@ namespace Manager
 
         public void HandleWin()
         {
-            _gameplayManager.LevelPassed(nextLevel);
+            _gameplayManager.LevelPassed(nextLevelName);
         }
 
         public void HandleWinGame()

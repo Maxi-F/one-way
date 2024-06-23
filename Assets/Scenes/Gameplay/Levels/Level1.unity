@@ -876,6 +876,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1654556705}
     - target: {fileID: 7955728586405096038, guid: f20694ace3718064887079c1f7055b9b, type: 3}
+      propertyPath: nextLevelName
+      value: Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955728586405096038, guid: f20694ace3718064887079c1f7055b9b, type: 3}
       propertyPath: pauseSensibilitySlider
       value: 
       objectReference: {fileID: 2444005421485034886}
