@@ -7,12 +7,10 @@ public class JumpCoinManager : MonoBehaviour
 {
     [SerializeField] private float secondsUntilEnableCoin = 4;
     
-    private JumpCoin[] _jumpCoins;
     private EventManager _eventManager;
     
     private void Start()
     {
-        _jumpCoins ??= GetComponents<JumpCoin>();
         _eventManager ??= FindObjectOfType<EventManager>();
         
         _eventManager.SubscribeTo("coinObtained", OnCoinObtained);

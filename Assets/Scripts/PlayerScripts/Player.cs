@@ -14,9 +14,7 @@ namespace PlayerScripts
         
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
-
-        [Header("Events")] [SerializeField] private UnityEvent onWinboxCollided;
-
+        
         public float Velocity { get { return _rigidbody.velocity.magnitude; } }
         public bool IsFlying { get; set; }
 
@@ -90,14 +88,6 @@ namespace PlayerScripts
         public bool IsEdgeGrabbing()
         {
             return _movementFSM.IsCurrentBehaviour(MovementBehaviour.EdgeGrab);
-        }
-
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("WinBox"))
-            {
-                onWinboxCollided.Invoke();
-            }
         }
 
         public void SetGravity(bool active)

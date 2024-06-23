@@ -9,6 +9,7 @@ TagManager:
   - WinBox
   - PauseCanvas
   - player
+  - Guitar
   layers:
   - Default
   - TransparentFX
