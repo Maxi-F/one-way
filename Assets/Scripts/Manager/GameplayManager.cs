@@ -5,6 +5,7 @@ using Manager;
 using ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -12,16 +13,16 @@ public class GameplayManager : MonoBehaviour
     private SceneryManager _sceneryManager;
     
     [SerializeField] private SensibilitySettings _playerSettings;
-    [SerializeField] private string initLevelSceneName = "Level1";
-    [SerializeField] private string menuSceneName = "Menu";
-    [SerializeField] private string gameplaySceneName = "Gameplay";
+    [SerializeField] private SceneChangeData initLevelScene;
+    [SerializeField] private SceneChangeData menuScene;
+    [SerializeField] private SceneChangeData gameplayScene;
     
     void Awake()
     {
-        _activeLevelSceneName = initLevelSceneName;
+        _activeLevelSceneName = initLevelScene.sceneName;
         _sceneryManager ??= FindObjectOfType<SceneryManager>();
         _sceneryManager.LoadScene(_activeLevelSceneName);
-        _sceneryManager.SubscribeEventToAddScene(menuSceneName, UnloadGameplay);
+        _sceneryManager.SubscribeEventToAddScene(menuScene.sceneName, UnloadGameplay);
     }
 
     public void LevelPassed(string nextLevel)
@@ -34,19 +35,19 @@ public class GameplayManager : MonoBehaviour
 
     public void HandleWin()
     {
-        _sceneryManager.LoadScene(menuSceneName);
+        _sceneryManager.LoadScene(menuScene.sceneName);
     }
 
     private void UnloadGameplay()
-    {
+    {//
         _sceneryManager.UnloadScene(_activeLevelSceneName);
-        _sceneryManager.UnloadScene(gameplaySceneName);
-        _sceneryManager.UnsubscribeEventToAddScene(menuSceneName, UnloadGameplay);
+        _sceneryManager.UnloadScene(gameplayScene.sceneName);
+        _sceneryManager.UnsubscribeEventToAddScene(menuScene.sceneName, UnloadGameplay);
     }
 
     public void BackToMenu()
     {
-        _sceneryManager.LoadScene(menuSceneName);
+        _sceneryManager.LoadScene(menuScene.sceneName);
     }
 
     public void SetSensibility(float newSensibility)

@@ -3,6 +3,7 @@ using System;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Manager
 {
@@ -12,11 +13,18 @@ namespace Manager
         [SerializeField] private string nextLevelName;
         [SerializeField] private GameObject pauseCanvas;
         [SerializeField] private SliderBehaviour pauseSensibilitySlider;
-        [SerializeField] private UnityEvent OnDeath;
+        [FormerlySerializedAs("OnDeath")] [SerializeField] private UnityEvent onDeath;
+        [SerializeField] private MovementBehaviour test;
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
         private bool _isPaused = false;
+        private string[] _movementBehaviours;
+        
+        void Awake()
+        {
+            _movementBehaviours = new[] { "test1", "test2" };
+        }
         
         void Start()
         {
@@ -37,7 +45,7 @@ namespace Manager
         {
             player.transform.position = _startingPosition;
             
-            OnDeath.Invoke();
+            onDeath.Invoke();
             player.Stop();
         }
 

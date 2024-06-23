@@ -168,8 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenesToSubscribeTo:
-  - Menu
-  sceneName: Credits
+  - sceneName: Menu
+  sceneName:
+    sceneName: Credits
 --- !u!1 &194860873
 GameObject:
   m_ObjectHideFlags: 0

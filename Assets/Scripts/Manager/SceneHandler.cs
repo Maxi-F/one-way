@@ -7,8 +7,8 @@ namespace Manager
 {
     public class SceneHandler : MonoBehaviour
     {
-        [SerializeField] private string[] scenesToSubscribeTo;
-        [SerializeField] private string sceneName;
+        [SerializeField] private SceneChangeData[] scenesToSubscribeTo;
+        [SerializeField] private SceneChangeData sceneName;
 
         private SceneryManager _sceneryManager;
         
@@ -28,7 +28,7 @@ namespace Manager
         {
             Array.ForEach(scenesToSubscribeTo, (aSceneName) =>
             {
-                _sceneryManager.SubscribeEventToAddScene(aSceneName, UnloadScene);
+                _sceneryManager.SubscribeEventToAddScene(aSceneName.sceneName, UnloadScene);
             });
         }
         
@@ -36,13 +36,13 @@ namespace Manager
         {
             Array.ForEach(scenesToSubscribeTo, (aSceneName) =>
             {
-                _sceneryManager.UnsubscribeEventToAddScene(aSceneName, UnloadScene);
+                _sceneryManager.UnsubscribeEventToAddScene(aSceneName.sceneName, UnloadScene);
             });
         }
         
         private void UnloadScene()
         {
-            _sceneryManager.UnloadScene(sceneName);
+            _sceneryManager.UnloadScene(sceneName.sceneName);
         }
     }
 }

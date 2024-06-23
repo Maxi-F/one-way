@@ -348,9 +348,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenesToSubscribeTo:
-  - Gameplay
-  - Credits
-  sceneName: Menu
+  - sceneName: Gameplay
+  - sceneName: Credits
+  sceneName:
+    sceneName: Menu
 --- !u!114 &1181565957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,6 +560,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
       propertyPath: sceneName
+      value: Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
+      propertyPath: sceneName.sceneName
       value: Credits
       objectReference: {fileID: 0}
     - target: {fileID: 5921583599069335045, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
@@ -871,6 +876,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
+      propertyPath: isExit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
       propertyPath: sceneName
       value: Exit
       objectReference: {fileID: 0}
@@ -1163,7 +1172,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
+      propertyPath: isExit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
       propertyPath: sceneName
+      value: Gameplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 5021106424478199880, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}
+      propertyPath: sceneName.sceneName
       value: Gameplay
       objectReference: {fileID: 0}
     - target: {fileID: 7433398702053263152, guid: 9777ec10a4d6e0c4dbc2fac3e5467448, type: 3}

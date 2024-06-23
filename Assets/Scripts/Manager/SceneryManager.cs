@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace Manager
 {
     public class SceneryManager : MonoBehaviour
     {
-        [SerializeField] private string _initSceneName;
-        [SerializeField] private ScenesData _scenesData;
+        [SerializeField] private SceneChangeData initSceneName;
+        [SerializeField] private ScenesData scenesData;
         
         private readonly List<SerializableScene> _activeScenes = new List<SerializableScene>();
         
         public void InitScenes()
         {
-            LoadScene(_initSceneName);
+            LoadScene(initSceneName.sceneName);
         }
 
         public void LoadScene(string sceneName)
@@ -27,7 +28,13 @@ namespace Manager
                 return;
             }
             
-            SerializableScene scene = _scenesData.GetSceneByName(sceneName);
+            SerializableScene scene = scenesData.GetSceneByName(sceneName);
+
+            if (scene == null)
+            {
+                Debug.LogError($"Scene with name {sceneName} not found.");
+                return;
+            }
             
             scene.OnSceneAdded?.Invoke();
             AddScene(scene);
@@ -35,7 +42,13 @@ namespace Manager
 
         public void UnloadScene(string aSceneName)
         {
-            SerializableScene aScene = _scenesData.GetSceneByName(aSceneName);
+            SerializableScene aScene = scenesData.GetSceneByName(aSceneName);
+            
+            if (aScene == null)
+            {
+                Debug.LogError($"Scene with name {aSceneName} not found.");
+                return;
+            }
             
             if (_activeScenes.Exists(scene => scene.name == aScene.name))
             {
@@ -56,14 +69,14 @@ namespace Manager
 
         public void SubscribeEventToAddScene(string sceneName, Action action)
         {
-            SerializableScene aScene = _scenesData.GetSceneByName(sceneName);
+            SerializableScene aScene = scenesData.GetSceneByName(sceneName);
 
             aScene.OnSceneAdded += action;
         }
         
         public void UnsubscribeEventToAddScene(string sceneName, Action action)
         {
-            SerializableScene aScene = _scenesData.GetSceneByName(sceneName);
+            SerializableScene aScene = scenesData.GetSceneByName(sceneName);
 
             aScene.OnSceneAdded -= action;
         }

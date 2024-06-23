@@ -8,8 +8,9 @@ namespace Button
     public class ButtonHandler : MonoBehaviour
     {
         private SceneryManager _sceneryManager;
-        [SerializeField] private string sceneName;
-
+        [SerializeField] private bool isExit = false;
+        [SerializeField] private SceneChangeData sceneName;
+        
         private void Start()
         {
             _sceneryManager = FindObjectOfType<SceneryManager>();
@@ -23,7 +24,7 @@ namespace Button
                 return;
             }
             
-            _sceneryManager.LoadScene(sceneName);
+            _sceneryManager.LoadScene(isExit ? "Exit" : sceneName.sceneName);
         }
     }
     
