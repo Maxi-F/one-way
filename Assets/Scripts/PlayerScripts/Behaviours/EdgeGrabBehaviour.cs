@@ -38,8 +38,9 @@ public class EdgeGrabBehaviour : MonoBehaviour, IBehaviour
     public void Exit(IBehaviour nextBehaviour)
     {
         _edgeGrabController.SetEdgeGrabTimer();
-        _edgeGrabController.IsEdgeGrabbing = false;
         _jumpController.SetShouldJumpValues();
+        _edgeGrabController.IsEdgeGrabbing = false;
+        _jumpController.SetIsJumping();
     }
 
     public MovementBehaviour[] GetNextBehaviours()

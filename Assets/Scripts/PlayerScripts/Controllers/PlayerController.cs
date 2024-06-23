@@ -43,16 +43,22 @@ namespace PlayerScripts
                 _timePassedWithoutTouchingGround += Time.deltaTime;
                 if (_timePassedWithoutTouchingGround > coyoteTime)
                 {
-                    if(!_jumpController.IsJumping)
+                    if (!_jumpController.IsJumping)
+                    {
+                        Debug.Log("This mf");                        
                         _player.Jump();
-                    if(!_isFalling)
+                    }
+                    if (!_isFalling)
+                    {
                         OnFalling.Invoke();
+                    }
                     _isFalling = true;
                 }
-                else
-                {
-                    _isFalling = false;
-                }
+            }
+
+            if (IsOnFloor())
+            {
+                _isFalling = false;
             }
         }
 
