@@ -2,6 +2,7 @@ using PlayerScripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -21,7 +22,10 @@ public class PlayerAnimator : MonoBehaviour
 
     public void HandleWalk()
     {
-        if(_player.Velocity < velocityToRun)
+        Vector3 horizontalVelocity = _player.GetHorizontalVelocity();
+        if (horizontalVelocity.magnitude < 0.0001f) return;
+        
+        if(horizontalVelocity.magnitude < velocityToRun)
         {
             animator.SetBool("isWalking", true);
             animator.SetBool("isRunning", false);
@@ -70,6 +74,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator.SetBool("isFalling", false);
         animator.SetBool("isJumping", false);
+        HandleWalk();
     }
 
     public void HandleBreak()

@@ -40,7 +40,6 @@ namespace PlayerScripts
         {
             if (!IsOnFloor() && !_edgeGrabController.IsEdgeGrabbing)
             {
-                Debug.Log($"{IsOnFloor()}, {_edgeGrabController.IsEdgeGrabbing}");
                 _timePassedWithoutTouchingGround += Time.deltaTime;
                 if (_timePassedWithoutTouchingGround > coyoteTime)
                 {

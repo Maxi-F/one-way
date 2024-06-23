@@ -66,7 +66,6 @@ namespace Manager
         {
             if (_isPaused)
             {
-                Debug.Log("AAAA");
                 Time.timeScale = 1f;
                 pauseCanvas.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
