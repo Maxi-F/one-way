@@ -24,4 +24,9 @@ public class CollectableCoin : WithDebugRemover
         
         gameObject.SetActive(false);
     }
+
+    public void Reset()
+    {
+        gameObject.SetActive(true);
+    }
 }

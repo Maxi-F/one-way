@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CollectableCoinsManager : MonoBehaviour
 {
-    private int _coinsQuantity;
+    private int _coinsObtained = 0;
+    private CollectableCoin[] _collectableCoins;
     private EventManager _eventManager;
     
     void Start()
     {
-        CollectableCoin[] collectableCoins = FindObjectsOfType<CollectableCoin>();
-
-        _coinsQuantity = collectableCoins.Length;
-
+        _collectableCoins = FindObjectsOfType<CollectableCoin>();
+        
         _eventManager = FindObjectOfType<EventManager>();
 
         if (_eventManager == null)
@@ -22,15 +21,26 @@ public class CollectableCoinsManager : MonoBehaviour
         }
         
         _eventManager.SubscribeTo("collectableCoinObtained", OnCoinObtained);
+        _eventManager.SubscribeTo("playerDeath", OnReset);
     }
 
     void OnCoinObtained(Dictionary<string, object> message)
     {
-        _coinsQuantity--;
+        _coinsObtained++;
 
-        if (_coinsQuantity == 0)
+        if (_coinsObtained == _collectableCoins.Length)
         {
             _eventManager.TriggerEvent("allCoinsCollected", null);
         }
+    }
+
+    void OnReset(Dictionary<string, object> message)
+    {
+        foreach (var collectableCoin in _collectableCoins)
+        {
+            collectableCoin.Reset();
+        }
+
+        _coinsObtained = 0;
     }
 }

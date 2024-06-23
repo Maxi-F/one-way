@@ -45,7 +45,6 @@ namespace PlayerScripts
                 {
                     if (!_jumpController.IsJumping)
                     {
-                        Debug.Log("This mf");                        
                         _player.Jump();
                     }
                     if (!_isFalling)

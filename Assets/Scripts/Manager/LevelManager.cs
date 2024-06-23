@@ -1,5 +1,6 @@
 using PlayerScripts;
 using System;
+using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,10 +17,14 @@ namespace Manager
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
+        private EventManager _eventManager;
         private bool _isPaused = false;
         
         void Start()
         {
+            _eventManager = FindObjectOfType<EventManager>();
+            _eventManager.SubscribeTo("playerDeath", HandleDeath);
+
             _startingPosition = player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
             player.Sensibility = _gameplayManager.GetSensibility();
@@ -31,9 +36,10 @@ namespace Manager
             Cursor.visible = false;
 
             Time.timeScale = 1f;
+            
         }
     
-        public void HandleDeath()
+        public void HandleDeath(Dictionary<string, object> message)
         {
             player.transform.position = _startingPosition;
             

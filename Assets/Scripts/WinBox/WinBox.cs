@@ -18,24 +18,35 @@ public class WinBox : MonoBehaviour
     {
         _guitarRenderer = gameObject.transform.GetChild(0).GetComponent<Renderer>();
 
-        if (!isInitiallyActive)
-        {
-            _guitarRenderer.material = transparentGuitar;
-        }
-
-        _isActive = isInitiallyActive;
+        SetRenderedMaterial();
 
         EventManager eventManager = FindObjectOfType<EventManager>();
         
         eventManager.SubscribeTo("allCoinsCollected", OnCoinsCollected);
+        eventManager.SubscribeTo("playerDeath", OnReset);
     }
 
+    void SetRenderedMaterial()
+    {
+        _isActive = isInitiallyActive;
+        
+        if (!_isActive)
+        {
+            _guitarRenderer.material = transparentGuitar;
+        }
+    }
+    
     void OnCoinsCollected(Dictionary<string, object> message)
     {
         _isActive = true;
         
         // TODO Preguntar como mejorar esto mañana
         _guitarRenderer.material = normalGuitar;
+    }
+
+    void OnReset(Dictionary<string, object> message)
+    {
+        SetRenderedMaterial();
     }
     
     public void OnTriggerEnter(Collider other)
