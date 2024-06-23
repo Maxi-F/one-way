@@ -34,8 +34,17 @@ public class JumpCoin : MonoBehaviour
 
     public void Update()
     {
-        _actualDirection = (_instantiatedNote.transform.position - _center).magnitude > hoverDistance ? -_actualDirection : _actualDirection;
-
+        float upLimit = _center.y + hoverDistance;
+        float downLimit = _center.y - hoverDistance;
+        
+        if (upLimit < _instantiatedNote.transform.position.y)
+        {
+            _actualDirection = -1;
+        } else if (downLimit > _instantiatedNote.transform.position.y)
+        {
+            _actualDirection = 1;
+        }
+        
         _instantiatedNote.transform.position += new Vector3(0,  _actualDirection * hoverVelocity * Time.deltaTime, 0);
     }
 
@@ -44,8 +53,6 @@ public class JumpCoin : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().AddJump();
-
-            Debug.Log(_eventManager);
 
             _eventManager.TriggerEvent(
                 "coinObtained",
