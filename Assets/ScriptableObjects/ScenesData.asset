@@ -31,3 +31,6 @@ MonoBehaviour:
   - path: Assets/Scenes/Gameplay/Levels/Level2.unity
     name: Level2
     index: 5
+  - path: Assets/Scenes/Gameplay/Levels/Level3.unity
+    name: Level3
+    index: 6

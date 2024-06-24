@@ -58,7 +58,7 @@ public class ScenesData : ScriptableObject
             {
                 int index = SceneUtility.GetBuildIndexByScenePath(editorBuildSettingsScene.path);
 
-                if (scenes[index] != null)
+                if (index < scenes.Count && scenes[index] != null)
                 {
                     scenes[index].index = index;
                     scenes[index].path = editorBuildSettingsScene.path;
