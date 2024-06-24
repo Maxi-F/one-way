@@ -22,7 +22,7 @@ namespace PlayerScripts
             behaviours.AddRange(behavioursToUse);
             currentBehaviour = initBehaviour;
         }
-
+        
         public void changeStateTo(MovementBehaviour nextBehaviourName)
         {
             if(!currentBehaviour.GetNextBehaviours().Contains(nextBehaviourName))

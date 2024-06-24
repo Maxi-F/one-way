@@ -20,15 +20,19 @@ public class CameraBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ModifyRotation();
         ModifyPosition();
+    }
+
+    private void LateUpdate()
+    {
+        ModifyRotation();
     }
 
     private void ModifyRotation()
     {
         Quaternion previousRotationInX = transform.rotation;
         Vector3 previousPositionInX = transform.position;
-        float multiplier = _isController ? 1 : Time.fixedDeltaTime;
+        float multiplier = _isController ? 1 : Time.deltaTime;
         
         transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * multiplier);
 
