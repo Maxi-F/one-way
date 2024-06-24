@@ -131,7 +131,7 @@ namespace PlayerScripts
             _moveController.Move(direction);
         }
 
-        public void LookChange(Vector2 eulers)
+        public void LookChange(Vector2 eulers, bool isController)
         {
             _moveController.LookChange();
         }

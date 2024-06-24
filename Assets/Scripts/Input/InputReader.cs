@@ -9,7 +9,7 @@ namespace Input
     public class InputReader : MonoBehaviour
     {
         [SerializeField] private UnityEvent<Vector3> OnMove;
-        [SerializeField] private UnityEvent<Vector2> OnLook;
+        [SerializeField] private UnityEvent<Vector2, bool> OnLook;
         [SerializeField] private UnityEvent OnJump;
         [SerializeField] private UnityEvent<bool> OnGoDown;
         [SerializeField] private UnityEvent OnFly;
@@ -26,7 +26,9 @@ namespace Input
         public void HandleLookInput(InputAction.CallbackContext context)
         {
             Vector2 lookInput = context.ReadValue<Vector2>();
-            OnLook?.Invoke(lookInput);
+            
+            Debug.Log(context.control.device);
+            OnLook?.Invoke(lookInput, context.control.device != Mouse.current);
         }
 
         public void HandleJumpInput(InputAction.CallbackContext context)

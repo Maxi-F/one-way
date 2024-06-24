@@ -16,7 +16,8 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField] private Vector2 bottomMinMaxAngles = new Vector2(260.0f, 280.0f);
     
     private Vector2 _desiredRotation;
-    
+    private bool _isController;
+
     private void FixedUpdate()
     {
         ModifyRotation();
@@ -27,7 +28,9 @@ public class CameraBehaviour : MonoBehaviour
     {
         Quaternion previousRotationInX = transform.rotation;
         Vector3 previousPositionInX = transform.position;
-        transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * Time.fixedDeltaTime);
+        float multiplier = _isController ? 1 : Time.fixedDeltaTime;
+        
+        transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * multiplier);
 
         float angleInX = transform.rotation.eulerAngles.x;
         
@@ -38,7 +41,7 @@ public class CameraBehaviour : MonoBehaviour
             transform.position = previousPositionInX;
         }
         
-        transform.RotateAround(target.position, Vector3.up, _desiredRotation.x * player.Sensibility * Time.fixedDeltaTime);
+        transform.RotateAround(target.position, Vector3.up, _desiredRotation.x * player.Sensibility * multiplier);
     }
 
     private void ModifyPosition()
@@ -49,8 +52,18 @@ public class CameraBehaviour : MonoBehaviour
         transform.position = Vector3.Slerp(transform.position, offsetEmulatingTransformPoint, Time.fixedDeltaTime * followSpeed);
     }
 
-    public void RotateCamera(Vector2 lookInput)
+    public void RotateCamera(Vector2 lookInput, bool isController)
     {
-        _desiredRotation = lookInput;
+        _isController = isController;
+
+        Debug.Log(_isController);
+        if (isController)
+        {
+            _desiredRotation = lookInput;
+        }
+        else
+        {
+            _desiredRotation = new Vector2(lookInput.x, -lookInput.y);
+        }
     }
 }

@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b08be804c8523914fa28907d9e7de6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scene: 1
+  sceneName: Menu
 --- !u!1 &8253086122244387220
 GameObject:
   m_ObjectHideFlags: 0
