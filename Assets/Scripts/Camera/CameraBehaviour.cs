@@ -10,33 +10,35 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset = new Vector3(0, 1.5f, -5);
     [SerializeField] private float followSpeed = 5;
-    
-    [Header("Rotation properties")]
-    [SerializeField] private Vector2 xMinMaxRotation = new Vector2(0f, 50f);
+
+    [Header("Rotation properties")] 
+    [SerializeField] private Vector2 topMinMaxAngles = new Vector2(80.0f, 100.0f);
+    [SerializeField] private Vector2 bottomMinMaxAngles = new Vector2(260.0f, 280.0f);
     
     private Vector2 _desiredRotation;
     
     private void FixedUpdate()
     {
-        ModifyPosition();
-    }
-
-    private void LateUpdate()
-    {
         ModifyRotation();
+        ModifyPosition();
     }
 
     private void ModifyRotation()
     {
-        transform.RotateAround(target.position, Vector3.up, _desiredRotation.x * player.Sensibility * Time.deltaTime);
-        
         Quaternion previousRotationInX = transform.rotation;
-        transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * Time.deltaTime);
+        Vector3 previousPositionInX = transform.position;
+        transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * Time.fixedDeltaTime);
 
-        if (transform.rotation.eulerAngles.x < xMinMaxRotation.x || transform.rotation.eulerAngles.x > xMinMaxRotation.y)
+        float angleInX = transform.rotation.eulerAngles.x;
+        
+        if ((angleInX > topMinMaxAngles.x && angleInX < topMinMaxAngles.y) ||
+            (angleInX > bottomMinMaxAngles.x && angleInX < bottomMinMaxAngles.y))
         {
             transform.rotation = previousRotationInX;
+            transform.position = previousPositionInX;
         }
+        
+        transform.RotateAround(target.position, Vector3.up, _desiredRotation.x * player.Sensibility * Time.fixedDeltaTime);
     }
 
     private void ModifyPosition()
