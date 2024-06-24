@@ -25,7 +25,10 @@ public class JumpCoinFactory
         GameObject instantiatedNote = GameObject.Instantiate(noteObject, parent.transform);
 
         SkinnedMeshRenderer renderer = instantiatedNote.GetComponentInChildren<SkinnedMeshRenderer>();
-        
+
+        instantiatedNote.AddComponent<HoveringCoin>();
+        instantiatedNote.GetComponent<HoveringCoin>().SetHoverSettings(_creationConfig.hoverVelocity, _creationConfig.hoverDistance);
+
         renderer.material = material;
         renderer.rootBone = parent.transform;
         
