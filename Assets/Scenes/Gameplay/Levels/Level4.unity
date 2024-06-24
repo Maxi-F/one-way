@@ -895,7 +895,7 @@ MonoBehaviour:
   OnFly:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7346907246542318172}
+      - m_Target: {fileID: 7346907246542318173}
         m_TargetAssemblyTypeName: CheatManager, Assembly-CSharp
         m_MethodName: ToggleFly
         m_Mode: 1
@@ -4080,17 +4080,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
---- !u!1 &7346907246542318172 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4908522634812977545, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
-  m_PrefabInstance: {fileID: 7346907246542318171}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7346907246542318173 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3553440793681036681, guid: fd4807b8d22fc8146a0d8bbdb8cab60d, type: 3}
   m_PrefabInstance: {fileID: 7346907246542318171}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7346907246542318172}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 260ebf0d81b1c7a438cbaf8e0266a0a6, type: 3}
