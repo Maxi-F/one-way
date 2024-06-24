@@ -11,22 +11,16 @@ public class JumpCoin : WithDebugRemover
     [Header("Coin config")]
     [SerializeField] private JumpCoinConfig config;
     
-    private Vector3 _center;
-    private GameObject _instantiatedNote;
-    private EventManager _eventManager;
-    private int _actualDirection = 1;
-    
+    private EventManager _eventManager;    
     
     public void Start()
     {
         RemoveDebug();
         _eventManager ??= FindObjectOfType<EventManager>();
         
-        JumpCoinFactory factory = new JumpCoinFactory(config);
+        JumpCoinFactory factory = new JumpCoinFactory(config, FindObjectOfType<Player>());
 
-        _instantiatedNote = factory.CreateJumpCoin(gameObject);
-
-        _center = _instantiatedNote.transform.position;
+        factory.CreateJumpCoin(gameObject);
     }
 
     public void OnTriggerEnter(Collider other)

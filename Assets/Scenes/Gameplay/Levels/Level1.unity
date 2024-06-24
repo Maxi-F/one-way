@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.76880455, g: 0.46603215, b: 0.38838986, a: 1}
+  m_IndirectSpecularColor: {r: 0.7688047, g: 0.46603203, b: 0.3883904, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2777,6 +2777,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4761180873234024286, guid: 1669c8e873b6a34439fec57135d78d83, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 541872690}
     - target: {fileID: 4937774414296246562, guid: 1669c8e873b6a34439fec57135d78d83, type: 3}
       propertyPath: m_Name
       value: CollectableCoinsManager

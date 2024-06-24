@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using PlayerScripts;
 using ScriptableObjects.Scripts;
 using UnityEngine;
 
 public class JumpCoinFactory
 {
     private JumpCoinConfig _creationConfig;
+    private Player _player;
 
-    public JumpCoinFactory(JumpCoinConfig config)
+    public JumpCoinFactory(JumpCoinConfig config, Player player)
     {
         _creationConfig = config;
+        _player = player;
     }
 
     /// <summary>
@@ -28,6 +31,8 @@ public class JumpCoinFactory
 
         instantiatedNote.AddComponent<HoveringCoin>();
         instantiatedNote.GetComponent<HoveringCoin>().SetHoverSettings(_creationConfig.hoverVelocity, _creationConfig.hoverDistance);
+        instantiatedNote.AddComponent<CoinLookAt>();
+        instantiatedNote.GetComponent<CoinLookAt>().SetTransform(_player.transform);
 
         renderer.material = material;
         renderer.rootBone = parent.transform;

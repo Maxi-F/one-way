@@ -48,8 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 27e8ca01658060e499c8389765da6b60, type: 2}
-  hoverVelocity: 0.5
-  hoverDistance: 0.2
 --- !u!136 &4582208022106610876
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using PlayerScripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class JumpCoinManager : MonoBehaviour
 {
     [SerializeField] private float secondsUntilEnableCoin = 4;
-    
+
     private EventManager _eventManager;
     
     private void Start()
