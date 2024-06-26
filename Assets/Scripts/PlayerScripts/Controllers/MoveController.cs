@@ -26,6 +26,7 @@ namespace PlayerScripts
 
         private Vector3 _obtainedDirection;
         private Vector3 _desiredDirection;
+
         private Vector3 _goalVelocity;
         private bool _shouldBrake;
         public Vector3 Direction
@@ -73,11 +74,11 @@ namespace PlayerScripts
             _desiredDirection.y = 0;
         }
 
-        private Vector3 GetForceToApply()
+        private Vector3 GetForceToApply(bool isInAir = false)
         {
             Vector3 unitVelocity = GetHorizontalVelocity().normalized;
 
-            float velocityDot = Vector3.Dot(_desiredDirection.normalized, unitVelocity);
+            float velocityDot = isInAir ? Vector3.Dot(_desiredDirection.normalized, unitVelocity) : 1;
             
             float accelerationToUse = acceleration * accelerationFactorFromDot.Evaluate(velocityDot);
 
@@ -115,6 +116,13 @@ namespace PlayerScripts
                 if(GetHorizontalVelocity().magnitude <= 0.0001f)
                     _shouldBrake = false;
             }
+        }
+
+        public void MovePlayerInAir()
+        {
+            Vector3 forceToApply = GetForceToApply(true);
+
+            _rigidbody.AddForce(forceToApply, ForceMode.Force);
         }
 
         public void OnDrawGizmos()
