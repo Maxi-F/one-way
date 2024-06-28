@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
@@ -10,8 +11,14 @@ public class WinBox : MonoBehaviour
     [SerializeField] private Material normalGuitar;
     [SerializeField] private bool isInitiallyActive = true;
     
-    [Header("Events")] [SerializeField] private UnityEvent onWinboxCollided;
+    [Header("Events")] 
+    [SerializeField] private UnityEvent onWinboxCollided;
 
+    [Header("Event names")]
+    [SerializeField] private string allCoinsCollectedEvent = "allCoinsCollected";
+
+    [SerializeField] private string playerDeathEvent = "playerDeath";
+    
     private bool _isActive;
     private Renderer _guitarRenderer;
     
@@ -20,11 +27,15 @@ public class WinBox : MonoBehaviour
         _guitarRenderer = gameObject.transform.GetChild(0).GetComponent<Renderer>();
 
         SetRenderedMaterial();
-
-        EventManager eventManager = FindObjectOfType<EventManager>();
         
-        eventManager.SubscribeTo("allCoinsCollected", OnCoinsCollected);
-        eventManager.SubscribeTo("playerDeath", OnReset);
+        EventManager.Instance.SubscribeTo(allCoinsCollectedEvent, OnCoinsCollected);
+        EventManager.Instance.SubscribeTo(playerDeathEvent, OnReset);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.UnsubscribeTo(allCoinsCollectedEvent, OnCoinsCollected);
+        EventManager.Instance.UnsubscribeTo(playerDeathEvent, OnReset);
     }
 
     void SetRenderedMaterial()

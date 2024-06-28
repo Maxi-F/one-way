@@ -60,7 +60,6 @@ public class CameraBehaviour : MonoBehaviour
     {
         _isController = isController;
 
-        Debug.Log(_isController);
         if (isController)
         {
             _desiredRotation = lookInput;

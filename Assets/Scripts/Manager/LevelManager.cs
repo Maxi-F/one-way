@@ -14,7 +14,15 @@ namespace Manager
         [SerializeField] private GameObject pauseCanvas;
         [SerializeField] private SliderBehaviour pauseSensibilitySlider;
         [SerializeField] private UnityEvent OnDeath;
+        
+        [Header("Events")]
         [SerializeField] private string playerDeathEvent = "playerDeath";
+        [SerializeField] private string menuActivatedEvent = "menuActivated";
+        [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
+        [SerializeField] private string sensibilityChangedEvent = "sensibilityChanged";
+
+        
+        [Header("MenuData")] [SerializeField] private string pauseMenuName = "pause";
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
@@ -23,13 +31,21 @@ namespace Manager
         void Start()
         {
             EventManager.Instance.SubscribeTo(playerDeathEvent, HandleDeath);
-
+            EventManager.Instance.SubscribeTo(sensibilityChangedEvent, SetSensibility);
+            
             _startingPosition = player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
-            player.Sensibility = _gameplayManager.GetSensibility();
-            pauseSensibilitySlider ??= GetComponent<SliderBehaviour>();
+
+            if (_gameplayManager == null)
+            {
+                Debug.LogWarning("Gameplaymanager not found. Sensibility not setted.");
+            }
+            else
+            {
+                player.Sensibility = _gameplayManager.GetSensibility();   
+            }
             
-            pauseSensibilitySlider.UseValue(player.Sensibility);
+            
             
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -41,6 +57,8 @@ namespace Manager
         private void OnDisable()
         {
             EventManager.Instance.UnsubscribeTo(playerDeathEvent, HandleDeath);
+            EventManager.Instance.SubscribeTo(sensibilityChangedEvent, SetSensibility);
+
         }
 
         public void HandleDeath(Dictionary<string, object> message)
@@ -66,8 +84,10 @@ namespace Manager
             _gameplayManager.BackToMenu();
         }
 
-        public void SetSensibility(float newSensibility)
+        public void SetSensibility(Dictionary<string, object> message)
         {
+            float newSensibility = (float)message["value"];
+            
             player.Sensibility = newSensibility;
             _gameplayManager.SetSensibility(newSensibility);
         }
@@ -77,7 +97,12 @@ namespace Manager
             if (_isPaused)
             {
                 Time.timeScale = 1f;
-                pauseCanvas.SetActive(false);
+                
+                EventManager.Instance.TriggerEvent(
+                    menuDeactivatedEvent,
+                    new Dictionary<string, object>() { { "name", pauseMenuName } }
+                    );
+                
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 _isPaused = false;
@@ -85,7 +110,12 @@ namespace Manager
             else
             {
                 Time.timeScale = 0f;
-                pauseCanvas.SetActive(true);
+                
+                EventManager.Instance.TriggerEvent(
+                    menuActivatedEvent,
+                    new Dictionary<string, object>() { { "name", pauseMenuName } }
+                );
+                
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
                 _isPaused = true;

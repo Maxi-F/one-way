@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace Manager
 {
     public class SceneryManager : MonoBehaviour
     {
-        [SerializeField] private string _initSceneName;
-        [SerializeField] private ScenesData _scenesData;
+        [SerializeField] private string initSceneName = "Menu";
+        [SerializeField] private ScenesData scenesData;
+        [SerializeField] private string allMenusScene;
         
         private readonly List<SerializableScene> _activeScenes = new List<SerializableScene>();
         
         public void InitScenes()
         {
-            LoadScene(_initSceneName);
+            LoadScene(allMenusScene);
+            LoadScene(initSceneName);
         }
 
         public void LoadScene(string sceneName)
@@ -27,7 +30,7 @@ namespace Manager
                 return;
             }
             
-            SerializableScene scene = _scenesData.GetSceneByName(sceneName);
+            SerializableScene scene = scenesData.GetSceneByName(sceneName);
             
             scene.OnSceneAdded?.Invoke();
             AddScene(scene);
@@ -35,7 +38,7 @@ namespace Manager
 
         public void UnloadScene(string aSceneName)
         {
-            SerializableScene aScene = _scenesData.GetSceneByName(aSceneName);
+            SerializableScene aScene = scenesData.GetSceneByName(aSceneName);
             
             if (_activeScenes.Exists(scene => scene.name == aScene.name))
             {
@@ -56,14 +59,14 @@ namespace Manager
 
         public void SubscribeEventToAddScene(string sceneName, Action action)
         {
-            SerializableScene aScene = _scenesData.GetSceneByName(sceneName);
+            SerializableScene aScene = scenesData.GetSceneByName(sceneName);
 
             aScene.OnSceneAdded += action;
         }
         
         public void UnsubscribeEventToAddScene(string sceneName, Action action)
         {
-            SerializableScene aScene = _scenesData.GetSceneByName(sceneName);
+            SerializableScene aScene = scenesData.GetSceneByName(sceneName);
 
             aScene.OnSceneAdded -= action;
         }

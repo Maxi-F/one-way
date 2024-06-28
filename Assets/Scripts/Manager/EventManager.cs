@@ -16,14 +16,12 @@ namespace Manager
             if (Instance == null)
             {
                 Instance = this;
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
-                Destroy(this);
+                Destroy(gameObject);
             }
-        
-        
-            DontDestroyOnLoad(this);
         
             _events = new Dictionary<string, Action<Dictionary<string, object>>>();
         }

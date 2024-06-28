@@ -27,11 +27,9 @@ namespace Input
         {
             Vector2 lookInput = context.ReadValue<Vector2>();
             
-            Debug.Log(context.control.device);
             OnLook?.Invoke(lookInput, context.control.device != Mouse.current);
         }
 
-        // asd
         public void HandleJumpInput(InputAction.CallbackContext context)
         {
             if(context.started)

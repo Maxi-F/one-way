@@ -8,7 +8,6 @@ using UnityEngine;
 public class CollectableCoinsManager : MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private float defaultYRotation = 90;
     [SerializeField] private string collectableCoinObtainedEvent = "collectableCoinObtained";
     [SerializeField] private string playerDeathEvent = "playerDeath";
     [SerializeField] private string allCoinsCollectedEvent = "allCoinsCollected";

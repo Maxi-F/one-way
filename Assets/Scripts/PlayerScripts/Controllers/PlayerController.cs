@@ -117,7 +117,6 @@ namespace PlayerScripts
 
         public void HandleDoubleJump()
         {
-            Debug.Log("Hello?");
             _isFalling = false;
         }
 

@@ -37,3 +37,6 @@ MonoBehaviour:
   - path: Assets/Scenes/Gameplay/Levels/Level4.unity
     name: Level4
     index: 7
+  - path: Assets/Scenes/AllMenus.unity
+    name: AllMenus
+    index: 8

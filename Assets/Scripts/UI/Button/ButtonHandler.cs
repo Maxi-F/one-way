@@ -9,7 +9,7 @@ namespace Button
     {
         private SceneryManager _sceneryManager;
         [SerializeField] private string sceneName;
-
+        [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
         private void Start()
         {
             _sceneryManager = FindObjectOfType<SceneryManager>();
@@ -24,6 +24,14 @@ namespace Button
             }
             
             _sceneryManager.LoadScene(sceneName);
+        }
+
+        public void Deactivate(string canvasName)
+        {
+            EventManager.Instance.TriggerEvent(
+                menuDeactivatedEvent,
+                new Dictionary<string, object>() { { "name", canvasName } }
+                );
         }
     }
     

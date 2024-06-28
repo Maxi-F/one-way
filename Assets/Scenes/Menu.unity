@@ -227,6 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1181565954}
   - component: {fileID: 1181565956}
+  - component: {fileID: 1181565957}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -265,6 +266,21 @@ MonoBehaviour:
   - Gameplay
   - Credits
   sceneName: Menu
+--- !u!114 &1181565957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181565953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e899ced2e91b542a80737ca1ed5ff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuName: menu
+  menuActivatedEvent: menuActivated
+  menuDeactivatedEvent: menuDeactivated
 --- !u!1 &1205396216
 GameObject:
   m_ObjectHideFlags: 0
