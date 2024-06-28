@@ -14,16 +14,15 @@ namespace Manager
         [SerializeField] private GameObject pauseCanvas;
         [SerializeField] private SliderBehaviour pauseSensibilitySlider;
         [SerializeField] private UnityEvent OnDeath;
+        [SerializeField] private string playerDeathEvent = "playerDeath";
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
-        private EventManager _eventManager;
         private bool _isPaused = false;
         
         void Start()
         {
-            _eventManager = FindObjectOfType<EventManager>();
-            _eventManager.SubscribeTo("playerDeath", HandleDeath);
+            EventManager.Instance.SubscribeTo(playerDeathEvent, HandleDeath);
 
             _startingPosition = player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
@@ -38,7 +37,12 @@ namespace Manager
             Time.timeScale = 1f;
             
         }
-    
+
+        private void OnDisable()
+        {
+            EventManager.Instance.UnsubscribeTo(playerDeathEvent, HandleDeath);
+        }
+
         public void HandleDeath(Dictionary<string, object> message)
         {
             player.transform.position = _startingPosition;

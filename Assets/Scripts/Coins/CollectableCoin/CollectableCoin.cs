@@ -1,26 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 
 public class CollectableCoin : WithDebugRemover
 {
-    private EventManager _eventManager;
+    [SerializeField] private string collectableCoinEvent = "collectableCoinObtained";
+    
     private void Start()
     {
         RemoveDebug();
-        
-        _eventManager = FindObjectOfType<EventManager>();
-
-        if (_eventManager == null)
-        {
-            Debug.LogError("Event manager is null");
-        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        _eventManager.TriggerEvent("collectableCoinObtained", null);
+        EventManager.Instance.TriggerEvent(collectableCoinEvent, null);
         
         gameObject.SetActive(false);
     }

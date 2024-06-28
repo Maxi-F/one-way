@@ -1,17 +1,20 @@
+using System;
 using PlayerScripts;
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 
 public class CollectableCoinsManager : MonoBehaviour
 {
     [SerializeField] private Player player;
     [SerializeField] private float defaultYRotation = 90;
-
+    [SerializeField] private string collectableCoinObtainedEvent = "collectableCoinObtained";
+    [SerializeField] private string playerDeathEvent = "playerDeath";
+    [SerializeField] private string allCoinsCollectedEvent = "allCoinsCollected";
+    
     private int _coinsObtained = 0;
     private CollectableCoin[] _collectableCoins;
-    private EventManager _eventManager;
-    
     void Start()
     {
         _collectableCoins = FindObjectsOfType<CollectableCoin>();
@@ -21,17 +24,15 @@ public class CollectableCoinsManager : MonoBehaviour
             CoinLookAt coinLookAt = collectableCoin.GetComponentInChildren<CoinLookAt>();
             coinLookAt.SetTransform(player.transform);
         }
-
-        _eventManager = FindObjectOfType<EventManager>();
-
-        if (_eventManager == null)
-        {
-            Debug.LogError("Event manager not found!");
-            return;
-        }//
         
-        _eventManager.SubscribeTo("collectableCoinObtained", OnCoinObtained);
-        _eventManager.SubscribeTo("playerDeath", OnReset);
+        EventManager.Instance.SubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
+        EventManager.Instance.SubscribeTo(playerDeathEvent, OnReset);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.UnsubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
+        EventManager.Instance.UnsubscribeTo(playerDeathEvent, OnReset);
     }
 
     void OnCoinObtained(Dictionary<string, object> message)
@@ -40,7 +41,7 @@ public class CollectableCoinsManager : MonoBehaviour
 
         if (_coinsObtained == _collectableCoins.Length)
         {
-            _eventManager.TriggerEvent("allCoinsCollected", null);
+            EventManager.Instance.TriggerEvent(allCoinsCollectedEvent, null);
         }
     }
 

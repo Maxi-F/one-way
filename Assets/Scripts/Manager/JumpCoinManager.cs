@@ -2,31 +2,29 @@ using PlayerScripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 
 public class JumpCoinManager : MonoBehaviour
 {
     [SerializeField] private float secondsUntilEnableCoin = 4;
-
-    private EventManager _eventManager;
+    [SerializeField] private string coinObtainedEvent = "coinObtained";
     
     private void Start()
     {
-        _eventManager ??= FindObjectOfType<EventManager>();
-        
-        _eventManager.SubscribeTo("coinObtained", OnCoinObtained);
+        EventManager.Instance.SubscribeTo(coinObtainedEvent, OnCoinObtained);
     }
 
     private void OnDisable()
     {
-        _eventManager.UnsubscribeTo("coinObtained", OnCoinObtained);
+        EventManager.Instance.UnsubscribeTo(coinObtainedEvent, OnCoinObtained);
     }
 
-    public void OnCoinObtained(Dictionary<string, object> message)
+    private void OnCoinObtained(Dictionary<string, object> message)
     {
-        GameObject gameObject = (GameObject)message["gameObject"];
+        GameObject aGameObject = (GameObject)message["gameObject"];
 
-        StartCoroutine(EnableCoin(gameObject));
+        StartCoroutine(EnableCoin(aGameObject));
     }
 
     IEnumerator EnableCoin(GameObject coinObject)

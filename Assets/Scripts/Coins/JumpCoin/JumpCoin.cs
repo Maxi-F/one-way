@@ -1,43 +1,41 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using PlayerScripts;
 using ScriptableObjects.Scripts;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class JumpCoin : WithDebugRemover
+namespace Coins.JumpCoin
 {
-    [Header("Coin config")]
-    [SerializeField] private JumpCoinConfig config;
-    
-    private EventManager _eventManager;    
-    
-    public void Start()
+    public class JumpCoin : WithDebugRemover
     {
-        RemoveDebug();
-        _eventManager ??= FindObjectOfType<EventManager>();
-        
-        JumpCoinFactory factory = new JumpCoinFactory(config, FindObjectOfType<Player>());
-
-        factory.CreateJumpCoin(gameObject);
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
+        [Header("Coin config")]
+        [SerializeField] private JumpCoinConfig config;
+    
+        public void Start()
         {
-            other.gameObject.GetComponent<PlayerController>().AddJump();
+            RemoveDebug();
+        
+            JumpCoinFactory factory = new JumpCoinFactory(config, FindObjectOfType<Player>());
 
-            _eventManager.TriggerEvent(
-                "coinObtained",
-                new Dictionary<string, object>()
-                {
-                    { "gameObject", gameObject }
-                });
+            factory.CreateJumpCoin(gameObject);
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                other.gameObject.GetComponent<PlayerController>().AddJump();
+
+                EventManager.Instance.TriggerEvent(
+                    "coinObtained",
+                    new Dictionary<string, object>()
+                    {
+                        { "gameObject", gameObject }
+                    });
             
             
-            gameObject.SetActive(false);
+                gameObject.SetActive(false);
+            }
         }
     }
 }
