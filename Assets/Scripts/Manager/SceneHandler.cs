@@ -9,7 +9,7 @@ namespace Manager
     {
         [SerializeField] private string[] scenesToSubscribeTo;
         [SerializeField] private string sceneName;
-        [SerializeField] private string[] optionalScenes  = new string[] {};
+        [SerializeField] private string[] optionalScenes = new string[] {};
         
         private SceneryManager _sceneryManager;
         

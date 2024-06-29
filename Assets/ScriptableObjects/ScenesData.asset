@@ -22,7 +22,7 @@ MonoBehaviour:
   - path: Assets/Scenes/Menu/Menu.unity
     name: Menu
     index: 2
-  - path: Assets/Scenes/Credits.unity
+  - path: Assets/Scenes/Credits/Credits.unity
     name: Credits
     index: 3
   - path: Assets/Scenes/Gameplay/Levels/Level1.unity
@@ -43,3 +43,6 @@ MonoBehaviour:
   - path: Assets/Scenes/Menu/MenuDesign.unity
     name: MenuDesign
     index: 9
+  - path: Assets/Scenes/Credits/CreditsDesign.unity
+    name: CreditsDesign
+    index: 10
