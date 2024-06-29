@@ -9,7 +9,8 @@ public class JumpCoinManager : MonoBehaviour
 {
     [SerializeField] private float secondsUntilEnableCoin = 4;
     [SerializeField] private string coinObtainedEvent = "coinObtained";
-    
+    [SerializeField] private string modifyJumpValuesEvent = "noteModified";
+
     private void Start()
     {
         EventManager.Instance.SubscribeTo(coinObtainedEvent, OnCoinObtained);
@@ -24,6 +25,8 @@ public class JumpCoinManager : MonoBehaviour
     {
         GameObject aGameObject = (GameObject)message["gameObject"];
 
+        EventManager.Instance.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", 1} });
+        
         StartCoroutine(EnableCoin(aGameObject));
     }
 

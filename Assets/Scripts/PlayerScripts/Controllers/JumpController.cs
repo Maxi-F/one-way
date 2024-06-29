@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -15,8 +16,9 @@ namespace PlayerScripts
         
         [Header("Events")]
         [SerializeField] private UnityEvent OnLand;
-
         [SerializeField] private UnityEvent OnDoubleJump;
+        [SerializeField] private string resetJumpValuesEvent = "initNotes";
+        [SerializeField] private string modifyJumpValuesEvent = "noteModified";
         
         private Rigidbody _rigidBody;
         private Player _player;
@@ -33,6 +35,8 @@ namespace PlayerScripts
         public void Start()
         {
             _jumpsLeft = maxDoubleJumpsFromGround;
+            
+            EventManager.Instance.TriggerEvent(resetJumpValuesEvent, new Dictionary<string, object>() { {"value", _jumpsLeft} } );
 
             _player ??= GetComponent<Player>();
             _rigidBody ??= GetComponent<Rigidbody>();
@@ -69,6 +73,9 @@ namespace PlayerScripts
         {
             _jumpsLeft = _groundController.IsOnGround() ? maxDoubleJumpsFromGround : maxDoubleJumpsFromGround - 1;
             
+            if(!_groundController.IsOnGround())
+                EventManager.Instance.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", -1} } );
+            
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;
         }
@@ -86,6 +93,8 @@ namespace PlayerScripts
         public void JumpFromAir()
         {
             _jumpsLeft--;
+            
+            EventManager.Instance.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", -1} } );
             
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;
@@ -105,6 +114,7 @@ namespace PlayerScripts
         public void ResetJumps()
         {
             _jumpsLeft = maxDoubleJumpsFromGround;
+            EventManager.Instance.TriggerEvent(resetJumpValuesEvent, new Dictionary<string, object>() { {"value", maxDoubleJumpsFromGround} } );
         }
 
         public void AddJump()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
