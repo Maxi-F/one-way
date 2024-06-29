@@ -61,9 +61,11 @@ public class EdgeGrabController : MonoBehaviour
     
     public void OnDrawGizmos()
     {
+        /*
         Gizmos.color = Color.blue;
             
         Gizmos.DrawLine(_edgeLineCastStart, _edgeLineCastEnd);
+        */
     }
 
     public void CheckEdge()
