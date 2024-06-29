@@ -64,7 +64,9 @@ public class GroundController : MonoBehaviour
     
     public void OnDrawGizmos()
     {
+        /*
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(feetPivot.position, Vector3.down * groundedRaycastDistance);
+        */
     }
 }

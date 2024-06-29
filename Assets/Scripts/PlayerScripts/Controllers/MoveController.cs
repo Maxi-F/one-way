@@ -127,6 +127,7 @@ namespace PlayerScripts
 
         public void OnDrawGizmos()
         {
+            /*
             if (Application.isPlaying)
             {
                 Gizmos.DrawLine(
@@ -136,6 +137,7 @@ namespace PlayerScripts
                     );
                 
             }
+            */
         }
     }
 }
