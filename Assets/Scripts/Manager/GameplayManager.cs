@@ -47,6 +47,10 @@ public class GameplayManager : MonoBehaviour
 
     public void HandleWin()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+        
+        // TODO win scene
         _sceneryManager.LoadScene(menuSceneName);
     }
 
@@ -71,5 +75,14 @@ public class GameplayManager : MonoBehaviour
     public float GetSensibility()
     {
         return _playerSettings.sensibility;
+    }
+
+    public void HandleLose()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+     
+        // TODO lose scene
+        _sceneryManager.LoadScene(menuSceneName);
     }
 }

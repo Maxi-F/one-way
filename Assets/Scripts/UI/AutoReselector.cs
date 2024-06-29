@@ -20,6 +20,7 @@ public class AutoReselector : MonoBehaviour
     {
         if (IsCanvasOpen)
         {
+            Debug.Log(eventSystem.currentSelectedGameObject);
             if (eventSystem.currentSelectedGameObject == null)
                 eventSystem.SetSelectedGameObject(_lastSelectedObject);
             else

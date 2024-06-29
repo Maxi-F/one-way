@@ -54,7 +54,7 @@ namespace Manager
         {
             Action<Dictionary<string, object>> anEvent = null;
             if (_events.TryGetValue(eventName, out anEvent)) {
-                anEvent.Invoke(message);
+                anEvent?.Invoke(message);
             }
         }
     }

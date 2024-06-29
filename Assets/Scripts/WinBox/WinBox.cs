@@ -16,8 +16,6 @@ public class WinBox : MonoBehaviour
 
     [Header("Event names")]
     [SerializeField] private string allCoinsCollectedEvent = "allCoinsCollected";
-
-    [SerializeField] private string playerDeathEvent = "playerDeath";
     
     private bool _isActive;
     private Renderer _guitarRenderer;
@@ -28,14 +26,12 @@ public class WinBox : MonoBehaviour
 
         SetRenderedMaterial();
         
-        EventManager.Instance.SubscribeTo(allCoinsCollectedEvent, OnCoinsCollected);
-        EventManager.Instance.SubscribeTo(playerDeathEvent, OnReset);
+        EventManager.Instance.SubscribeTo(allCoinsCollectedEvent, OnCoinsCollected); 
     }
 
     private void OnDisable()
     {
         EventManager.Instance.UnsubscribeTo(allCoinsCollectedEvent, OnCoinsCollected);
-        EventManager.Instance.UnsubscribeTo(playerDeathEvent, OnReset);
     }
 
     void SetRenderedMaterial()
@@ -52,13 +48,7 @@ public class WinBox : MonoBehaviour
     {
         _isActive = true;
         
-        // TODO Preguntar como mejorar esto mañana
         _guitarRenderer.material = normalGuitar;
-    }
-
-    void OnReset(Dictionary<string, object> message)
-    {
-        SetRenderedMaterial();
     }
     
     public void OnTriggerEnter(Collider other)

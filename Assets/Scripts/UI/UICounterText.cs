@@ -20,9 +20,21 @@ public class UICounterText : MonoBehaviour
     void OnEnable()
     {
         _textMesh ??= GetComponent<TextMeshProUGUI>();
-        EventManager.Instance.SubscribeTo(initValueEvent, InitValue);
-        EventManager.Instance.SubscribeTo(updateValueEvent, UpdateValue);
-        EventManager.Instance.SubscribeTo(resetValueEvent, ResetValue);
+
+        if (initValueEvent != null)
+        {
+            EventManager.Instance.SubscribeTo(initValueEvent, InitValue);
+        }
+
+        if (updateValueEvent != null)
+        {
+            EventManager.Instance.SubscribeTo(updateValueEvent, UpdateValue);
+        }
+
+        if (resetValueEvent != null)
+        {
+            EventManager.Instance.SubscribeTo(resetValueEvent, ResetValue);
+        }
 
         _actualValue = initValue;
         SetText();
@@ -30,9 +42,20 @@ public class UICounterText : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.Instance.UnsubscribeTo(updateValueEvent, UpdateValue);
-        EventManager.Instance.UnsubscribeTo(resetValueEvent, ResetValue);
-        EventManager.Instance.UnsubscribeTo(initValueEvent, InitValue);
+        if (initValueEvent != null)
+        {
+            EventManager.Instance.UnsubscribeTo(initValueEvent, InitValue);
+        }
+
+        if (updateValueEvent != null)
+        {
+            EventManager.Instance.UnsubscribeTo(updateValueEvent, UpdateValue);
+        }
+
+        if (resetValueEvent != null)
+        {
+            EventManager.Instance.UnsubscribeTo(resetValueEvent, ResetValue);
+        }
     }
 
     private void SetText()

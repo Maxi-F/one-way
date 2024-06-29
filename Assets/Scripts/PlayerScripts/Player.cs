@@ -11,13 +11,19 @@ namespace PlayerScripts
         [Header("PlayerData")]
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] WalkingBehaviour walkBehaviour;
+        [SerializeField] private int lives = 3;
+        [SerializeField] private int maxLives = 3;
         
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
         
-        public float Velocity { get { return _rigidbody.velocity.magnitude; } }
         public bool IsFlying { get; set; }
 
+        public int Lives
+        {
+            get { return lives; }
+        }
+        
         private Rigidbody _rigidbody;
         private bool _shouldStop = false;
         private MovementFSM _movementFSM;
@@ -32,6 +38,8 @@ namespace PlayerScripts
 
             IBehaviour[] behaviours = GetComponents<IBehaviour>();
             _movementFSM = new MovementFSM(behaviours, walkBehaviour);
+
+            lives = maxLives;
         }
 
         public Vector3 GetHorizontalVelocity()
@@ -106,6 +114,11 @@ namespace PlayerScripts
         public void Fly()
         {
             _movementFSM.changeStateTo(MovementBehaviour.Fly);
+        }
+
+        public void LoseLive()
+        {
+            lives--;
         }
     }
 }

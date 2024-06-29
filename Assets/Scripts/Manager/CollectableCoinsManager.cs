@@ -9,7 +9,7 @@ public class CollectableCoinsManager : MonoBehaviour
 {
     [SerializeField] private Player player;
     [SerializeField] private string collectableCoinObtainedEvent = "collectableCoinObtained";
-    [SerializeField] private string playerDeathEvent = "playerDeath";
+    [SerializeField] private string playerLostEvent = "playerLost";
     [SerializeField] private string allCoinsCollectedEvent = "allCoinsCollected";
     [SerializeField] private string collectableCoinsCountEvent = "collectableCoinsCount";
     
@@ -27,13 +27,13 @@ public class CollectableCoinsManager : MonoBehaviour
         
         EventManager.Instance.TriggerEvent(collectableCoinsCountEvent, new Dictionary<string, object>() { { "value", _collectableCoins.Length } });
         EventManager.Instance.SubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
-        EventManager.Instance.SubscribeTo(playerDeathEvent, OnReset);
+        EventManager.Instance.SubscribeTo(playerLostEvent, OnReset);
     }
 
     private void OnDisable()
     {
         EventManager.Instance.UnsubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
-        EventManager.Instance.UnsubscribeTo(playerDeathEvent, OnReset);
+        EventManager.Instance.UnsubscribeTo(playerLostEvent, OnReset);
     }
 
     void OnCoinObtained(Dictionary<string, object> message)

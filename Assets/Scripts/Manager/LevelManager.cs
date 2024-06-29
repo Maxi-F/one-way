@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Manager
 {
@@ -20,7 +21,7 @@ namespace Manager
         [SerializeField] private string menuActivatedEvent = "menuActivated";
         [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
         [SerializeField] private string sensibilityChangedEvent = "sensibilityChanged";
-        
+        [SerializeField] private string initPlayerLivesEvent = "initPlayerLives";
         
         [Header("MenuData")] 
         [SerializeField] private string pauseMenuName = "pause";
@@ -34,6 +35,7 @@ namespace Manager
         {
             EventManager.Instance.SubscribeTo(playerDeathEvent, HandleDeath);
             EventManager.Instance.SubscribeTo(sensibilityChangedEvent, SetSensibility);
+            EventManager.Instance.TriggerEvent(initPlayerLivesEvent, new Dictionary<string, object>() { { "value", player.Lives } });
             
             _startingPosition = player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
@@ -64,12 +66,26 @@ namespace Manager
 
         public void HandleDeath(Dictionary<string, object> message)
         {
+            player.LoseLive();
+
+            if (player.Lives == 0)
+            {
+                HandleLose();
+                
+                return;
+            }
+            
             player.transform.position = _startingPosition;
             
             OnDeath.Invoke();
             player.Stop();
         }
 
+        public void HandleLose()
+        {
+            _gameplayManager.HandleLose();
+        }
+        
         public void HandleWin()
         {
             _gameplayManager.LevelPassed(nextLevelName);
