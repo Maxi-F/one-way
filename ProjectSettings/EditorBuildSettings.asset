@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Gameplay/Gameplay.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/Menu/Menu.unity
     guid: d93b3528e27182446ab8336ed522d09a
   - enabled: 1
     path: Assets/Scenes/Credits.unity
@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AllMenus.unity
     guid: 7c5dca8ee0bcd6b4fa032af758416a61
+  - enabled: 1
+    path: Assets/Scenes/Menu/MenuDesign.unity
+    guid: abf2c24736c4a75458f19592dc0f49b8
   m_configObjects: {}

@@ -19,7 +19,7 @@ MonoBehaviour:
   - path: Assets/Scenes/Gameplay/Gameplay.unity
     name: Gameplay
     index: 1
-  - path: Assets/Scenes/Menu.unity
+  - path: Assets/Scenes/Menu/Menu.unity
     name: Menu
     index: 2
   - path: Assets/Scenes/Credits.unity
@@ -40,3 +40,6 @@ MonoBehaviour:
   - path: Assets/Scenes/AllMenus.unity
     name: AllMenus
     index: 8
+  - path: Assets/Scenes/Menu/MenuDesign.unity
+    name: MenuDesign
+    index: 9

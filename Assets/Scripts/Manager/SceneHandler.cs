@@ -9,13 +9,19 @@ namespace Manager
     {
         [SerializeField] private string[] scenesToSubscribeTo;
         [SerializeField] private string sceneName;
-
+        [SerializeField] private string[] optionalScenes  = new string[] {};
+        
         private SceneryManager _sceneryManager;
         
         private void OnEnable()
         {
             _sceneryManager = FindObjectOfType<SceneryManager>();
-            
+
+            foreach (var optionalScene in optionalScenes)
+            {
+                _sceneryManager.LoadScene(optionalScene);
+            }
+
             SubscribeToActions();
         }
 
@@ -43,6 +49,11 @@ namespace Manager
         private void UnloadScene()
         {
             _sceneryManager.UnloadScene(sceneName);
+
+            foreach (var optionalScene in optionalScenes)
+            {
+                _sceneryManager.UnloadScene(optionalScene);
+            }
         }
     }
 }
