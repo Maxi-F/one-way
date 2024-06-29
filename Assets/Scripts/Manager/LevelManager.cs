@@ -20,9 +20,11 @@ namespace Manager
         [SerializeField] private string menuActivatedEvent = "menuActivated";
         [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
         [SerializeField] private string sensibilityChangedEvent = "sensibilityChanged";
-
         
-        [Header("MenuData")] [SerializeField] private string pauseMenuName = "pause";
+        
+        [Header("MenuData")] 
+        [SerializeField] private string pauseMenuName = "pause";
+
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
@@ -58,7 +60,6 @@ namespace Manager
         {
             EventManager.Instance.UnsubscribeTo(playerDeathEvent, HandleDeath);
             EventManager.Instance.SubscribeTo(sensibilityChangedEvent, SetSensibility);
-
         }
 
         public void HandleDeath(Dictionary<string, object> message)

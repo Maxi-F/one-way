@@ -15,6 +15,12 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private string initLevelSceneName = "Level1";
     [SerializeField] private string menuSceneName = "Menu";
     [SerializeField] private string gameplaySceneName = "Gameplay";
+    [SerializeField] private string gameplayUIMenuName = "gameplayUI";
+
+    
+    [Header("Events")]
+    [SerializeField] private string menuActivatedEvent = "menuActivated";
+    [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
     
     void Awake()
     {
@@ -22,6 +28,13 @@ public class GameplayManager : MonoBehaviour
         _sceneryManager ??= FindObjectOfType<SceneryManager>();
         _sceneryManager.LoadScene(_activeLevelSceneName);
         _sceneryManager.SubscribeEventToAddScene(menuSceneName, UnloadGameplay);
+        
+        EventManager.Instance.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.TriggerEvent(menuDeactivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
     }
 
     public void LevelPassed(string nextLevel)

@@ -52,15 +52,5 @@ public class MenusManager : MonoBehaviour
         }
         
         menu.menuObject.SetActive(triggerValue);
-
-        AutoReselector reselector = menu.menuObject.GetComponentInChildren<AutoReselector>();
-
-        if (reselector == null)
-        {
-            Debug.LogError("Reselector not found.");
-            return;
-        }
-
-        reselector.IsCanvasOpen = triggerValue;
     }
 }

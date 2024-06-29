@@ -1238,6 +1238,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  allCoinsCollectedEvent: allCoinsCollected
+  playerDeathEvent: playerDeath
 --- !u!114 &897715161 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8523795145773584938, guid: 28e6adcb6e363ac499534431bd754217, type: 3}

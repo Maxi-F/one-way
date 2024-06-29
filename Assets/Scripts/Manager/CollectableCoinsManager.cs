@@ -11,6 +11,7 @@ public class CollectableCoinsManager : MonoBehaviour
     [SerializeField] private string collectableCoinObtainedEvent = "collectableCoinObtained";
     [SerializeField] private string playerDeathEvent = "playerDeath";
     [SerializeField] private string allCoinsCollectedEvent = "allCoinsCollected";
+    [SerializeField] private string collectableCoinsCountEvent = "collectableCoinsCount";
     
     private int _coinsObtained = 0;
     private CollectableCoin[] _collectableCoins;
@@ -24,6 +25,7 @@ public class CollectableCoinsManager : MonoBehaviour
             coinLookAt.SetTransform(player.transform);
         }
         
+        EventManager.Instance.TriggerEvent(collectableCoinsCountEvent, new Dictionary<string, object>() { { "value", _collectableCoins.Length } });
         EventManager.Instance.SubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
         EventManager.Instance.SubscribeTo(playerDeathEvent, OnReset);
     }

@@ -10,7 +10,8 @@ public class DeathBox : MonoBehaviour
 {
     private Plane _plane;
     
-    [SerializeField] Player player;
+    [SerializeField] private Player player;
+    [SerializeField] private string playerDeathEvent = "playerDeath";
     
     private void Start()
     {
@@ -21,7 +22,7 @@ public class DeathBox : MonoBehaviour
     {
         if (!_plane.GetSide(player.transform.position))
         {
-            EventManager.Instance.TriggerEvent("playerDeath", null);
+            EventManager.Instance.TriggerEvent(playerDeathEvent, null);
         }
     }
 }
