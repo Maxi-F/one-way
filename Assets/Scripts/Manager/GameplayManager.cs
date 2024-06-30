@@ -5,13 +5,14 @@ using Manager;
 using ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
+using PlayerSettings = ScriptableObjects.PlayerSettings;
 
 public class GameplayManager : MonoBehaviour
 {
     private string _activeLevelSceneName;
     private SceneryManager _sceneryManager;
     
-    [SerializeField] private SensibilitySettings _playerSettings;
+    [SerializeField] private PlayerSettings _playerSettings;
     [SerializeField] private string initLevelSceneName = "Level1";
     [SerializeField] private string menuSceneName = "Menu";
     [SerializeField] private string gameplaySceneName = "Gameplay";
@@ -74,22 +75,24 @@ public class GameplayManager : MonoBehaviour
 
     public void SetMusicVolume(float newMusicVolume)
     {
+        _playerSettings.musicVolume = newMusicVolume;
         PlayerPrefs.SetFloat("MusicVolume", newMusicVolume);
     }
 
     public float GetMusicVolume()
     {
-        return PlayerPrefs.GetFloat("MusicVolume");
+        return _playerSettings.musicVolume;
     }
     
     public void SetSoundVolume(float newMusicVolume)
     {
+        _playerSettings.sfxVolume = newMusicVolume;
         PlayerPrefs.SetFloat("SoundVolume", newMusicVolume);
     }
 
     public float GetSoundVolume()
     {
-        return PlayerPrefs.GetFloat("SoundVolume");
+        return _playerSettings.sfxVolume;
     }
 
     public float GetSensibility()

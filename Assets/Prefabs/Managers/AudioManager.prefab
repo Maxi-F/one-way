@@ -47,58 +47,74 @@ MonoBehaviour:
   musics:
   - name: music
     clip: {fileID: 8300000, guid: 0827871998af7de4fb3225a1fcd1719a, type: 3}
-    volume: 0.11
+    maxVolume: 1
     pitch: 1
     loop: 0
   sfxs:
   - name: walk
     clip: {fileID: 8300000, guid: 0efd7e507b3473c4b85d7cdd2eab9329, type: 3}
-    volume: 0.403
+    maxVolume: 1
     pitch: 1
     loop: 1
   - name: run
     clip: {fileID: 8300000, guid: 09958c80c6b5f7645845a622b493d10a, type: 3}
-    volume: 0.403
+    maxVolume: 1
     pitch: 1
     loop: 1
   - name: jump
     clip: {fileID: 8300000, guid: 0fc8a5777eba17f4aab158d589484bd8, type: 3}
-    volume: 0.6
+    maxVolume: 1
     pitch: 1
     loop: 0
   - name: doubleJump
     clip: {fileID: 8300000, guid: 5772a9b72f9a8d44c98a974ed180251b, type: 3}
-    volume: 0.6
+    maxVolume: 1
     pitch: 1
     loop: 0
   - name: star
     clip: {fileID: 8300000, guid: 3bcca28a18fd25d40a93870a7ee7d0cf, type: 3}
-    volume: 0.6
+    maxVolume: 1
     pitch: 1
     loop: 0
   - name: CNote
     clip: {fileID: 8300000, guid: 9f52506c39c276d4fa7f8899b8804224, type: 3}
-    volume: 0.6
+    maxVolume: 1
     pitch: 1
     loop: 0
   - name: BNote
     clip: {fileID: 8300000, guid: 77060ad0ebcffa940bab920e358a495c, type: 3}
-    volume: 0.6
+    maxVolume: 1
     pitch: 1
     loop: 0
   - name: ENote
     clip: {fileID: 8300000, guid: b838e78d8b63b9b4098f06fa5427d5da, type: 3}
-    volume: 0.6
+    maxVolume: 1
     pitch: 1
     loop: 0
   - name: GNote
     clip: {fileID: 8300000, guid: daa4d5ad60d01a940b4a4e9d5fc8482c, type: 3}
-    volume: 0.6
+    maxVolume: 1
     pitch: 1
     loop: 0
   - name: click
     clip: {fileID: 8300000, guid: 6a090c21d86375e42a90c6f316a418da, type: 3}
-    volume: 0.6
+    maxVolume: 1
+    pitch: 1
+    loop: 0
+  - name: allStarsCollected
+    clip: {fileID: 8300000, guid: af92b67140976b347aaf10de3002bfae, type: 3}
+    maxVolume: 1
+    pitch: 1
+    loop: 0
+  - name: nextLevel
+    clip: {fileID: 8300000, guid: 2b6cd4f7f79f3964fbf5756bf1ce29e8, type: 3}
+    maxVolume: 1
+    pitch: 1
+    loop: 0
+  - name: lostLife
+    clip: {fileID: 8300000, guid: 77ef3ac786c8275478b219480af2c0bf, type: 3}
+    maxVolume: 1
     pitch: 1
     loop: 0
   initMusic: music
+  playerSettings: {fileID: 11400000, guid: e672c3c5ea00bcb4388914d32839e6db, type: 2}

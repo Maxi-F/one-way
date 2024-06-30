@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Manager;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,6 +11,8 @@ public class WinBox : MonoBehaviour
     [SerializeField] private Material transparentGuitar;
     [SerializeField] private Material normalGuitar;
     [SerializeField] private bool isInitiallyActive = true;
+
+    [Header("Sounds")] [SerializeField] private string passLevelSound = "nextLevel";
     
     [Header("Events")] 
     [SerializeField] private UnityEvent onWinboxCollided;
@@ -53,7 +56,10 @@ public class WinBox : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
-        if(_isActive)
+        if (_isActive)
+        {
+            AudioManager.Instance.PlaySound(passLevelSound);            
             onWinboxCollided.Invoke();
+        }
     }
 }

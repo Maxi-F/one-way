@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class DeathBox : MonoBehaviour
     
     [SerializeField] private Player player;
     [SerializeField] private string playerDeathEvent = "playerDeath";
+    [SerializeField] private string lostLiveSound = "lostLife";
     
     private void Start()
     {
@@ -22,6 +24,7 @@ public class DeathBox : MonoBehaviour
     {
         if (!_plane.GetSide(player.transform.position))
         {
+            AudioManager.Instance.PlaySound(lostLiveSound);
             EventManager.Instance.TriggerEvent(playerDeathEvent, null);
         }
     }

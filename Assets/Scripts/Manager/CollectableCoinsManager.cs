@@ -12,6 +12,8 @@ public class CollectableCoinsManager : MonoBehaviour
 
     [Header("Sounds")] 
     [SerializeField] private string obtainStarSound = "star";
+
+    [SerializeField] private string allStarsCollectedSound = "allStarsCollected";
     
     [Header("Events")]
     [SerializeField] private string collectableCoinObtainedEvent = "collectableCoinObtained";
@@ -45,12 +47,15 @@ public class CollectableCoinsManager : MonoBehaviour
     void OnCoinObtained(Dictionary<string, object> message)
     {
         _coinsObtained++;
-        
-        AudioManager.Instance.PlaySound(obtainStarSound);
 
         if (_coinsObtained == _collectableCoins.Length)
         {
+            AudioManager.Instance.PlaySound(allStarsCollectedSound);
             EventManager.Instance.TriggerEvent(allCoinsCollectedEvent, null);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound(obtainStarSound);
         }
     }
 

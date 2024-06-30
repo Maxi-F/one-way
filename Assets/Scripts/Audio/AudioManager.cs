@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 
 namespace Audio
@@ -9,6 +10,9 @@ namespace Audio
         [SerializeField] private Sound[] musics;
         [SerializeField] private Sound[] sfxs;
         [SerializeField] private string initMusic;
+        
+        [Header("Settings")]
+        [SerializeField] private PlayerSettings playerSettings;
         
         public static AudioManager Instance;
         
@@ -31,11 +35,13 @@ namespace Audio
             foreach (Sound sound in musics)
             {
                 sound.GenerateAudioSource(gameObject.AddComponent<AudioSource>());
+                sound.SetVolume(playerSettings.musicVolume);
             }
             
             foreach (var sound in sfxs)
             {
                 sound.GenerateAudioSource(gameObject.AddComponent<AudioSource>());
+                sound.SetVolume(playerSettings.sfxVolume);
             }
         }
 

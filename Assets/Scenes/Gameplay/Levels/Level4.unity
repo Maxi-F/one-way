@@ -1640,6 +1640,7 @@ MonoBehaviour:
   transparentGuitar: {fileID: 2100000, guid: b60b62c177f43fe4f8381e8441696f89, type: 2}
   normalGuitar: {fileID: 2100000, guid: 03dcd475c05bea245892652d0afd874c, type: 2}
   isInitiallyActive: 0
+  passLevelSound: nextLevel
   onWinboxCollided:
     m_PersistentCalls:
       m_Calls:
@@ -1656,7 +1657,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   allCoinsCollectedEvent: allCoinsCollected
-  playerDeathEvent: playerDeath
 --- !u!114 &897715161 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8523795145773584938, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
@@ -2971,6 +2971,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 541872690}
+    - target: {fileID: 4130923573261338370, guid: 6739a95e9d3c7054f8182cdb2a5a5860, type: 3}
+      propertyPath: lostLiveSound
+      value: lostLife
+      objectReference: {fileID: 0}
     - target: {fileID: 4130923573261338370, guid: 6739a95e9d3c7054f8182cdb2a5a5860, type: 3}
       propertyPath: onHandleDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
