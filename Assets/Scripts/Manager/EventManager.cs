@@ -32,6 +32,14 @@ namespace Manager
             _events = new Dictionary<string, Action<Dictionary<string, object>>>();
         }
     
+        /// <summary>
+        /// Subscribes to an event on the event manager.
+        /// </summary>
+        /// <param name="anEventName">The event name key.</param>
+        /// <param name="listener">
+        /// The listener of the event. This listener must have a dictionary parameter, with which
+        /// you will be able to receive any data and parse it from the object type.
+        /// </param>
         public void SubscribeTo(string anEventName, Action<Dictionary<string, object>> listener) {
             Action<Dictionary<string, object>> anEvent;
         
@@ -47,6 +55,11 @@ namespace Manager
             }
         }
 
+        /// <summary>
+        /// Unsubscribes from the event with the event name key.
+        /// </summary>
+        /// <param name="eventName">The event name key</param>
+        /// <param name="listener">The listener of the event.</param>
         public void UnsubscribeTo(string eventName, Action<Dictionary<string, object>> listener)
         {
             Action<Dictionary<string, object>> anEvent;
@@ -56,6 +69,11 @@ namespace Manager
             }
         }
 
+        /// <summary>
+        /// Triggers an event using an event name.
+        /// </summary>
+        /// <param name="eventName">The event name key</param>
+        /// <param name="message">The message to send to the event, which has a format of a dictionary with key values.</param>
         public void TriggerEvent(string eventName, Dictionary<string, object> message)
         {
             Action<Dictionary<string, object>> anEvent = null;
