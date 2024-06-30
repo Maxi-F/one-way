@@ -8,11 +8,11 @@ namespace Manager
     public class SceneHandler : MonoBehaviour
     {
         [SerializeField] private string[] scenesToSubscribeTo;
-        [SerializeField] private string sceneName;
-        [SerializeField] private string[] optionalScenes = new string[] {};
+        [Tooltip("Current scene name")] [SerializeField] private string sceneName;
+        [Tooltip("Optional scenes to activate with the current scene")] [SerializeField] private string[] optionalScenes = new string[] {};
         
         private SceneryManager _sceneryManager;
-        // asd
+        
         private void OnEnable()
         {
             _sceneryManager = FindObjectOfType<SceneryManager>();
@@ -30,6 +30,9 @@ namespace Manager
             UnsubscribeToActions();
         }
 
+        /// <summary>
+        /// Subscribes to add scene event of the scenes to subscribe to.
+        /// </summary>
         private void SubscribeToActions()
         {
             Array.ForEach(scenesToSubscribeTo, (aSceneName) =>
@@ -38,6 +41,9 @@ namespace Manager
             });
         }
         
+        /// <summary>
+        /// Unsubscribes to add scene event of the scenes to subscribe to.
+        /// </summary>
         private void UnsubscribeToActions()
         {
             Array.ForEach(scenesToSubscribeTo, (aSceneName) =>
@@ -46,6 +52,9 @@ namespace Manager
             });
         }
         
+        /// <summary>
+        /// Unloads current scene and optional scenes.
+        /// </summary>
         private void UnloadScene()
         {
             _sceneryManager.UnloadScene(sceneName);
