@@ -1,112 +1,150 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Manager;
-using ScriptableObjects;
 using ScriptableObjects.Scripts;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class GameplayManager : MonoBehaviour
+namespace Manager
 {
-    private string _activeLevelSceneName;
-    private SceneryManager _sceneryManager;
-    
-    [FormerlySerializedAs("_playerSettings")] [SerializeField] private PlayerSettingsConfig playerSettingsConfig;
-    [SerializeField] private string initLevelSceneName = "Level1";
-    [SerializeField] private string menuSceneName = "Menu";
-    [SerializeField] private string gameplaySceneName = "Gameplay";
-    [SerializeField] private string gameplayUIMenuName = "gameplayUI";
-
-    
-    [Header("Events")]
-    [SerializeField] private string menuActivatedEvent = "menuActivated";
-    [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
-    
-    void Awake()
+    public class GameplayManager : MonoBehaviour
     {
-        _activeLevelSceneName = initLevelSceneName;
-        _sceneryManager ??= FindObjectOfType<SceneryManager>();
-        _sceneryManager.LoadScene(_activeLevelSceneName);
-        _sceneryManager.SubscribeEventToAddScene(menuSceneName, UnloadGameplay);
+        private string _activeLevelSceneName;
+        private SceneryManager _sceneryManager;
+    
+        [SerializeField] private PlayerSettingsConfig playerSettingsConfig;
         
-        EventManager.Instance?.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
-    }
+        [Header("SceneNames")]
+        [SerializeField] private string initLevelSceneName = "Level1";
+        [SerializeField] private string menuSceneName = "Menu";
+        [SerializeField] private string gameplaySceneName = "Gameplay";
+        [SerializeField] private string gameplayUIMenuName = "gameplayUI";
 
-    private void OnDisable()
-    {
-        EventManager.Instance?.TriggerEvent(menuDeactivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
-    }
-
-    public void LevelPassed(string nextLevel)
-    {
-        if (_activeLevelSceneName == nextLevel) return;
-        _sceneryManager.UnloadScene(_activeLevelSceneName);
-        _sceneryManager.LoadScene(nextLevel);
-        _activeLevelSceneName = nextLevel;
-    }
-
-    public void HandleWin()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
-        
-        // TODO win scene
-        _sceneryManager.LoadScene(menuSceneName);
-    }
-
-    private void UnloadGameplay()
-    {
-        _sceneryManager.UnloadScene(_activeLevelSceneName);
-        _sceneryManager.UnloadScene(gameplaySceneName);
-        _sceneryManager.UnsubscribeEventToAddScene(menuSceneName, UnloadGameplay);
-    }
-
-    public void BackToMenu()
-    {
-        _sceneryManager.LoadScene(menuSceneName);
-    }
-
-    public void SetSensibility(float newSensibility)
-    {
-        playerSettingsConfig.sensibility = newSensibility;
-        PlayerPrefs.SetFloat("Sensibility", playerSettingsConfig.sensibility);
-    }
-
-    public void SetMusicVolume(float newMusicVolume)
-    {
-        playerSettingsConfig.musicVolume = newMusicVolume;
-        PlayerPrefs.SetFloat("MusicVolume", newMusicVolume);
-    }
-
-    public float GetMusicVolume()
-    {
-        return playerSettingsConfig.musicVolume;
-    }
     
-    public void SetSoundVolume(float newMusicVolume)
-    {
-        playerSettingsConfig.sfxVolume = newMusicVolume;
-        PlayerPrefs.SetFloat("SoundVolume", newMusicVolume);
-    }
+        [Header("Events")]
+        [SerializeField] private string menuActivatedEvent = "menuActivated";
+        [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
+    
+        void Awake()
+        {
+            _activeLevelSceneName = initLevelSceneName;
+            _sceneryManager ??= FindObjectOfType<SceneryManager>();
+            _sceneryManager.LoadScene(_activeLevelSceneName);
+            _sceneryManager.SubscribeEventToAddScene(menuSceneName, UnloadGameplay);
+        
+            EventManager.Instance?.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
+        }
 
-    public float GetSoundVolume()
-    {
-        return playerSettingsConfig.sfxVolume;
-    }
+        private void OnDisable()
+        {
+            EventManager.Instance?.TriggerEvent(menuDeactivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
+        }
 
-    public float GetSensibility()
-    {
-        return playerSettingsConfig.sensibility;
-    }
+        /// <summary>
+        /// Changes the level scene, unloading current scene and
+        /// loading the next scene passed as a parameter
+        /// </summary>
+        /// <param name="nextLevel">The next level scene.</param>
+        public void LevelPassed(string nextLevel)
+        {
+            if (_activeLevelSceneName == nextLevel) return;
+            _sceneryManager.UnloadScene(_activeLevelSceneName);
+            _sceneryManager.LoadScene(nextLevel);
+            _activeLevelSceneName = nextLevel;
+        }
 
-    public void HandleLose()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
+        /// <summary>
+        /// Handles win behaviour.
+        /// </summary>
+        public void HandleWin()
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        
+            // TODO win scene
+            _sceneryManager.LoadScene(menuSceneName);
+        }
+
+        /// <summary>
+        /// Unloads the gameplay scenes.
+        /// </summary>
+        private void UnloadGameplay()
+        {
+            _sceneryManager.UnloadScene(_activeLevelSceneName);
+            _sceneryManager.UnloadScene(gameplaySceneName);
+            _sceneryManager.UnsubscribeEventToAddScene(menuSceneName, UnloadGameplay);
+        }
+
+        /// <summary>
+        /// Loads the menu scene.
+        /// </summary>
+        public void BackToMenu()
+        {
+            _sceneryManager.LoadScene(menuSceneName);
+        }
+
+        /// <summary>
+        /// Sets the new sensitivity on player prefs and player SO.
+        /// </summary>
+        public void SetSensibility(float newSensibility)
+        {
+            playerSettingsConfig.sensibility = newSensibility;
+            PlayerPrefs.SetFloat("Sensibility", playerSettingsConfig.sensibility);
+        }
+
+        /// <summary>
+        /// Sets the new music volume on player prefs and player SO.
+        /// </summary>
+        public void SetMusicVolume(float newMusicVolume)
+        {
+            playerSettingsConfig.musicVolume = newMusicVolume;
+            PlayerPrefs.SetFloat("MusicVolume", newMusicVolume);
+        }
+
+        /// <summary>
+        /// Get current music volume.
+        /// </summary>
+        /// <returns>Current music volume.</returns>
+        public float GetMusicVolume()
+        {
+            return playerSettingsConfig.musicVolume;
+        }
+    
+        /// <summary>
+        /// Sets the new sound volume on player prefs and player SO.
+        /// </summary>
+        public void SetSoundVolume(float newMusicVolume)
+        {
+            playerSettingsConfig.sfxVolume = newMusicVolume;
+            PlayerPrefs.SetFloat("SoundVolume", newMusicVolume);
+        }
+
+        /// <summary>
+        /// Get current SFX volume.
+        /// </summary>
+        /// <returns>Current SFX volume.</returns>
+        public float GetSoundVolume()
+        {
+            return playerSettingsConfig.sfxVolume;
+        }
+
+        /// <summary>
+        /// Get current Sensibility.
+        /// </summary>
+        /// <returns>Current Sensibility.</returns>
+        public float GetSensibility()
+        {
+            return playerSettingsConfig.sensibility;
+        }
+
+        /// <summary>
+        /// Handles lose behaviour.
+        /// </summary>
+        public void HandleLose()
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
      
-        // TODO lose scene
-        _sceneryManager.LoadScene(menuSceneName);
+            // TODO lose scene
+            _sceneryManager.LoadScene(menuSceneName);
+        }
     }
 }
