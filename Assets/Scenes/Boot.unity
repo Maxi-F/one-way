@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef1fa649a20808419823423e4d8f01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenesData: {fileID: 11400000, guid: 5538bcce7b2ee534fbc438a1d2b8a639, type: 2}
+  scenesDataConfig: {fileID: 11400000, guid: 5538bcce7b2ee534fbc438a1d2b8a639, type: 2}
   initScenes:
   - Managers
   - AllMenus
@@ -217,8 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e84189566ca58646861f431fa9699d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneryManager: {fileID: 369674541}
-  sensibilitySettings: {fileID: 11400000, guid: e672c3c5ea00bcb4388914d32839e6db, type: 2}
+  sceneryManager: {fileID: 369674541}
+  playerSettingsConfig: {fileID: 11400000, guid: e672c3c5ea00bcb4388914d32839e6db, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
