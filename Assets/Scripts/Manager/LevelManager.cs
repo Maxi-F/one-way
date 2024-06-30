@@ -23,6 +23,7 @@ namespace Manager
         [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
         [SerializeField] private string sensibilityChangedEvent = "sensibilityChanged";
         [SerializeField] private string initPlayerLivesEvent = "initPlayerLives";
+        [SerializeField] private string levelPassed = "levelPassed";
         
         [Header("MenuData")] 
         [SerializeField] private string pauseMenuName = "pause";
@@ -90,11 +91,13 @@ namespace Manager
         public void HandleWin()
         {
             _gameplayManager.LevelPassed(nextLevelName);
+            EventManager.Instance.TriggerEvent(levelPassed, null);
         }
 
         public void HandleWinGame()
         {
             _gameplayManager.HandleWin();
+            EventManager.Instance.TriggerEvent(levelPassed, null);
         }
 
         public void BackToMenu()

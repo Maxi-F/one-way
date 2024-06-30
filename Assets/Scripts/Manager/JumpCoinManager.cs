@@ -2,6 +2,7 @@ using PlayerScripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Coins.JumpCoin;
 using Manager;
 using UnityEngine;
 
@@ -34,6 +35,6 @@ public class JumpCoinManager : MonoBehaviour
     {
         yield return new WaitForSeconds(secondsUntilEnableCoin);
         
-        coinObject.SetActive(true);
+        coinObject.GetComponent<JumpCoin>().Enable();
     }
 }

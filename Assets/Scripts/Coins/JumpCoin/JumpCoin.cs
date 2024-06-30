@@ -15,16 +15,31 @@ namespace Coins.JumpCoin
         [SerializeField] private JumpCoinConfig config;
 
         private string _noteSound;
+        private GameObject _instantiatedNote;
+        private Player _player;
+        private JumpCoinFactory _jumpCoinFactory;
         
         public void Start()
         {
-            RemoveDebug();
-        
-            JumpCoinFactory factory = new JumpCoinFactory(config, FindObjectOfType<Player>());
-            
-            factory.CreateJumpCoin(gameObject);
+            _player = FindObjectOfType<Player>();
+            _jumpCoinFactory = new JumpCoinFactory(config);
 
-            _noteSound = config.sounds[Random.Range(0, config.sounds.Count - 1)];
+            if (_player == null)
+            {
+                Debug.LogError("Player not found from jump note!");
+                return;
+            }
+            
+            RemoveDebug();
+            
+            _jumpCoinFactory = new JumpCoinFactory(config);
+            
+            Enable();
+        }
+
+        void OnDisable()
+        {
+            JumpCoinPool.Instance.ReturnToPool(_instantiatedNote);
         }
 
         public void OnTriggerEnter(Collider other)
@@ -45,6 +60,17 @@ namespace Coins.JumpCoin
             
                 gameObject.SetActive(false);
             }
+        }
+
+        public void Enable()
+        {
+            _instantiatedNote = JumpCoinPool.Instance.GetPooledNote();
+            
+            _jumpCoinFactory.Activate(_instantiatedNote, gameObject, _player.transform);
+
+            _noteSound = config.sounds[Random.Range(0, config.sounds.Count - 1)];
+            
+            gameObject.SetActive(true);
         }
     }
 }

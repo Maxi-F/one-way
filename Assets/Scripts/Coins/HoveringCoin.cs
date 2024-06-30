@@ -15,6 +15,7 @@ public class HoveringCoin : MonoBehaviour
     {
         this.hoverVelocity = hoverVelocity;
         this.hoverDistance = hoverDistance;
+        _center = transform.position;
     }
 
     public void Start()

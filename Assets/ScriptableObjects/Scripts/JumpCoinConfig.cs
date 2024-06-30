@@ -8,7 +8,8 @@ namespace ScriptableObjects.Scripts
     {
         public List<GameObject> noteObjects = new List<GameObject>();
         public List<Material> materialsList = new List<Material>();
-
+        public Vector3 noteScale = new Vector3(2, 2, 2);
+        
         [Header("Sounds")] public List<string> sounds = new List<string>();
         
         [Header("Hover settings")]

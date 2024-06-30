@@ -1,42 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
-using PlayerScripts;
 using ScriptableObjects.Scripts;
 using UnityEngine;
 
-public class JumpCoinFactory
+namespace Coins.JumpCoin
 {
-    private JumpCoinConfig _creationConfig;
-    private Player _player;
-
-    public JumpCoinFactory(JumpCoinConfig config, Player player)
+    public class JumpCoinFactory
     {
-        _creationConfig = config;
-        _player = player;
-    }
+        private JumpCoinConfig _creationConfig;
 
-    /// <summary>
-    /// Creates a Jump coin using the jump coin config provided
-    /// </summary>
-    /// <param name="parent">parent object</param>
-    /// <returns></returns>
-    public GameObject CreateJumpCoin(GameObject parent)
-    {
-        GameObject noteObject = _creationConfig.noteObjects[Random.Range(0, _creationConfig.noteObjects.Count)];
-        Material material = _creationConfig.materialsList[Random.Range(0, _creationConfig.materialsList.Count)];
+        public JumpCoinFactory(JumpCoinConfig config)
+        {
+            _creationConfig = config;
+        }
 
-        GameObject instantiatedNote = GameObject.Instantiate(noteObject, parent.transform);
+        /// <summary>
+        /// Creates a Jump coin using the jump coin config provided
+        /// </summary>
+        /// <param name="parent">parent object</param>
+        /// <returns></returns>
+        public GameObject CreateJumpCoin()
+        {
+            GameObject noteObject = _creationConfig.noteObjects[Random.Range(0, _creationConfig.noteObjects.Count)];
+            Material material = _creationConfig.materialsList[Random.Range(0, _creationConfig.materialsList.Count)];
 
-        SkinnedMeshRenderer renderer = instantiatedNote.GetComponentInChildren<SkinnedMeshRenderer>();
+            GameObject instantiatedNote = GameObject.Instantiate(noteObject);
+            instantiatedNote.transform.localScale = _creationConfig.noteScale;
+            
+            SkinnedMeshRenderer renderer = instantiatedNote.GetComponentInChildren<SkinnedMeshRenderer>();
 
-        instantiatedNote.AddComponent<HoveringCoin>();
-        instantiatedNote.GetComponent<HoveringCoin>().SetHoverSettings(_creationConfig.hoverVelocity, _creationConfig.hoverDistance);
-        instantiatedNote.AddComponent<CoinLookAt>();
-        instantiatedNote.GetComponent<CoinLookAt>().SetTransform(_player.transform);
+            instantiatedNote.AddComponent<HoveringCoin>();
+            instantiatedNote.AddComponent<CoinLookAt>();
 
-        renderer.material = material;
-        renderer.rootBone = parent.transform;
+            renderer.material = material;
         
-        return instantiatedNote;
+            return instantiatedNote;
+        }
+
+        public void Activate(GameObject note, GameObject parent, Transform playerTransform)
+        {
+            SkinnedMeshRenderer renderer = note.GetComponentInChildren<SkinnedMeshRenderer>();
+
+            note.transform.position = parent.transform.position;
+            
+            note.GetComponent<CoinLookAt>().SetTransform(playerTransform);
+            note.GetComponent<HoveringCoin>().SetHoverSettings(_creationConfig.hoverVelocity, _creationConfig.hoverDistance);
+            
+            renderer.rootBone = parent.transform;
+            
+            note.SetActive(true);
+        }
     }
 }
