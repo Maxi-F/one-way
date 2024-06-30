@@ -1,56 +1,72 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Manager;
 using UnityEngine;
 
-[Serializable]
-public class MenuData
+namespace Manager
 {
-    public string name;
-    public GameObject menuObject;
-}
-
-public class MenusManager : MonoBehaviour
-{
-    [SerializeField] private MenuData[] menus;
-    [SerializeField] private string menuActivatedEvent = "menuActivated";
-    [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
-    
-    private void Start()
+    [Serializable]
+    public class MenuData
     {
-        EventManager.Instance?.SubscribeTo(menuActivatedEvent, ActivateMenu);
-        EventManager.Instance?.SubscribeTo(menuDeactivatedEvent, DeactivateMenu);
-
+        public string name;
+        public GameObject menuObject;
     }
 
-    private void OnDisable()
+    public class MenusManager : MonoBehaviour
     {
-        EventManager.Instance?.UnsubscribeTo(menuActivatedEvent, ActivateMenu);
-        EventManager.Instance?.UnsubscribeTo(menuDeactivatedEvent, DeactivateMenu);
-
-    }
-
-    private void ActivateMenu(Dictionary<string, object> message)
-    {
-        TriggerMenu((string)message["name"], true);
-    }
-    
-    private void DeactivateMenu(Dictionary<string, object> message)
-    {
-       TriggerMenu((string)message["name"], false);
-    }
-
-    private void TriggerMenu(string name, bool triggerValue)
-    {
-        MenuData menu = Array.Find(menus, aMenu => aMenu.name == name);
-
-        if (menu == null)
-        {
-            Debug.LogError($"Menu ${name} not found!");
-            return;
-        }
+        [SerializeField] private MenuData[] menus;
         
-        menu.menuObject.SetActive(triggerValue);
+        [Header("Events")]
+        [SerializeField] private string menuActivatedEvent = "menuActivated";
+        [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
+    
+        private void Start()
+        {
+            EventManager.Instance?.SubscribeTo(menuActivatedEvent, OnActivateMenu);
+            EventManager.Instance?.SubscribeTo(menuDeactivatedEvent, OnDeactivateMenu);
+
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance?.UnsubscribeTo(menuActivatedEvent, OnActivateMenu);
+            EventManager.Instance?.UnsubscribeTo(menuDeactivatedEvent, OnDeactivateMenu);
+
+        }
+
+        /// <summary>
+        /// Event that activates the menu passed from the message.
+        /// </summary>
+        /// <param name="message">dictionary with a key "name", and a value of a string (Name of the menu to activate).</param>
+        private void OnActivateMenu(Dictionary<string, object> message)
+        {
+            TriggerMenu((string)message["name"], true);
+        }
+    
+        /// <summary>
+        /// Event that deactivates the menu passed from the message.
+        /// </summary>
+        /// <param name="message">dictionary with a key "name", and a value of a string (Name of the menu to deactivate).</param>
+        private void OnDeactivateMenu(Dictionary<string, object> message)
+        {
+            TriggerMenu((string)message["name"], false);
+        }
+
+        /// <summary>
+        /// Triggers the menu active value, depending on trigger bool passed.
+        /// </summary>
+        /// <param name="menuName">name of the menu to trigger</param>
+        /// <param name="triggerValue">trigger boolean to activate or deactivate.</param>
+        private void TriggerMenu(string menuName, bool triggerValue)
+        {
+            MenuData menu = Array.Find(menus, aMenu => aMenu.name == menuName);
+
+            if (menu == null)
+            {
+                Debug.LogError($"Menu ${menuName} not found!");
+                return;
+            }
+        
+            menu.menuObject.SetActive(triggerValue);
+        }
     }
 }
