@@ -3,6 +3,8 @@ using PlayerScripts;
 using System.Collections;
 using System.Collections.Generic;
 using Audio;
+using Coins;
+using Coins.CollectableCoin;
 using Manager;
 using UnityEngine;
 

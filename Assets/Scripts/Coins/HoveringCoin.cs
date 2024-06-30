@@ -9,12 +9,21 @@ public class HoveringCoin : MonoBehaviour
     [SerializeField] private float hoverDistance = 0.2f;
 
     private Vector3 _center;
+    
+    /// <summary>
+    /// int that has a value of 1 or -1, depending on direction of the hover.
+    /// </summary>
     private int _actualDirection = 1;
 
-    public void SetHoverSettings(float hoverVelocity, float hoverDistance)
+    /// <summary>
+    /// Sets the new hover settings.
+    /// </summary>
+    /// <param name="newHoverVelocity">new hover velocity</param>
+    /// <param name="newHoverDistance">new hover distance</param>
+    public void SetHoverSettings(float newHoverVelocity, float newHoverDistance)
     {
-        this.hoverVelocity = hoverVelocity;
-        this.hoverDistance = hoverDistance;
+        this.hoverVelocity = newHoverVelocity;
+        this.hoverDistance = newHoverDistance;
         _center = transform.position;
     }
 

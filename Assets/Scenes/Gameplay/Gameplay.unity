@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountToPool: 20
-  jumpCoinConfig: {fileID: 11400000, guid: 27e8ca01658060e499c8389765da6b60, type: 2}
+  noteConfig: {fileID: 11400000, guid: 27e8ca01658060e499c8389765da6b60, type: 2}
   levelPassed: levelPassed
 --- !u!1 &2015105330
 GameObject:
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb9e09ef88dc1b48a59105189ea06b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerSettings: {fileID: 11400000, guid: e672c3c5ea00bcb4388914d32839e6db, type: 2}
+  playerSettingsConfig: {fileID: 11400000, guid: e672c3c5ea00bcb4388914d32839e6db, type: 2}
   initLevelSceneName: Level1
   menuSceneName: Menu
   gameplaySceneName: Gameplay

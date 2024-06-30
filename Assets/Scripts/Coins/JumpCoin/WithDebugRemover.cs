@@ -1,14 +1,20 @@
 using UnityEngine;
 
-public class WithDebugRemover : MonoBehaviour
+namespace Coins.JumpCoin
 {
-    protected void RemoveDebug()
+    public class WithDebugRemover : MonoBehaviour
     {
-        foreach (Transform child in transform)
+        /// <summary>
+        /// Removes the debug capsule that is used in the scene editor.
+        /// </summary>
+        protected void RemoveDebug()
         {
-            if (child.gameObject.CompareTag("Debug"))
+            foreach (Transform child in transform)
             {
-                child.gameObject.SetActive(false);
+                if (child.gameObject.CompareTag("Debug"))
+                {
+                    child.gameObject.SetActive(false);
+                }
             }
         }
     }

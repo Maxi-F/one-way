@@ -1,27 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Coins.JumpCoin;
 using Manager;
 using UnityEngine;
 
-public class CollectableCoin : WithDebugRemover
+namespace Coins.CollectableCoin
 {
-    [SerializeField] private string collectableCoinEvent = "collectableCoinObtained";
+    public class CollectableCoin : WithDebugRemover
+    {
+        [Header("Events")]
+        [SerializeField] private string collectableCoinEvent = "collectableCoinObtained";
     
-    private void Start()
-    {
-        RemoveDebug();
-    }
+        private void Start()
+        {
+            RemoveDebug();
+        }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        EventManager.Instance.TriggerEvent(collectableCoinEvent, null);
+        private void OnTriggerEnter(Collider other)
+        {
+            EventManager.Instance.TriggerEvent(collectableCoinEvent, null);
         
-        gameObject.SetActive(false);
-    }
+            gameObject.SetActive(false);
+        }
 
-    public void Reset()
-    {
-        gameObject.SetActive(true);
+        public void Reset()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

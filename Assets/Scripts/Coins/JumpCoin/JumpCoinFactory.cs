@@ -5,7 +5,7 @@ namespace Coins.JumpCoin
 {
     public class JumpCoinFactory
     {
-        private NoteConfig _creationConfig;
+        private readonly NoteConfig _creationConfig;
 
         public JumpCoinFactory(NoteConfig config)
         {
@@ -35,6 +35,12 @@ namespace Coins.JumpCoin
             return instantiatedNote;
         }
 
+        /// <summary>
+        /// Activates a jump coin, on a parent object and sets the player transform.
+        /// </summary>
+        /// <param name="note">note to activate</param>
+        /// <param name="parent">parent object to use to position the note</param>
+        /// <param name="playerTransform">player transform to set look at values</param>
         public void Activate(GameObject note, GameObject parent, Transform playerTransform)
         {
             SkinnedMeshRenderer renderer = note.GetComponentInChildren<SkinnedMeshRenderer>();

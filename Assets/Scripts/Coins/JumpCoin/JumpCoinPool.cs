@@ -1,84 +1,100 @@
-using System.Collections;
 using System.Collections.Generic;
-using Coins.JumpCoin;
 using Manager;
 using ScriptableObjects.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class JumpCoinPool : MonoBehaviour
+namespace Coins.JumpCoin
 {
-    [SerializeField] private int amountToPool = 20;
-    [FormerlySerializedAs("jumpCoinConfig")] [SerializeField] private NoteConfig noteConfig;
-    
-    [Header("Events")]
-    [SerializeField] private string levelPassed = "levelPassed";
-    
-    public static JumpCoinPool Instance;
-    
-    private List<GameObject> _pooledJumpCoins;
-    private JumpCoinFactory _jumpCoinFactory;
-    
-    void Awake()
+    public class JumpCoinPool : MonoBehaviour
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        } else
-        {
-            Destroy(gameObject);
-        }
-
-        _jumpCoinFactory = new JumpCoinFactory(noteConfig);
-        DontDestroyOnLoad(gameObject);
-    }
-
-    void OnEnable()
-    {
-        _pooledJumpCoins = new List<GameObject>();
-        for(int i = 0; i < amountToPool; i++)
-        {
-            CreateNote();
-        }
-        
-        EventManager.Instance.SubscribeTo(levelPassed, ClearPooledNotes);
-    }
+        [SerializeField] private int amountToPool = 20;
+        [SerializeField] private NoteConfig noteConfig;
     
-    public GameObject GetPooledNote()
-    {
-        for(int i = 0; i < amountToPool; i++)
+        [Header("Events")]
+        [SerializeField] private string levelPassed = "levelPassed";
+    
+        public static JumpCoinPool Instance;
+    
+        private List<GameObject> _pooledJumpCoins;
+        private JumpCoinFactory _jumpCoinFactory;
+    
+        void Awake()
         {
-            if(!_pooledJumpCoins[i].activeInHierarchy)
+            if(Instance == null)
             {
-                return _pooledJumpCoins[i];
+                Instance = this;
+            } else
+            {
+                Destroy(gameObject);
+            }
+
+            _jumpCoinFactory = new JumpCoinFactory(noteConfig);
+            DontDestroyOnLoad(gameObject);
+        }
+
+        void OnEnable()
+        {
+            _pooledJumpCoins = new List<GameObject>();
+            for(int i = 0; i < amountToPool; i++)
+            {
+                CreateNote();
+            }
+        
+            EventManager.Instance.SubscribeTo(levelPassed, ClearPooledNotes);
+        }
+    
+        /// <summary>
+        /// Obtains a pooled note from the notes pool.
+        /// </summary>
+        /// <returns>A Note gameobject.</returns>
+        public GameObject GetPooledNote()
+        {
+            for(int i = 0; i < amountToPool; i++)
+            {
+                if(!_pooledJumpCoins[i].activeInHierarchy)
+                {
+                    return _pooledJumpCoins[i];
+                }
+            }
+        
+            return CreateNote();
+        }
+
+        /// <summary>
+        /// Sets all notes as non active from the notes pool.
+        /// </summary>
+        public void ClearPooledNotes(Dictionary<string, object> message)
+        {
+            for (int i = 0; i < amountToPool; i++)
+            {
+                _pooledJumpCoins[i].SetActive(false);
             }
         }
-        
-        return CreateNote();
-    }
-
-    public void ClearPooledNotes(Dictionary<string, object> message)
-    {
-        for (int i = 0; i < amountToPool; i++)
-        {
-            _pooledJumpCoins[i].SetActive(false);
-        }
-    }
     
-    private GameObject CreateNote()
-    {
-        GameObject note = _jumpCoinFactory.CreateJumpCoin();
+        /// <summary>
+        /// Creates a note from the jump coin factory.
+        /// </summary>
+        /// <returns>A Note Gameobject.</returns>
+        private GameObject CreateNote()
+        {
+            GameObject note = _jumpCoinFactory.CreateJumpCoin();
             
-        note.SetActive(false);
+            note.SetActive(false);
             
-        _pooledJumpCoins.Add(note);
+            _pooledJumpCoins.Add(note);
 
-        return note;
-    }
+            return note;
+        }
 
-    public void ReturnToPool(GameObject instantiatedNote)
-    {
-        instantiatedNote.transform.SetParent(gameObject.transform);
-        instantiatedNote.SetActive(false);
+        /// <summary>
+        /// Returns a note to the pool, setting it as non active.
+        /// </summary>
+        /// <param name="instantiatedNote">Note to return to the pool.</param>
+        public void ReturnToPool(GameObject instantiatedNote)
+        {
+            instantiatedNote.transform.SetParent(gameObject.transform);
+            instantiatedNote.SetActive(false);
+        }
     }
 }

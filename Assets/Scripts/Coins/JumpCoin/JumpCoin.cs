@@ -62,6 +62,9 @@ namespace Coins.JumpCoin
             }
         }
 
+        /// <summary>
+        /// Enables the jump coin, using a pooled note from the notes pool.
+        /// </summary>
         public void Enable()
         {
             _instantiatedNote = JumpCoinPool.Instance.GetPooledNote();
