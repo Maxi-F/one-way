@@ -31,7 +31,7 @@ namespace PlayerScripts
             get { return lives; }
         }
         
-        private Rigidbody _rigidbody;
+        private Rigidbody _rigidBody;
         private bool _shouldStop = false;
         private MovementFSM _movementFSM;
         
@@ -40,7 +40,7 @@ namespace PlayerScripts
         
         public void Start()
         {
-            _rigidbody ??= GetComponent<Rigidbody>();
+            _rigidBody ??= GetComponent<Rigidbody>();
             _rotationBehaviour ??= GetComponent<RotationBehaviour>();
 
             IBehaviour[] behaviours = GetComponents<IBehaviour>();
@@ -49,32 +49,39 @@ namespace PlayerScripts
             lives = maxLives;
         }
 
+        /// <summary>
+        /// Returns the current player horizontal velocity.
+        /// </summary>
         public Vector3 GetHorizontalVelocity()
         {
-            Vector3 velocity = _rigidbody.velocity;
+            Vector3 velocity = _rigidBody.velocity;
             velocity.y = 0;
 
             return velocity;
         }
 
+        /// <summary>
+        /// Returns the current player horizontal velocity magnitude.
+        /// </summary>
         public float GetHorizontalVelocityMagnitude()
         {
             return GetHorizontalVelocity().magnitude;
         }
 
-        public float GetBoxSize()
-        {
-            return capsuleCollider.radius;
-        }
-
+        /// <summary>
+        /// Makes the player change its state to move.
+        /// </summary>
         public void TouchesGround()
         {
-            _movementFSM.changeStateTo(MovementBehaviour.Move);
+            _movementFSM.ChangeStateTo(MovementBehaviour.Move);
         }
 
+        /// <summary>
+        /// Makes the player change its state to jump.
+        /// </summary>
         public void Jump()
         {
-            _movementFSM.changeStateTo(MovementBehaviour.Jump);
+            _movementFSM.ChangeStateTo(MovementBehaviour.Jump);
         }
         
         public void Update()
@@ -87,7 +94,7 @@ namespace PlayerScripts
         {
             if (_shouldStop)
             {
-                _rigidbody.AddForce(-_rigidbody.velocity, ForceMode.Impulse);
+                _rigidBody.AddForce(-_rigidBody.velocity, ForceMode.Impulse);
                 _shouldStop = false;
             }
             else {
@@ -95,34 +102,45 @@ namespace PlayerScripts
             }
         }
 
+        /// <summary>
+        /// Makes the player stop movement.
+        /// </summary>
         public void Stop()
         {
             _shouldStop = true;
         }
 
+        /// <summary>
+        /// Checks if player is edge grabbing or not.
+        /// </summary>
         public bool IsEdgeGrabbing()
         {
             return _movementFSM.IsCurrentBehaviour(MovementBehaviour.EdgeGrab);
         }
 
-        public void SetGravity(bool active)
-        {
-            _rigidbody.useGravity = active;
-        }
-
+        
+        /// <summary>
+        /// Makes the player edge grab if it was not edge grabbing before.
+        /// </summary>
         public void EdgeGrab()
         {
             if (!IsEdgeGrabbing())
             {
-                _movementFSM.changeStateTo(MovementBehaviour.EdgeGrab);
+                _movementFSM.ChangeStateTo(MovementBehaviour.EdgeGrab);
             }
         }
 
+        /// <summary>
+        /// Changes the player state to fly.
+        /// </summary>
         public void Fly()
         {
-            _movementFSM.changeStateTo(MovementBehaviour.Fly);
+            _movementFSM.ChangeStateTo(MovementBehaviour.Fly);
         }
 
+        /// <summary>
+        /// makes a player lose a life
+        /// </summary>
         public void LoseLive()
         {
             lives--;

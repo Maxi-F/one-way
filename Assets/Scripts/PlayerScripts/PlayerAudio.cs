@@ -11,6 +11,7 @@ namespace PlayerScripts
         private Player _player;
         private bool _isPaused = false;
         
+        [Header("Sounds")]
         [SerializeField] private string walkSound = "walk";
         [SerializeField] private string runSound = "run";
         [SerializeField] private string jumpSound = "jump";
@@ -35,6 +36,9 @@ namespace PlayerScripts
             EventManager.Instance?.UnsubscribeTo(menuDeactivatedEvent, OnUnpause);
         }
 
+        /// <summary>
+        /// Event that listens to pause event to pause playing sounds.
+        /// </summary>
         private void OnPause(Dictionary<string, object> message)
         {
             if ((string)message["name"] == pauseMenuName)
@@ -43,6 +47,9 @@ namespace PlayerScripts
             }
         }
         
+        /// <summary>
+        /// Event that listens to pause event to resume playing sounds.
+        /// </summary>
         private void OnUnpause(Dictionary<string, object> message)
         {
             if (message.ContainsKey("isDeactivating") && (bool)message["isDeactivating"]) return;
@@ -52,6 +59,9 @@ namespace PlayerScripts
             }
         }
 
+        /// <summary>
+        /// Handles Walk sounds or running sounds.
+        /// </summary>
         public void OnWalk()
         {
             if (_isPaused) return;
@@ -77,6 +87,9 @@ namespace PlayerScripts
             }
         }
 
+        /// <summary>
+        /// Handles stop walking sounds.
+        /// </summary>
         public void OnStopWalk()
         {
             if (_isPaused) return;
@@ -85,6 +98,9 @@ namespace PlayerScripts
             AudioManager.Instance?.StopSound(runSound);
         }
 
+        /// <summary>
+        /// Handles jump sounds.
+        /// </summary>
         public void OnJump()
         {
             if (_isPaused) return;
@@ -95,6 +111,9 @@ namespace PlayerScripts
             AudioManager.Instance?.PlaySound(jumpSound);
         }
 
+        /// <summary>
+        /// Handles double jump sounds
+        /// </summary>
         public void OnDoubleJump()
         {
             if (_isPaused) return;
