@@ -47,7 +47,7 @@ MonoBehaviour:
   musics:
   - name: music
     clip: {fileID: 8300000, guid: 0827871998af7de4fb3225a1fcd1719a, type: 3}
-    volume: 0.515
+    volume: 0.11
     pitch: 1
     loop: 0
   sfxs:
@@ -68,6 +68,31 @@ MonoBehaviour:
     loop: 0
   - name: doubleJump
     clip: {fileID: 8300000, guid: 5772a9b72f9a8d44c98a974ed180251b, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+  - name: star
+    clip: {fileID: 8300000, guid: 3bcca28a18fd25d40a93870a7ee7d0cf, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+  - name: CNote
+    clip: {fileID: 8300000, guid: 9f52506c39c276d4fa7f8899b8804224, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+  - name: BNote
+    clip: {fileID: 8300000, guid: 77060ad0ebcffa940bab920e358a495c, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+  - name: ENote
+    clip: {fileID: 8300000, guid: b838e78d8b63b9b4098f06fa5427d5da, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+  - name: GNote
+    clip: {fileID: 8300000, guid: daa4d5ad60d01a940b4a4e9d5fc8482c, type: 3}
     volume: 0.6
     pitch: 1
     loop: 0

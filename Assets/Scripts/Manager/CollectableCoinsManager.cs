@@ -2,12 +2,18 @@ using System;
 using PlayerScripts;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Manager;
 using UnityEngine;
 
 public class CollectableCoinsManager : MonoBehaviour
 {
     [SerializeField] private Player player;
+
+    [Header("Sounds")] 
+    [SerializeField] private string obtainStarSound = "star";
+    
+    [Header("Events")]
     [SerializeField] private string collectableCoinObtainedEvent = "collectableCoinObtained";
     [SerializeField] private string playerLostEvent = "playerLost";
     [SerializeField] private string allCoinsCollectedEvent = "allCoinsCollected";
@@ -39,6 +45,8 @@ public class CollectableCoinsManager : MonoBehaviour
     void OnCoinObtained(Dictionary<string, object> message)
     {
         _coinsObtained++;
+        
+        AudioManager.Instance.PlaySound(obtainStarSound);
 
         if (_coinsObtained == _collectableCoins.Length)
         {
