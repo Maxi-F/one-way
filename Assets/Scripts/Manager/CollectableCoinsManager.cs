@@ -12,7 +12,6 @@ public class CollectableCoinsManager : MonoBehaviour
 
     [Header("Sounds")] 
     [SerializeField] private string obtainStarSound = "star";
-
     [SerializeField] private string allStarsCollectedSound = "allStarsCollected";
     
     [Header("Events")]
