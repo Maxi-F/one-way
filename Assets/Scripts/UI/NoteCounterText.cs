@@ -17,14 +17,14 @@ public class NoteCounterText : MonoBehaviour
     {
         _textMesh ??= GetComponent<TextMeshProUGUI>();
         
-        EventManager.Instance.SubscribeTo(noteModifiedEvent, ModifyNotes);
-        EventManager.Instance.SubscribeTo(initNotesEvent, InitNotes);
+        EventManager.Instance?.SubscribeTo(noteModifiedEvent, ModifyNotes);
+        EventManager.Instance?.SubscribeTo(initNotesEvent, InitNotes);
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.UnsubscribeTo(noteModifiedEvent, ModifyNotes);
-        EventManager.Instance.UnsubscribeTo(initNotesEvent, InitNotes);
+        EventManager.Instance?.UnsubscribeTo(noteModifiedEvent, ModifyNotes);
+        EventManager.Instance?.UnsubscribeTo(initNotesEvent, InitNotes);
     }
 
     void InitNotes(Dictionary<string, object> message)

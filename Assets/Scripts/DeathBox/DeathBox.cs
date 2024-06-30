@@ -28,8 +28,8 @@ public class DeathBox : MonoBehaviour
     {
         if (!_plane.GetSide(player.transform.position))
         {
-            AudioManager.Instance.PlaySound(lostLiveSound);
-            EventManager.Instance.TriggerEvent(playerDeathEvent, null);
+            AudioManager.Instance?.PlaySound(lostLiveSound);
+            EventManager.Instance?.TriggerEvent(playerDeathEvent, null);
         }
     }
 }

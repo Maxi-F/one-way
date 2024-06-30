@@ -31,12 +31,12 @@ public class GameplayManager : MonoBehaviour
         _sceneryManager.LoadScene(_activeLevelSceneName);
         _sceneryManager.SubscribeEventToAddScene(menuSceneName, UnloadGameplay);
         
-        EventManager.Instance.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
+        EventManager.Instance?.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.TriggerEvent(menuDeactivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
+        EventManager.Instance?.TriggerEvent(menuDeactivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
     }
 
     public void LevelPassed(string nextLevel)

@@ -23,7 +23,7 @@ namespace UI
 
         public void OnValueChange(float value)
         {
-            EventManager.Instance.TriggerEvent(sensibilityChangedEvent, new Dictionary<string, object>() { { "value", value } });
+            EventManager.Instance?.TriggerEvent(sensibilityChangedEvent, new Dictionary<string, object>() { { "value", value } });
         }
     }
 }

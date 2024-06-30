@@ -34,15 +34,15 @@ public class CollectableCoinsManager : MonoBehaviour
             coinLookAt.SetTransform(player.transform);
         }
         
-        EventManager.Instance.TriggerEvent(collectableCoinsCountEvent, new Dictionary<string, object>() { { "value", _collectableCoins.Length } });
-        EventManager.Instance.SubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
-        EventManager.Instance.SubscribeTo(playerLostEvent, OnReset);
+        EventManager.Instance?.TriggerEvent(collectableCoinsCountEvent, new Dictionary<string, object>() { { "value", _collectableCoins.Length } });
+        EventManager.Instance?.SubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
+        EventManager.Instance?.SubscribeTo(playerLostEvent, OnReset);
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.UnsubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
-        EventManager.Instance.UnsubscribeTo(playerLostEvent, OnReset);
+        EventManager.Instance?.UnsubscribeTo(collectableCoinObtainedEvent, OnCoinObtained);
+        EventManager.Instance?.UnsubscribeTo(playerLostEvent, OnReset);
     }
 
     void OnCoinObtained(Dictionary<string, object> message)
@@ -51,12 +51,12 @@ public class CollectableCoinsManager : MonoBehaviour
 
         if (_coinsObtained == _collectableCoins.Length)
         {
-            AudioManager.Instance.PlaySound(allStarsCollectedSound);
-            EventManager.Instance.TriggerEvent(allCoinsCollectedEvent, null);
+            AudioManager.Instance?.PlaySound(allStarsCollectedSound);
+            EventManager.Instance?.TriggerEvent(allCoinsCollectedEvent, null);
         }
         else
         {
-            AudioManager.Instance.PlaySound(obtainStarSound);
+            AudioManager.Instance?.PlaySound(obtainStarSound);
         }
     }
 

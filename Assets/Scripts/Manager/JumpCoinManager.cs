@@ -14,19 +14,19 @@ public class JumpCoinManager : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.SubscribeTo(coinObtainedEvent, OnCoinObtained);
+        EventManager.Instance?.SubscribeTo(coinObtainedEvent, OnCoinObtained);
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.UnsubscribeTo(coinObtainedEvent, OnCoinObtained);
+        EventManager.Instance?.UnsubscribeTo(coinObtainedEvent, OnCoinObtained);
     }
 
     private void OnCoinObtained(Dictionary<string, object> message)
     {
         GameObject aGameObject = (GameObject)message["gameObject"];
 
-        EventManager.Instance.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", 1} });
+        EventManager.Instance?.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", 1} });
         
         StartCoroutine(EnableCoin(aGameObject));
     }

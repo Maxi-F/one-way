@@ -21,7 +21,13 @@ namespace Audio
         [Header("Settings")]
         [SerializeField] private PlayerSettingsConfig playerSettingsConfig;
         
-        public static AudioManager Instance;
+        private static AudioManager _instance;
+        public static AudioManager Instance
+        {
+            // checks with null because if object is destroyed it returns true but object is not null.
+            get { return _instance == null ? null : _instance; }
+            private set { _instance = value; }
+        }
         
         private Stack<List<Sound>> _pauseStack;
 

@@ -23,17 +23,17 @@ public class UICounterText : MonoBehaviour
 
         if (initValueEvent != null)
         {
-            EventManager.Instance.SubscribeTo(initValueEvent, InitValue);
+            EventManager.Instance?.SubscribeTo(initValueEvent, InitValue);
         }
 
         if (updateValueEvent != null)
         {
-            EventManager.Instance.SubscribeTo(updateValueEvent, UpdateValue);
+            EventManager.Instance?.SubscribeTo(updateValueEvent, UpdateValue);
         }
 
         if (resetValueEvent != null)
         {
-            EventManager.Instance.SubscribeTo(resetValueEvent, ResetValue);
+            EventManager.Instance?.SubscribeTo(resetValueEvent, ResetValue);
         }
 
         _actualValue = initValue;
@@ -44,17 +44,17 @@ public class UICounterText : MonoBehaviour
     {
         if (initValueEvent != null)
         {
-            EventManager.Instance.UnsubscribeTo(initValueEvent, InitValue);
+            EventManager.Instance?.UnsubscribeTo(initValueEvent, InitValue);
         }
 
         if (updateValueEvent != null)
         {
-            EventManager.Instance.UnsubscribeTo(updateValueEvent, UpdateValue);
+            EventManager.Instance?.UnsubscribeTo(updateValueEvent, UpdateValue);
         }
 
         if (resetValueEvent != null)
         {
-            EventManager.Instance.UnsubscribeTo(resetValueEvent, ResetValue);
+            EventManager.Instance?.UnsubscribeTo(resetValueEvent, ResetValue);
         }
     }
 

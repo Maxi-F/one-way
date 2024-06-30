@@ -36,7 +36,7 @@ namespace PlayerScripts
         {
             _jumpsLeft = maxDoubleJumpsFromGround;
             
-            EventManager.Instance.TriggerEvent(resetJumpValuesEvent, new Dictionary<string, object>() { {"value", _jumpsLeft} } );
+            EventManager.Instance?.TriggerEvent(resetJumpValuesEvent, new Dictionary<string, object>() { {"value", _jumpsLeft} } );
 
             _player ??= GetComponent<Player>();
             _rigidBody ??= GetComponent<Rigidbody>();
@@ -74,7 +74,7 @@ namespace PlayerScripts
             _jumpsLeft = _groundController.IsOnGround() ? maxDoubleJumpsFromGround : maxDoubleJumpsFromGround - 1;
             
             if(!_groundController.IsOnGround())
-                EventManager.Instance.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", -1} } );
+                EventManager.Instance?.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", -1} } );
             
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;
@@ -94,7 +94,7 @@ namespace PlayerScripts
         {
             _jumpsLeft--;
             
-            EventManager.Instance.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", -1} } );
+            EventManager.Instance?.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", -1} } );
             
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;
@@ -114,7 +114,7 @@ namespace PlayerScripts
         public void ResetJumps()
         {
             _jumpsLeft = maxDoubleJumpsFromGround;
-            EventManager.Instance.TriggerEvent(resetJumpValuesEvent, new Dictionary<string, object>() { {"value", maxDoubleJumpsFromGround} } );
+            EventManager.Instance?.TriggerEvent(resetJumpValuesEvent, new Dictionary<string, object>() { {"value", maxDoubleJumpsFromGround} } );
         }
 
         public void AddJump()

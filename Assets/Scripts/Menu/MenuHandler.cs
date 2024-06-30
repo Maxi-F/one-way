@@ -12,11 +12,11 @@ public class MenuHandler : MonoBehaviour
     
     void Start()
     {
-        EventManager.Instance.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", menuName } });
+        EventManager.Instance?.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", menuName } });
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.TriggerEvent(menuDeactivatedEvent, new Dictionary<string, object>() { { "name", menuName } });
+        EventManager.Instance?.TriggerEvent(menuDeactivatedEvent, new Dictionary<string, object>() { { "name", menuName } });
     }
 }

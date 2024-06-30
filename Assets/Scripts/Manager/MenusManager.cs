@@ -19,15 +19,15 @@ public class MenusManager : MonoBehaviour
     
     private void Start()
     {
-        EventManager.Instance.SubscribeTo(menuActivatedEvent, ActivateMenu);
-        EventManager.Instance.SubscribeTo(menuDeactivatedEvent, DeactivateMenu);
+        EventManager.Instance?.SubscribeTo(menuActivatedEvent, ActivateMenu);
+        EventManager.Instance?.SubscribeTo(menuDeactivatedEvent, DeactivateMenu);
 
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.UnsubscribeTo(menuActivatedEvent, ActivateMenu);
-        EventManager.Instance.UnsubscribeTo(menuDeactivatedEvent, DeactivateMenu);
+        EventManager.Instance?.UnsubscribeTo(menuActivatedEvent, ActivateMenu);
+        EventManager.Instance?.UnsubscribeTo(menuDeactivatedEvent, DeactivateMenu);
 
     }
 

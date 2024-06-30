@@ -16,7 +16,7 @@ namespace Coins.CollectableCoin
 
         private void OnTriggerEnter(Collider other)
         {
-            EventManager.Instance.TriggerEvent(collectableCoinEvent, null);
+            EventManager.Instance?.TriggerEvent(collectableCoinEvent, null);
         
             gameObject.SetActive(false);
         }

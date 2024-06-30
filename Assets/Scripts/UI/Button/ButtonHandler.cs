@@ -27,13 +27,13 @@ namespace Button
                 return;
             }
             
-            AudioManager.Instance.PlaySound(clickSound);
+            AudioManager.Instance?.PlaySound(clickSound);
             _sceneryManager.LoadScene(sceneName);
         }
 
         public void Deactivate(string canvasName)
         {
-            EventManager.Instance.TriggerEvent(
+            EventManager.Instance?.TriggerEvent(
                 menuDeactivatedEvent,
                 new Dictionary<string, object>() { { "name", canvasName }, { "isDeactivating", true } }
                 );

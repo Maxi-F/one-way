@@ -12,7 +12,7 @@ namespace Button
         {
             LevelManager levelManager = FindObjectOfType<LevelManager>();
             
-            AudioManager.Instance.PlaySound(clickSound);
+            AudioManager.Instance?.PlaySound(clickSound);
             levelManager.TogglePause();
         }
     }

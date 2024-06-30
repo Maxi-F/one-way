@@ -25,14 +25,14 @@ namespace PlayerScripts
         {
             _player ??= GetComponent<Player>();
             
-            EventManager.Instance.SubscribeTo(menuActivatedEvent, OnPause);
-            EventManager.Instance.SubscribeTo(menuDeactivatedEvent, OnUnpause);
+            EventManager.Instance?.SubscribeTo(menuActivatedEvent, OnPause);
+            EventManager.Instance?.SubscribeTo(menuDeactivatedEvent, OnUnpause);
         }
 
         void OnDisable()
         {
-            EventManager.Instance.UnsubscribeTo(menuActivatedEvent, OnPause);
-            EventManager.Instance.UnsubscribeTo(menuDeactivatedEvent, OnUnpause);
+            EventManager.Instance?.UnsubscribeTo(menuActivatedEvent, OnPause);
+            EventManager.Instance?.UnsubscribeTo(menuDeactivatedEvent, OnUnpause);
         }
 
         private void OnPause(Dictionary<string, object> message)
@@ -61,18 +61,18 @@ namespace PlayerScripts
 
             if (horizontalVelocity.magnitude < _player.VelocityToRun)
             {
-                AudioManager.Instance.StopSound(runSound);
-                if (!AudioManager.Instance.IsPlayingSound(walkSound))
+                AudioManager.Instance?.StopSound(runSound);
+                if (AudioManager.Instance != null && !AudioManager.Instance.IsPlayingSound(walkSound))
                 {
-                    AudioManager.Instance.PlaySound(walkSound);
+                    AudioManager.Instance?.PlaySound(walkSound);
                 }
             }
             else
             {
-                AudioManager.Instance.StopSound(walkSound);
-                if (!AudioManager.Instance.IsPlayingSound(runSound))
+                AudioManager.Instance?.StopSound(walkSound);
+                if (AudioManager.Instance != null && !AudioManager.Instance.IsPlayingSound(runSound))
                 {
-                    AudioManager.Instance.PlaySound(runSound);
+                    AudioManager.Instance?.PlaySound(runSound);
                 }
             }
         }
@@ -81,25 +81,25 @@ namespace PlayerScripts
         {
             if (_isPaused) return;
 
-            AudioManager.Instance.StopSound(walkSound);
-            AudioManager.Instance.StopSound(runSound);
+            AudioManager.Instance?.StopSound(walkSound);
+            AudioManager.Instance?.StopSound(runSound);
         }
 
         public void OnJump()
         {
             if (_isPaused) return;
 
-            AudioManager.Instance.StopSound(walkSound);
-            AudioManager.Instance.StopSound(runSound);
+            AudioManager.Instance?.StopSound(walkSound);
+            AudioManager.Instance?.StopSound(runSound);
             
-            AudioManager.Instance.PlaySound(jumpSound);
+            AudioManager.Instance?.PlaySound(jumpSound);
         }
 
         public void OnDoubleJump()
         {
             if (_isPaused) return;
 
-            AudioManager.Instance.PlaySound(doubleJumpSound);
+            AudioManager.Instance?.PlaySound(doubleJumpSound);
         }
     }
 }

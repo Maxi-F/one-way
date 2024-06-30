@@ -39,7 +39,7 @@ namespace Coins.JumpCoin
 
         void OnDisable()
         {
-            JumpCoinPool.Instance.ReturnToPool(_instantiatedNote);
+            JumpCoinPool.Instance?.ReturnToPool(_instantiatedNote);
         }
 
         public void OnTriggerEnter(Collider other)
@@ -48,9 +48,9 @@ namespace Coins.JumpCoin
             {
                 other.gameObject.GetComponent<PlayerController>().AddJump();
 
-                AudioManager.Instance.PlaySound(_noteSound);
+                AudioManager.Instance?.PlaySound(_noteSound);
                 
-                EventManager.Instance.TriggerEvent(
+                EventManager.Instance?.TriggerEvent(
                     "coinObtained",
                     new Dictionary<string, object>()
                     {
@@ -67,7 +67,7 @@ namespace Coins.JumpCoin
         /// </summary>
         public void Enable()
         {
-            _instantiatedNote = JumpCoinPool.Instance.GetPooledNote();
+            _instantiatedNote = JumpCoinPool.Instance?.GetPooledNote();
             
             _jumpCoinFactory.Activate(_instantiatedNote, gameObject, _player.transform);
 

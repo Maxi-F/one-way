@@ -35,9 +35,9 @@ namespace Manager
         
         void Start()
         {
-            EventManager.Instance.SubscribeTo(playerDeathEvent, HandleDeath);
-            EventManager.Instance.SubscribeTo(sensibilityChangedEvent, SetSensibility);
-            EventManager.Instance.TriggerEvent(initPlayerLivesEvent, new Dictionary<string, object>() { { "value", player.Lives } });
+            EventManager.Instance?.SubscribeTo(playerDeathEvent, HandleDeath);
+            EventManager.Instance?.SubscribeTo(sensibilityChangedEvent, SetSensibility);
+            EventManager.Instance?.TriggerEvent(initPlayerLivesEvent, new Dictionary<string, object>() { { "value", player.Lives } });
             
             _startingPosition = player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
@@ -62,8 +62,8 @@ namespace Manager
 
         private void OnDisable()
         {
-            EventManager.Instance.UnsubscribeTo(playerDeathEvent, HandleDeath);
-            EventManager.Instance.SubscribeTo(sensibilityChangedEvent, SetSensibility);
+            EventManager.Instance?.UnsubscribeTo(playerDeathEvent, HandleDeath);
+            EventManager.Instance?.SubscribeTo(sensibilityChangedEvent, SetSensibility);
         }
 
         public void HandleDeath(Dictionary<string, object> message)
@@ -91,13 +91,13 @@ namespace Manager
         public void HandleWin()
         {
             _gameplayManager.LevelPassed(nextLevelName);
-            EventManager.Instance.TriggerEvent(levelPassed, null);
+            EventManager.Instance?.TriggerEvent(levelPassed, null);
         }
 
         public void HandleWinGame()
         {
             _gameplayManager.HandleWin();
-            EventManager.Instance.TriggerEvent(levelPassed, null);
+            EventManager.Instance?.TriggerEvent(levelPassed, null);
         }
 
         public void BackToMenu()
@@ -119,12 +119,12 @@ namespace Manager
             {
                 Time.timeScale = 1f;
                 
-                EventManager.Instance.TriggerEvent(
+                EventManager.Instance?.TriggerEvent(
                     menuDeactivatedEvent,
                     new Dictionary<string, object>() { { "name", pauseMenuName } }
                     );
                 
-                AudioManager.Instance.ResumeAll();
+                AudioManager.Instance?.ResumeAll();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 _isPaused = false;
@@ -133,12 +133,12 @@ namespace Manager
             {
                 Time.timeScale = 0f;
                 
-                EventManager.Instance.TriggerEvent(
+                EventManager.Instance?.TriggerEvent(
                     menuActivatedEvent,
                     new Dictionary<string, object>() { { "name", pauseMenuName } }
                 );
                 
-                AudioManager.Instance.PauseAllSounds();
+                AudioManager.Instance?.PauseAllSounds();
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
                 _isPaused = true;

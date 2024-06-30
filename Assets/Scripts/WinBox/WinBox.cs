@@ -29,12 +29,12 @@ public class WinBox : MonoBehaviour
 
         SetRenderedMaterial();
         
-        EventManager.Instance.SubscribeTo(allCoinsCollectedEvent, OnCoinsCollected); 
+        EventManager.Instance?.SubscribeTo(allCoinsCollectedEvent, OnCoinsCollected); 
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.UnsubscribeTo(allCoinsCollectedEvent, OnCoinsCollected);
+        EventManager.Instance?.UnsubscribeTo(allCoinsCollectedEvent, OnCoinsCollected);
     }
 
     void SetRenderedMaterial()
@@ -58,7 +58,7 @@ public class WinBox : MonoBehaviour
     {
         if (_isActive)
         {
-            AudioManager.Instance.PlaySound(passLevelSound);            
+            AudioManager.Instance?.PlaySound(passLevelSound);            
             onWinboxCollided.Invoke();
         }
     }

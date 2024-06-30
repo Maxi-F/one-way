@@ -39,11 +39,11 @@ namespace UI
             switch (soundType)
             {
                 case SoundType.Music:
-                    AudioManager.Instance.SetVolumeForMusic(value);
+                    AudioManager.Instance?.SetVolumeForMusic(value);
                     _gameplayManager.SetMusicVolume(value);
                     break;
                 case SoundType.Sfx:
-                    AudioManager.Instance.SetVolumeForSounds(value);
+                    AudioManager.Instance?.SetVolumeForSounds(value);
                     _gameplayManager.SetSoundVolume(value);
                     break;
             }

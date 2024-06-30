@@ -7,7 +7,14 @@ namespace Manager
     public class EventManager : MonoBehaviour
     {
         private Dictionary<string, Action<Dictionary<string, object>>> _events;
-        public static EventManager Instance { get; private set; }
+
+        private static EventManager _instance;
+        public static EventManager Instance
+        {
+            // checks with null because if object is destroyed it returns true but object is not null.
+            get { return _instance == null ? null : _instance; }
+            private set { _instance = value; }
+        }
     
     
         private void Awake()

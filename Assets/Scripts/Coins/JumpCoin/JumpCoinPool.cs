@@ -14,7 +14,13 @@ namespace Coins.JumpCoin
         [Header("Events")]
         [SerializeField] private string levelPassed = "levelPassed";
     
-        public static JumpCoinPool Instance;
+        private static JumpCoinPool _instance;
+        public static JumpCoinPool Instance
+        {
+            // checks with null because if object is destroyed it returns true but object is not null.
+            get { return _instance == null ? null : _instance; }
+            private set { _instance = value; }
+        }
     
         private List<GameObject> _pooledJumpCoins;
         private JumpCoinFactory _jumpCoinFactory;
@@ -41,7 +47,7 @@ namespace Coins.JumpCoin
                 CreateNote();
             }
         
-            EventManager.Instance.SubscribeTo(levelPassed, ClearPooledNotes);
+            EventManager.Instance?.SubscribeTo(levelPassed, ClearPooledNotes);
         }
     
         /// <summary>
