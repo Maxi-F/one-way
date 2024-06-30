@@ -1,18 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using Manager;
-using PlayerScripts.Controllers;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
+using UnityEngine.Serialization;
 
-namespace PlayerScripts
+namespace PlayerScripts.Controllers
 {
     public class JumpController : MonoBehaviour
     {
         [Header("Jump Settings")]
         [SerializeField] private float force;
-        [SerializeField] private float jumpingMiliseconds = 1000f;
+        [SerializeField] private float jumpingMilliseconds = 1000f;
         [SerializeField] [Min(1)] private int maxDoubleJumpsFromGround;
         
         [Header("Events")]
@@ -28,9 +26,6 @@ namespace PlayerScripts
         private bool _shouldJump = false;
         private int _jumpsLeft;
         private float _timeJumped = 0.0f;
-
-        public float TimeJumped { get { return _timeJumped; } }
-        
         public bool IsJumping { get; set; }
 
         public void Start()
@@ -56,6 +51,9 @@ namespace PlayerScripts
             }
         }
 
+        /// <summary>
+        /// Returns the velocity of the rigid body only in Y direction.
+        /// </summary>
         private Vector3 GetYVelocityVector()
         {
             return new Vector3(0, _rigidBody.velocity.y, 0);
@@ -70,6 +68,9 @@ namespace PlayerScripts
             }
         }
 
+        /// <summary>
+        /// Sets the init values of the jumping controller on player jump.
+        /// </summary>
         public void SetShouldJumpValues()
         {
             _jumpsLeft = _groundController.IsOnGround() ? maxDoubleJumpsFromGround : maxDoubleJumpsFromGround - 1;
@@ -81,16 +82,26 @@ namespace PlayerScripts
             _timeJumped = Time.time * 1000f;
         }
 
+        /// <summary>
+        /// Sets the controller Is Jumping flag
+        /// </summary>
+        /// <param name="value">boolean to set the jumping flag to</param>
         public void SetIsJumping(bool value = true)
         {
             IsJumping = value;
         }
 
+        /// <summary>
+        /// Returns true if player has jumps left.
+        /// </summary>
         public bool CanJump()
         {
             return _jumpsLeft > 0;
         }
 
+        /// <summary>
+        /// Makes the double jump on the air.
+        /// </summary>
         public void JumpFromAir()
         {
             _jumpsLeft--;
@@ -102,22 +113,34 @@ namespace PlayerScripts
             OnDoubleJump?.Invoke();
         }
 
+        /// <summary>
+        /// Returns if the player can make another jump after a cooldown.
+        /// </summary>
         public bool JumpingBreakTime()
         {
-            return TimeJumped < 0.0001f || TimeJumped + jumpingMiliseconds < (Time.time * 1000f);
+            return _timeJumped < 0.0001f || _timeJumped + jumpingMilliseconds < (Time.time * 1000f);
         }
 
+        /// <summary>
+        /// Checks if the player is on the floor, taking into account a cooldown.
+        /// </summary>
         public bool IsOnFloor()
         {
             return _groundController.IsOnGround() && JumpingBreakTime();
         }
-
+        
+        /// <summary>
+        /// Resets the double jumps that the player can do.
+        /// </summary>
         public void ResetJumps()
         {
             _jumpsLeft = maxDoubleJumpsFromGround;
             EventManager.Instance?.TriggerEvent(resetJumpValuesEvent, new Dictionary<string, object>() { {"value", maxDoubleJumpsFromGround} } );
         }
 
+        /// <summary>
+        /// Adds a new jump on air.
+        /// </summary>
         public void AddJump()
         {
             if(IsJumping)
