@@ -12,7 +12,11 @@ public class DeathBox : MonoBehaviour
     private Plane _plane;
     
     [SerializeField] private Player player;
+    
+    [Header("Events")]
     [SerializeField] private string playerDeathEvent = "playerDeath";
+    
+    [Header("Sounds")]
     [SerializeField] private string lostLiveSound = "lostLife";
     
     private void Start()
