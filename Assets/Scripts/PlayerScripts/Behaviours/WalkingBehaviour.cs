@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PlayerScripts
+namespace PlayerScripts.Behaviours
 {
     public class WalkingBehaviour : MonoBehaviour, IBehaviour
     {

@@ -66,7 +66,7 @@ namespace Manager
                 return;
             }
         
-            menu.menuObject.SetActive(triggerValue);
+            menu.menuObject?.SetActive(triggerValue);
         }
     }
 }

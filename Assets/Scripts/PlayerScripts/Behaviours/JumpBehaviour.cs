@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace PlayerScripts
+namespace PlayerScripts.Behaviours
 {
     [RequireComponent(typeof(Rigidbody))]
     public class JumpBehaviour : MonoBehaviour, IBehaviour

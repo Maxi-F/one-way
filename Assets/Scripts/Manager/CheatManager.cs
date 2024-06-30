@@ -1,4 +1,5 @@
 using PlayerScripts;
+using PlayerScripts.Behaviours;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;

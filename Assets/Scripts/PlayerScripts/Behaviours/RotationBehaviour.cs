@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace PlayerScripts
+namespace PlayerScripts.Behaviours
 {
     public class RotationBehaviour : MonoBehaviour
     {
@@ -26,6 +25,9 @@ namespace PlayerScripts
             transform.LookAt(transform.position + _lookingDirection);
         }
 
+        /// <summary>
+        /// Sets the desired look direction to the direction the move controller wants to go.
+        /// </summary>
         public void LookInDirection()
         {
             if(_moveController.Direction == Vector3.zero) return;
