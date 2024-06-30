@@ -2,12 +2,15 @@ using Audio;
 using Manager;
 using UnityEngine;
 
-namespace Button 
+namespace UI.Button 
 {
     public class BackToPlayButton : MonoBehaviour
     {
         [Header("Sounds")] [SerializeField] private string clickSound = "click";
         
+        /// <summary>
+        /// Handles click event.
+        /// </summary>
         public void Click()
         {
             LevelManager levelManager = FindObjectOfType<LevelManager>();

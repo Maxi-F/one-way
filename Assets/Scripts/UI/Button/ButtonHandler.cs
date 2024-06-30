@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using Audio;
 using Manager;
 using UnityEngine;
 
-namespace Button
+namespace UI.Button
 {
     public class ButtonHandler : MonoBehaviour
     {
@@ -19,6 +18,9 @@ namespace Button
             _sceneryManager = FindObjectOfType<SceneryManager>();
         }
         
+        /// <summary>
+        /// Event that handles button click.
+        /// </summary>
         public void OnButtonClick()
         {
             if (_sceneryManager == null)
@@ -31,6 +33,9 @@ namespace Button
             _sceneryManager.LoadScene(sceneName);
         }
 
+        /// <summary>
+        /// Deactivates a menu canvas on click.
+        /// </summary>
         public void Deactivate(string canvasName)
         {
             EventManager.Instance?.TriggerEvent(

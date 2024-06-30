@@ -1,30 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class AutoReselector : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private EventSystem eventSystem;
-    
-    public bool IsCanvasOpen { get; set; }
-
-    private GameObject _lastSelectedObject;
-
-    void Start()
+    public class AutoReselector : MonoBehaviour
     {
-        IsCanvasOpen = false;
-    }
+        [SerializeField] private EventSystem eventSystem;
     
-    void Update()
-    {
-        if (IsCanvasOpen)
+        public bool IsCanvasOpen { get; set; }
+
+        private GameObject _lastSelectedObject;
+
+        void Start()
         {
-            Debug.Log(eventSystem.currentSelectedGameObject);
-            if (eventSystem.currentSelectedGameObject == null)
-                eventSystem.SetSelectedGameObject(_lastSelectedObject);
-            else
-                _lastSelectedObject = eventSystem.currentSelectedGameObject;
+            IsCanvasOpen = false;
+        }
+    
+        void Update()
+        {
+            if (IsCanvasOpen)
+            {
+                Debug.Log(eventSystem.currentSelectedGameObject);
+                if (eventSystem.currentSelectedGameObject == null)
+                    eventSystem.SetSelectedGameObject(_lastSelectedObject);
+                else
+                    _lastSelectedObject = eventSystem.currentSelectedGameObject;
+            }
         }
     }
 }

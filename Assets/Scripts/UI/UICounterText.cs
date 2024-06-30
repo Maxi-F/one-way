@@ -1,87 +1,100 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using TMPro;
 using UnityEngine;
 
-public class UICounterText : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private string initValueEvent;
-    [SerializeField] private string updateValueEvent;
-    [SerializeField] private string resetValueEvent;
-    [SerializeField] private bool isIncrement = true;
-    [SerializeField] private int initValue;
+    public class UICounterText : MonoBehaviour
+    {
+        [SerializeField] private string initValueEvent;
+        [SerializeField] private string updateValueEvent;
+        [SerializeField] private string resetValueEvent;
+        [SerializeField] private bool isIncrement = true;
+        [SerializeField] private int initValue;
     
-    private TextMeshProUGUI _textMesh;
-    private int _actualValue;
-    private int _maxValue;
+        private TextMeshProUGUI _textMesh;
+        private int _actualValue;
+        private int _maxValue;
     
-    void OnEnable()
-    {
-        _textMesh ??= GetComponent<TextMeshProUGUI>();
-
-        if (initValueEvent != null)
+        void OnEnable()
         {
-            EventManager.Instance?.SubscribeTo(initValueEvent, InitValue);
+            _textMesh ??= GetComponent<TextMeshProUGUI>();
+
+            if (initValueEvent != null)
+            {
+                EventManager.Instance?.SubscribeTo(initValueEvent, InitValue);
+            }
+
+            if (updateValueEvent != null)
+            {
+                EventManager.Instance?.SubscribeTo(updateValueEvent, UpdateValue);
+            }
+
+            if (resetValueEvent != null)
+            {
+                EventManager.Instance?.SubscribeTo(resetValueEvent, ResetValue);
+            }
+
+            _actualValue = initValue;
+            SetText();
         }
 
-        if (updateValueEvent != null)
+        private void OnDisable()
         {
-            EventManager.Instance?.SubscribeTo(updateValueEvent, UpdateValue);
+            if (initValueEvent != null)
+            {
+                EventManager.Instance?.UnsubscribeTo(initValueEvent, InitValue);
+            }
+
+            if (updateValueEvent != null)
+            {
+                EventManager.Instance?.UnsubscribeTo(updateValueEvent, UpdateValue);
+            }
+
+            if (resetValueEvent != null)
+            {
+                EventManager.Instance?.UnsubscribeTo(resetValueEvent, ResetValue);
+            }
         }
 
-        if (resetValueEvent != null)
+        /// <summary>
+        /// Sets the text of the counter UI.
+        /// </summary>
+        private void SetText()
         {
-            EventManager.Instance?.SubscribeTo(resetValueEvent, ResetValue);
+            _textMesh.text = $"{_actualValue} / {_maxValue}";
         }
 
-        _actualValue = initValue;
-        SetText();
-    }
-
-    private void OnDisable()
-    {
-        if (initValueEvent != null)
+        /// <summary>
+        /// Inits counters.
+        /// </summary>
+        void InitValue(Dictionary<string, object> message)
         {
-            EventManager.Instance?.UnsubscribeTo(initValueEvent, InitValue);
-        }
-
-        if (updateValueEvent != null)
-        {
-            EventManager.Instance?.UnsubscribeTo(updateValueEvent, UpdateValue);
-        }
-
-        if (resetValueEvent != null)
-        {
-            EventManager.Instance?.UnsubscribeTo(resetValueEvent, ResetValue);
-        }
-    }
-
-    private void SetText()
-    {
-        _textMesh.text = $"{_actualValue} / {_maxValue}";
-    }
-
-    void InitValue(Dictionary<string, object> message)
-    {
-        _maxValue = (int)message["value"];
-        _actualValue = initValue;
+            _maxValue = (int)message["value"];
+            _actualValue = initValue;
         
-        SetText();
-    }
+            SetText();
+        }
     
-    void UpdateValue(Dictionary<string, object> message)
-    {
-        _actualValue = isIncrement ? _actualValue + 1 : _actualValue - 1;
+        /// <summary>
+        /// Updates counters.
+        /// </summary>
+        void UpdateValue(Dictionary<string, object> message)
+        {
+            _actualValue = isIncrement ? _actualValue + 1 : _actualValue - 1;
         
-        SetText();
-    }
+            SetText();
+        }
 
-    void ResetValue(Dictionary<string, object> message)
-    {
-        _actualValue = initValue;
+        /// <summary>
+        /// Resets counters.
+        /// </summary>
+        void ResetValue(Dictionary<string, object> message)
+        {
+            _actualValue = initValue;
         
-        SetText();
+            SetText();
+        }
     }
 }
