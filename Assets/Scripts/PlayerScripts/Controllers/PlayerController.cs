@@ -108,7 +108,7 @@ namespace PlayerScripts.Controllers
                 {
                     OnEdgeJump?.Invoke();
                 }
-                else if(IsOnFloor())
+                else if(IsOnFloor() || IsOnCoyoteTimeFloor())
                 {
                     OnJump?.Invoke();
                 }

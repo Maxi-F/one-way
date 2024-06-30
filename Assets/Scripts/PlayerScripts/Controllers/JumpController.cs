@@ -73,10 +73,7 @@ namespace PlayerScripts.Controllers
         /// </summary>
         public void SetShouldJumpValues()
         {
-            _jumpsLeft = _groundController.IsOnGround() ? maxDoubleJumpsFromGround : maxDoubleJumpsFromGround - 1;
-            
-            if(!_groundController.IsOnGround())
-                EventManager.Instance?.TriggerEvent(modifyJumpValuesEvent, new Dictionary<string, object>() { {"value", -1} } );
+            _jumpsLeft = maxDoubleJumpsFromGround;
             
             _shouldJump = true;
             _timeJumped = Time.time * 1000f;

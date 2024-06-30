@@ -38,7 +38,7 @@ namespace PlayerScripts.Behaviours
         public void Exit(IBehaviour nextBehaviour)
         {
             _edgeGrabController.SetEdgeGrabTimer();
-            _jumpController.SetShouldJumpValues();
+            _jumpController.JumpFromAir();
             _edgeGrabController.IsEdgeGrabbing = false;
             _jumpController.SetIsJumping();
         }
