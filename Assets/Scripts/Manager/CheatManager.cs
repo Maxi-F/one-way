@@ -1,46 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
-using Manager;
 using PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
-public class CheatManager : MonoBehaviour
+namespace Manager
 {
-    [SerializeField] private LevelManager levelManager;
-    [SerializeField] private Player player;
-    [SerializeField] private FlyBehaviour _flyBehaviour;
-    [SerializeField] private WalkingBehaviour _walkingBehaviour;
-    [SerializeField] private bool isLastLevel;
-    
-    [SerializeField] private UnityEvent OnFlyToggled;
-    
-    public void ToggleFly()
+    public class CheatManager : MonoBehaviour
     {
-        if (player.IsFlying)
+        [SerializeField] private LevelManager levelManager;
+        [SerializeField] private Player player;
+        [SerializeField] private FlyBehaviour flyBehaviour;
+        [SerializeField] private WalkingBehaviour walkingBehaviour;
+        [SerializeField] private bool isLastLevel;
+    
+        [SerializeField] private UnityEvent OnFlyToggled;
+    
+        /// <summary>
+        /// Toggles fly on player.
+        /// </summary>
+        public void ToggleFly()
         {
-            player.TouchesGround();
-            player.IsFlying = false;
-        }
-        else
-        {
+            if (player.IsFlying)
+            {
+                player.TouchesGround();
+                player.IsFlying = false;
+            }
+            else
+            {
             
-            player.Fly();
-            player.IsFlying = true;
-        }
+                player.Fly();
+                player.IsFlying = true;
+            }
         
-        OnFlyToggled?.Invoke();
-    }
-
-    public void PassLevel()
-    {
-        if (isLastLevel)
-        {
-            levelManager.HandleWinGame();
+            OnFlyToggled?.Invoke();
         }
-        else
+
+        /// <summary>
+        /// Passes to the next level. If it is on last level, it wins the game.
+        /// </summary>
+        public void PassLevel()
         {
-            levelManager.HandleWin();
+            if (isLastLevel)
+            {
+                levelManager.HandleWinGame();
+            }
+            else
+            {
+                levelManager.HandleWin();
+            }
         }
     }
 }
