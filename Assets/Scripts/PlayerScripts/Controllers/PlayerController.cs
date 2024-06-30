@@ -96,7 +96,7 @@ namespace PlayerScripts
                 {
                     OnEdgeJump?.Invoke();
                 }
-                else
+                else if(IsOnFloor())
                 {
                     OnJump?.Invoke();
                 }

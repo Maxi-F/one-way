@@ -10,6 +10,7 @@ namespace PlayerScripts
         [SerializeField] private string walkSound = "walk";
         [SerializeField] private string runSound = "run";
         [SerializeField] private string jumpSound = "jump";
+        [SerializeField] private string doubleJumpSound = "doubleJump";
         
         void Start()
         {
@@ -53,6 +54,11 @@ namespace PlayerScripts
             AudioManager.Instance.StopSound(runSound);
             
             AudioManager.Instance.PlaySound(jumpSound);
+        }
+
+        public void OnDoubleJump()
+        {
+            AudioManager.Instance.PlaySound(doubleJumpSound);
         }
     }
 }

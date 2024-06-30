@@ -66,4 +66,9 @@ MonoBehaviour:
     volume: 0.6
     pitch: 1
     loop: 0
+  - name: doubleJump
+    clip: {fileID: 8300000, guid: 5772a9b72f9a8d44c98a974ed180251b, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 0
   initMusic: music
