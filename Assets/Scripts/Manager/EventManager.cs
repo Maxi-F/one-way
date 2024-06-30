@@ -10,7 +10,6 @@ namespace Manager
         public static EventManager Instance { get; private set; }
     
     
-    
         private void Awake()
         {
             if (Instance == null)

@@ -9,7 +9,6 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private Animator animator;
 
     [Header("Animation properties")]
-    [SerializeField] private float velocityToRun;
     [SerializeField] [Range(0.0f, 1.0f)] private float walkingVelocityPercentage = 0.1f;
     [SerializeField] [Range(0.0f, 1.0f)] private float runningVelocityPercentage = 0.1f;
 
@@ -25,7 +24,7 @@ public class PlayerAnimator : MonoBehaviour
         Vector3 horizontalVelocity = _player.GetHorizontalVelocity();
         if (horizontalVelocity.magnitude < 0.0001f) return;
         
-        if(horizontalVelocity.magnitude < velocityToRun)
+        if(horizontalVelocity.magnitude < _player.VelocityToRun)
         {
             animator.SetBool("isWalking", true);
             animator.SetBool("isRunning", false);

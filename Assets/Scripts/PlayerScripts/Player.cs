@@ -13,11 +13,17 @@ namespace PlayerScripts
         [SerializeField] WalkingBehaviour walkBehaviour;
         [SerializeField] private int lives = 3;
         [SerializeField] private int maxLives = 3;
+        [SerializeField] private int velocityToRun = 10;
         
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
         
         public bool IsFlying { get; set; }
+
+        public int VelocityToRun
+        {
+            get { return velocityToRun; }
+        }
 
         public int Lives
         {

@@ -46,3 +46,6 @@ MonoBehaviour:
   - path: Assets/Scenes/Credits/CreditsDesign.unity
     name: CreditsDesign
     index: 10
+  - path: Assets/Scenes/Managers.unity
+    name: Managers
+    index: 11

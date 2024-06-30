@@ -12,7 +12,7 @@ namespace Manager
         [SerializeField] private string[] optionalScenes = new string[] {};
         
         private SceneryManager _sceneryManager;
-        
+        // asd
         private void OnEnable()
         {
             _sceneryManager = FindObjectOfType<SceneryManager>();

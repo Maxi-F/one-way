@@ -9,16 +9,18 @@ namespace Manager
 {
     public class SceneryManager : MonoBehaviour
     {
-        [SerializeField] private string initSceneName = "Menu";
         [SerializeField] private ScenesData scenesData;
+        [SerializeField] private string[] initScenes = new string[] { "Menu", "AllMenus", "Managers" };
         [SerializeField] private string allMenusScene;
         
         private readonly List<SerializableScene> _activeScenes = new List<SerializableScene>();
         
         public void InitScenes()
         {
-            LoadScene(allMenusScene);
-            LoadScene(initSceneName);
+            foreach (var initScene in initScenes)
+            {
+                LoadScene(initScene);
+            }
         }
 
         public void LoadScene(string sceneName)
