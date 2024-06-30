@@ -72,6 +72,26 @@ public class GameplayManager : MonoBehaviour
         PlayerPrefs.SetFloat("Sensibility", _playerSettings.sensibility);
     }
 
+    public void SetMusicVolume(float newMusicVolume)
+    {
+        PlayerPrefs.SetFloat("MusicVolume", newMusicVolume);
+    }
+
+    public float GetMusicVolume()
+    {
+        return PlayerPrefs.GetFloat("MusicVolume");
+    }
+    
+    public void SetSoundVolume(float newMusicVolume)
+    {
+        PlayerPrefs.SetFloat("SoundVolume", newMusicVolume);
+    }
+
+    public float GetSoundVolume()
+    {
+        return PlayerPrefs.GetFloat("SoundVolume");
+    }
+
     public float GetSensibility()
     {
         return _playerSettings.sensibility;

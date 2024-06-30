@@ -10,22 +10,30 @@ namespace Audio
         public AudioClip clip;
 
         [Range(0f, 1f)]
-        public float volume = 1f;
+        public float maxVolume = 1f;
         [Range(.1f, 3f)]
         public float pitch = 1f;
-
+        
         public bool loop = false;
     
         private AudioSource _source;
+        private float _volume;
         
         public void GenerateAudioSource(AudioSource newSource)
         {
             _source = newSource;
-
+            _volume = maxVolume;
+            
             _source.clip = clip;
-            _source.volume = volume;
+            _source.volume = _volume;
             _source.pitch = pitch;
             _source.loop = loop;
+        }
+
+        public void SetVolume(float newVolume)
+        {
+            _volume = newVolume * maxVolume;
+            _source.volume = _volume;
         }
         
         public void Play()

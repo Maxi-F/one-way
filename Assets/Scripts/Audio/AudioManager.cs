@@ -90,6 +90,23 @@ namespace Audio
             return sound != null && sound.IsPlaying();
         }
 
+        private void SetVolumeFor(Sound[] sounds, float volume)
+        {
+            foreach (Sound sound in sounds)
+            {
+                sound.SetVolume(volume);
+            }
+        }
+
+        public void SetVolumeForMusic(float volume)
+        {
+            SetVolumeFor(musics, volume);
+        }
+
+        public void SetVolumeForSounds(float volume)
+        {
+            SetVolumeFor(sfxs, volume);
+        }
         
         public void PlayMusic(string soundName)
         { 

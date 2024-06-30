@@ -14,7 +14,7 @@ namespace Manager
         [SerializeField] private Player player;
         [SerializeField] private string nextLevelName;
         [SerializeField] private GameObject pauseCanvas;
-        [SerializeField] private SliderBehaviour pauseSensibilitySlider;
+        [FormerlySerializedAs("pauseSensibilitySlider")] [SerializeField] private SensitivitySlider pauseSensibilitySensitivitySlider;
         [SerializeField] private UnityEvent OnDeath;
         
         [Header("Events")]

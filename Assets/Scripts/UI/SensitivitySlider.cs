@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class SliderBehaviour : MonoBehaviour
+    public class SensitivitySlider : MonoBehaviour
     { 
         [SerializeField] private string sensibilityChangedEvent = "sensibilityChanged";
         private Slider _slider;
