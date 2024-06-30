@@ -257,6 +257,7 @@ MonoBehaviour:
   walkBehaviour: {fileID: 5157922495966074360}
   lives: 3
   maxLives: 3
+  velocityToRun: 10
   maxAccumulatedForce: 20
 --- !u!114 &8523795145773584938
 MonoBehaviour:
@@ -271,7 +272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7100294875650141152}
-  velocityToRun: 10
   walkingVelocityPercentage: 0.1
   runningVelocityPercentage: 0.1
 --- !u!114 &982660316640988711
@@ -305,6 +305,18 @@ MonoBehaviour:
       - m_Target: {fileID: 8523795145773584938}
         m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
         m_MethodName: HandleFall
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2373511363521333872}
+        m_TargetAssemblyTypeName: PlayerScripts.PlayerAudio, Assembly-CSharp
+        m_MethodName: OnStopWalk
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -640,6 +652,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSound: walk
+  runSound: run
+  jumpSound: jump
 --- !u!1 &4157538118521161800
 GameObject:
   m_ObjectHideFlags: 0

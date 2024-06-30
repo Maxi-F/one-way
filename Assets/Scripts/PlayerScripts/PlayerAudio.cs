@@ -9,7 +9,8 @@ namespace PlayerScripts
         
         [SerializeField] private string walkSound = "walk";
         [SerializeField] private string runSound = "run";
-
+        [SerializeField] private string jumpSound = "jump";
+        
         void Start()
         {
             _player ??= GetComponent<Player>();
@@ -50,6 +51,8 @@ namespace PlayerScripts
         {
             AudioManager.Instance.StopSound(walkSound);
             AudioManager.Instance.StopSound(runSound);
+            
+            AudioManager.Instance.PlaySound(jumpSound);
         }
     }
 }
