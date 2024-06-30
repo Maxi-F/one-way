@@ -120,7 +120,7 @@ namespace Manager
                     menuDeactivatedEvent,
                     new Dictionary<string, object>() { { "name", pauseMenuName } }
                     );
-
+                
                 AudioManager.Instance.ResumeAll();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;

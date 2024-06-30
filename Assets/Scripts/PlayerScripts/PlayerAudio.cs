@@ -37,17 +37,15 @@ namespace PlayerScripts
 
         private void OnPause(Dictionary<string, object> message)
         {
-            Debug.Log("ASASFHADFH");
-            Debug.Log((string) message["name"]);
             if ((string)message["name"] == pauseMenuName)
             {
-                Debug.Log("Hi?");
                 _isPaused = true;
             }
         }
         
         private void OnUnpause(Dictionary<string, object> message)
         {
+            if (message.ContainsKey("isDeactivating") && (bool)message["isDeactivating"]) return;
             if ((string)message["name"] == pauseMenuName)
             {
                 _isPaused = false;

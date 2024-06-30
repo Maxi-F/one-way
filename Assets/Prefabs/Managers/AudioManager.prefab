@@ -96,4 +96,9 @@ MonoBehaviour:
     volume: 0.6
     pitch: 1
     loop: 0
+  - name: click
+    clip: {fileID: 8300000, guid: 6a090c21d86375e42a90c6f316a418da, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 0
   initMusic: music

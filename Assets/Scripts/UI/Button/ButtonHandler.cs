@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Manager;
 using UnityEngine;
 
@@ -10,6 +11,9 @@ namespace Button
         private SceneryManager _sceneryManager;
         [SerializeField] private string sceneName;
         [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
+
+        [Header("Sounds")] [SerializeField] private string clickSound = "click";
+        
         private void Start()
         {
             _sceneryManager = FindObjectOfType<SceneryManager>();
@@ -23,6 +27,7 @@ namespace Button
                 return;
             }
             
+            AudioManager.Instance.PlaySound(clickSound);
             _sceneryManager.LoadScene(sceneName);
         }
 
@@ -30,7 +35,7 @@ namespace Button
         {
             EventManager.Instance.TriggerEvent(
                 menuDeactivatedEvent,
-                new Dictionary<string, object>() { { "name", canvasName } }
+                new Dictionary<string, object>() { { "name", canvasName }, { "isDeactivating", true } }
                 );
         }
     }
