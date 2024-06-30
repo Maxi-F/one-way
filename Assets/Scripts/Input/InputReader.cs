@@ -16,6 +16,9 @@ namespace Input
         [SerializeField] private UnityEvent OnPassLevel;
         [SerializeField] private UnityEvent OnPause;
 
+        /// <summary>
+        /// Handles move input events from input actions.
+        /// </summary>
         public void HandleMoveInput(InputAction.CallbackContext context)
         {
             Vector2 moveInput = context.ReadValue<Vector2>();
@@ -23,6 +26,9 @@ namespace Input
             OnMove?.Invoke(moveDirection);
         }
 
+        /// <summary>
+        /// Handles look input events from input actions.
+        /// </summary>
         public void HandleLookInput(InputAction.CallbackContext context)
         {
             Vector2 lookInput = context.ReadValue<Vector2>();
@@ -30,6 +36,9 @@ namespace Input
             OnLook?.Invoke(lookInput, context.control.device != Mouse.current);
         }
 
+        /// <summary>
+        /// Handles jump input events from input actions.
+        /// </summary>
         public void HandleJumpInput(InputAction.CallbackContext context)
         {
             if(context.started)
@@ -38,6 +47,9 @@ namespace Input
             }
         }
 
+        /// <summary>
+        /// Handles Fly down events from input actions.
+        /// </summary>
         public void HandleGoDownInput(InputAction.CallbackContext context)
         {
             if (context.started)
@@ -49,6 +61,9 @@ namespace Input
             }
         }
 
+        /// <summary>
+        /// Handles Fly input events from input actions.
+        /// </summary>
         public void HandleFly(InputAction.CallbackContext context)
         {
             if (context.started)
@@ -57,6 +72,9 @@ namespace Input
             }
         }
 
+        /// <summary>
+        /// Handles pass level input events from input actions.
+        /// </summary>
         public void HandlePassLevel(InputAction.CallbackContext context)
         {
             if (context.started)
@@ -65,6 +83,9 @@ namespace Input
             }
         }
 
+        /// <summary>
+        /// Handles pause input events from input actions.
+        /// </summary>
         public void HandlePause(InputAction.CallbackContext context)
         {
             if(context.started)

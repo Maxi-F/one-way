@@ -43,7 +43,7 @@ namespace PlayerScripts
                 _timePassedWithoutTouchingGround += Time.deltaTime;
                 if (_timePassedWithoutTouchingGround > coyoteTime)
                 {
-                    if (!_jumpController.IsJumping)
+                    if (!_jumpController.IsJumping && !_cheatsEnabled)
                     {
                         _player.Jump();
                     }
