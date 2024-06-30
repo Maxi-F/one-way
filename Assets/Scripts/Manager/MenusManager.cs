@@ -65,8 +65,11 @@ namespace Manager
                 Debug.LogError($"Menu ${menuName} not found!");
                 return;
             }
-        
-            menu.menuObject?.SetActive(triggerValue);
+
+            if (menu.menuObject != null)
+            {
+                menu.menuObject.SetActive(triggerValue);
+            }
         }
     }
 }
