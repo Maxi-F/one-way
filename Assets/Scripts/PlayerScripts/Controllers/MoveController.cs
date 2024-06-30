@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-namespace PlayerScripts
+namespace PlayerScripts.Controllers
 {
     public class MoveController : MonoBehaviour
     {
@@ -21,7 +17,7 @@ namespace PlayerScripts
         [SerializeField] private AnimationCurve maxAccelerationFactorFromDot;
         [SerializeField] private float brakeMultiplier = .60f;
 
-        private Rigidbody _rigidbody;
+        private Rigidbody _rigidBody;
         private Player _player;
 
         private Vector3 _obtainedDirection;
@@ -29,22 +25,25 @@ namespace PlayerScripts
 
         private Vector3 _goalVelocity;
         private bool _shouldBrake;
-        public Vector3 Direction
-        {
-            get { return _desiredDirection; }
-        }
+        public Vector3 Direction => _desiredDirection;
 
         private void Start()
         {
-            _rigidbody ??= GetComponent<Rigidbody>();
+            _rigidBody ??= GetComponent<Rigidbody>();
             _player ??= GetComponent<Player>();
         }
 
+        /// <summary>
+        /// Makes the player change look direction
+        /// </summary>
         public void LookChange()
         {
             MoveThowardsCamera();
         }
 
+        /// <summary>
+        /// Executes movement events.
+        /// </summary>
         public void Events()
         {
             if (GetHorizontalVelocity().magnitude > 0.0001f)
@@ -57,6 +56,10 @@ namespace PlayerScripts
             }
         }
 
+        /// <summary>
+        /// Changes the player's desired direction movement
+        /// </summary>
+        /// <param name="direction">new desired direction</param>
         public void Move(Vector3 direction)
         {
             _shouldBrake = direction.magnitude < 0.0001f;
@@ -64,6 +67,10 @@ namespace PlayerScripts
             MoveThowardsCamera();
         }
 
+        /// <summary>
+        /// Makes the player move to the desired direction depending on the camera
+        /// position
+        /// </summary>
         private void MoveThowardsCamera()
         {
             Transform localTransform = transform;
@@ -74,6 +81,14 @@ namespace PlayerScripts
             _desiredDirection.y = 0;
         }
 
+        /// <summary>
+        /// Returns the force to apply on the frame for the movement.
+        /// It takes into account:
+        ///     - Current velocity and desired velocity
+        ///     - a factor of acceleration depending on the angle between the current velocity and desired direction
+        /// </summary>
+        /// <param name="isInAir">bool that checks if the player is in air or not.</param>
+        /// <returns></returns>
         private Vector3 GetForceToApply(bool isInAir = false)
         {
             Vector3 unitVelocity = GetHorizontalVelocity().normalized;
@@ -97,47 +112,56 @@ namespace PlayerScripts
             return Vector3.ClampMagnitude(forceToApply, maxAccelerationToUse);
         }
 
+        /// <summary>
+        /// Returns the current horizontal velocity of the player.
+        /// </summary>
         private Vector3 GetHorizontalVelocity()
         {
-            return new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+            return new Vector3(_rigidBody.velocity.x, 0, _rigidBody.velocity.z);
         }
         
+        /// <summary>
+        /// on fixed update of the player movement.
+        /// Uses the force to apply and a brake vector if the player is not moving anymore.
+        /// </summary>
         public void MovePlayer()
         {
             Vector3 forceToApply = GetForceToApply();
             
             Vector3 brakeForceVector = -GetHorizontalVelocity() * brakeMultiplier;
             
-            _rigidbody.AddForce(forceToApply, ForceMode.Force);
+            _rigidBody.AddForce(forceToApply, ForceMode.Force);
 
             if (_shouldBrake)
             {
-                _rigidbody.AddForce(brakeForceVector, ForceMode.Impulse);
+                _rigidBody.AddForce(brakeForceVector, ForceMode.Impulse);
                 if(GetHorizontalVelocity().magnitude <= 0.0001f)
                     _shouldBrake = false;
             }
         }
 
+        /// <summary>
+        /// On fixed update movement of the player on air.
+        /// </summary>
         public void MovePlayerInAir()
         {
             Vector3 forceToApply = GetForceToApply(true);
 
-            _rigidbody.AddForce(forceToApply, ForceMode.Force);
+            _rigidBody.AddForce(forceToApply, ForceMode.Force);
         }
 
         public void OnDrawGizmos()
         {
-            /*
-            if (Application.isPlaying)
+
+            if (Application.isPlaying && _rigidBody != null)
             {
                 Gizmos.DrawLine(
                     transform.position, 
                     transform.position + 
-                        _rigidbody.velocity
+                        _rigidBody.velocity
                     );
                 
             }
-            */
         }
     }
 }
