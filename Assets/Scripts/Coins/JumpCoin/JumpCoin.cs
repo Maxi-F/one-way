@@ -12,7 +12,7 @@ namespace Coins.JumpCoin
     public class JumpCoin : WithDebugRemover
     {
         [Header("Coin config")]
-        [SerializeField] private JumpCoinConfig config;
+        [SerializeField] private NoteConfig config;
 
         private string _noteSound;
         private GameObject _instantiatedNote;

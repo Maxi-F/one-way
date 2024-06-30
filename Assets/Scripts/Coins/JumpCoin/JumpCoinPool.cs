@@ -4,11 +4,12 @@ using Coins.JumpCoin;
 using Manager;
 using ScriptableObjects.Scripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class JumpCoinPool : MonoBehaviour
 {
     [SerializeField] private int amountToPool = 20;
-    [SerializeField] private JumpCoinConfig jumpCoinConfig;
+    [FormerlySerializedAs("jumpCoinConfig")] [SerializeField] private NoteConfig noteConfig;
     
     [Header("Events")]
     [SerializeField] private string levelPassed = "levelPassed";
@@ -28,7 +29,7 @@ public class JumpCoinPool : MonoBehaviour
             Destroy(gameObject);
         }
 
-        _jumpCoinFactory = new JumpCoinFactory(jumpCoinConfig);
+        _jumpCoinFactory = new JumpCoinFactory(noteConfig);
         DontDestroyOnLoad(gameObject);
     }
 

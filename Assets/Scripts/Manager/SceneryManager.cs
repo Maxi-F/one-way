@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScriptableObjects.Scripts;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -9,7 +10,7 @@ namespace Manager
 {
     public class SceneryManager : MonoBehaviour
     {
-        [SerializeField] private ScenesData scenesData;
+        [FormerlySerializedAs("scenesData")] [SerializeField] private ScenesDataConfig scenesDataConfig;
         [SerializeField] private string[] initScenes = new string[] { "Menu", "AllMenus", "Managers" };
         [SerializeField] private string allMenusScene;
         
@@ -32,7 +33,7 @@ namespace Manager
                 return;
             }
             
-            SerializableScene scene = scenesData.GetSceneByName(sceneName);
+            SerializableScene scene = scenesDataConfig.GetSceneByName(sceneName);
             
             scene.OnSceneAdded?.Invoke();
             AddScene(scene);
@@ -40,7 +41,7 @@ namespace Manager
 
         public void UnloadScene(string aSceneName)
         {
-            SerializableScene aScene = scenesData.GetSceneByName(aSceneName);
+            SerializableScene aScene = scenesDataConfig.GetSceneByName(aSceneName);
             
             if (_activeScenes.Exists(scene => scene.name == aScene.name))
             {
@@ -61,14 +62,14 @@ namespace Manager
 
         public void SubscribeEventToAddScene(string sceneName, Action action)
         {
-            SerializableScene aScene = scenesData.GetSceneByName(sceneName);
+            SerializableScene aScene = scenesDataConfig.GetSceneByName(sceneName);
 
             aScene.OnSceneAdded += action;
         }
         
         public void UnsubscribeEventToAddScene(string sceneName, Action action)
         {
-            SerializableScene aScene = scenesData.GetSceneByName(sceneName);
+            SerializableScene aScene = scenesDataConfig.GetSceneByName(sceneName);
 
             aScene.OnSceneAdded -= action;
         }

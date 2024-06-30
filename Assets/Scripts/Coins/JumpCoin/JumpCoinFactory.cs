@@ -5,9 +5,9 @@ namespace Coins.JumpCoin
 {
     public class JumpCoinFactory
     {
-        private JumpCoinConfig _creationConfig;
+        private NoteConfig _creationConfig;
 
-        public JumpCoinFactory(JumpCoinConfig config)
+        public JumpCoinFactory(NoteConfig config)
         {
             _creationConfig = config;
         }

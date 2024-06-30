@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using ScriptableObjects;
+using ScriptableObjects.Scripts;
 using UnityEditor;
 using UnityEngine;
-using PlayerSettings = ScriptableObjects.PlayerSettings;
+using UnityEngine.Serialization;
 
 public class GameplayManager : MonoBehaviour
 {
     private string _activeLevelSceneName;
     private SceneryManager _sceneryManager;
     
-    [SerializeField] private PlayerSettings _playerSettings;
+    [FormerlySerializedAs("_playerSettings")] [SerializeField] private PlayerSettingsConfig playerSettingsConfig;
     [SerializeField] private string initLevelSceneName = "Level1";
     [SerializeField] private string menuSceneName = "Menu";
     [SerializeField] private string gameplaySceneName = "Gameplay";
@@ -69,35 +70,35 @@ public class GameplayManager : MonoBehaviour
 
     public void SetSensibility(float newSensibility)
     {
-        _playerSettings.sensibility = newSensibility;
-        PlayerPrefs.SetFloat("Sensibility", _playerSettings.sensibility);
+        playerSettingsConfig.sensibility = newSensibility;
+        PlayerPrefs.SetFloat("Sensibility", playerSettingsConfig.sensibility);
     }
 
     public void SetMusicVolume(float newMusicVolume)
     {
-        _playerSettings.musicVolume = newMusicVolume;
+        playerSettingsConfig.musicVolume = newMusicVolume;
         PlayerPrefs.SetFloat("MusicVolume", newMusicVolume);
     }
 
     public float GetMusicVolume()
     {
-        return _playerSettings.musicVolume;
+        return playerSettingsConfig.musicVolume;
     }
     
     public void SetSoundVolume(float newMusicVolume)
     {
-        _playerSettings.sfxVolume = newMusicVolume;
+        playerSettingsConfig.sfxVolume = newMusicVolume;
         PlayerPrefs.SetFloat("SoundVolume", newMusicVolume);
     }
 
     public float GetSoundVolume()
     {
-        return _playerSettings.sfxVolume;
+        return playerSettingsConfig.sfxVolume;
     }
 
     public float GetSensibility()
     {
-        return _playerSettings.sensibility;
+        return playerSettingsConfig.sensibility;
     }
 
     public void HandleLose()

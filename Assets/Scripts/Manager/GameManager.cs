@@ -1,4 +1,5 @@
 using ScriptableObjects;
+using ScriptableObjects.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,13 +8,13 @@ namespace Manager
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private SceneryManager _sceneryManager;
-        [FormerlySerializedAs("sensibilitySettings")] [SerializeField] private PlayerSettings playerSettings;
+        [FormerlySerializedAs("playerSettings")] [FormerlySerializedAs("sensibilitySettings")] [SerializeField] private PlayerSettingsConfig playerSettingsConfig;
         private void Awake()
         {
             _sceneryManager.InitScenes();
             float prefsSensibility = PlayerPrefs.GetFloat("Sensibility");
 
-            playerSettings.sensibility = prefsSensibility;
+            playerSettingsConfig.sensibility = prefsSensibility;
         }
     }
 }
