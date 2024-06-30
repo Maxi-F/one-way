@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Audio;
 using Manager;
 using PlayerScripts;
+using PlayerScripts.Controllers;
 using ScriptableObjects.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
