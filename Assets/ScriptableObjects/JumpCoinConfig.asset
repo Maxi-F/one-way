@@ -19,3 +19,10 @@ MonoBehaviour:
   - {fileID: 100020, guid: 0fd1d2f1032fd874b8414b94d065341e, type: 3}
   materialsList:
   - {fileID: 2100000, guid: 470cda499cbb6534ba795f2fd5348c72, type: 2}
+  sounds:
+  - CNote
+  - BNote
+  - ENote
+  - GNote
+  hoverVelocity: 0.5
+  hoverDistance: 0.2
