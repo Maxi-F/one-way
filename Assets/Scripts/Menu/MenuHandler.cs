@@ -12,7 +12,6 @@ public class MenuHandler : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("activating?");
         EventManager.Instance.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", menuName } });
     }
 

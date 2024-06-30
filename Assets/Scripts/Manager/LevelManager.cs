@@ -1,6 +1,7 @@
 using PlayerScripts;
 using System;
 using System.Collections.Generic;
+using Audio;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -119,7 +120,8 @@ namespace Manager
                     menuDeactivatedEvent,
                     new Dictionary<string, object>() { { "name", pauseMenuName } }
                     );
-                
+
+                AudioManager.Instance.ResumeAll();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 _isPaused = false;
@@ -133,6 +135,7 @@ namespace Manager
                     new Dictionary<string, object>() { { "name", pauseMenuName } }
                 );
                 
+                AudioManager.Instance.PauseAllSounds();
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
                 _isPaused = true;
