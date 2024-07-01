@@ -12,6 +12,8 @@ namespace PlayerScripts.Controllers
         [SerializeField] private float force;
         [SerializeField] private float jumpingMilliseconds = 1000f;
         [SerializeField] [Min(1)] private int maxDoubleJumpsFromGround;
+        [SerializeField] private float maxTimeStuckFalling = 0.5f;
+        [SerializeField] private float stuckYVelocity = 0.001f;
         
         [Header("Events")]
         [SerializeField] private UnityEvent OnLand;
@@ -26,6 +28,7 @@ namespace PlayerScripts.Controllers
         private bool _shouldJump = false;
         private int _jumpsLeft;
         private float _timeJumped = 0.0f;
+        private float _timeStuckFalling = 0.0f;
         public bool IsJumping { get; set; }
 
         public void Start()
@@ -49,6 +52,10 @@ namespace PlayerScripts.Controllers
                 _shouldJump = false;
                 IsJumping = true;
             }
+            else if(_timeStuckFalling > maxTimeStuckFalling)
+            {
+                _rigidBody.AddForce(Vector3.up * force, ForceMode.Impulse);
+            }
         }
 
         /// <summary>
@@ -65,6 +72,16 @@ namespace PlayerScripts.Controllers
             {
                 _player.TouchesGround();
                 OnLand.Invoke();
+            }
+
+            float yVelocity = GetYVelocityVector().y;
+            if (yVelocity < stuckYVelocity && yVelocity > -stuckYVelocity)
+            {
+                _timeStuckFalling += Time.deltaTime;
+            }
+            else
+            {
+                _timeStuckFalling = 0;
             }
         }
 

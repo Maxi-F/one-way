@@ -160,7 +160,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539672749144961965}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e1734ee27cdc6604aa06e6446887ee02, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 10
-  jumpingMiliseconds: 1000
+  jumpingMilliseconds: 1000
   maxDoubleJumpsFromGround: 1
   OnLand:
     m_PersistentCalls:
@@ -613,7 +613,6 @@ MonoBehaviour:
   edgeGrabYdistance: 0.1
   powerJumpImpulse: 0
   edgeOffset: {x: 0.7, y: 1.5}
-  edgeJumpImpulse: 5
   secondsUntilEdgeGrabAvailable: 2
   OnEdgePositionSetted:
     m_PersistentCalls:
