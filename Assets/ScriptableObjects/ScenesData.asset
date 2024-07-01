@@ -13,39 +13,31 @@ MonoBehaviour:
   m_Name: ScenesData
   m_EditorClassIdentifier: 
   scenes:
-  - path: Assets/Scenes/Boot.unity
-    name: Boot
+  - name: Boot
     index: 0
-  - path: Assets/Scenes/Gameplay/Gameplay.unity
-    name: Gameplay
+  - name: Gameplay
     index: 1
-  - path: Assets/Scenes/Menu/Menu.unity
-    name: Menu
+  - name: Menu
     index: 2
-  - path: Assets/Scenes/Credits/Credits.unity
-    name: Credits
+  - name: Credits
     index: 3
-  - path: Assets/Scenes/Gameplay/Levels/Level1.unity
-    name: Level1
+  - name: Level1
     index: 4
-  - path: Assets/Scenes/Gameplay/Levels/Level2.unity
-    name: Level2
+  - name: Level2
     index: 5
-  - path: Assets/Scenes/Gameplay/Levels/Level3.unity
-    name: Level3
+  - name: Level3
     index: 6
-  - path: Assets/Scenes/Gameplay/Levels/Level4.unity
-    name: Level4
+  - name: Level4
     index: 7
-  - path: Assets/Scenes/AllMenus.unity
-    name: AllMenus
+  - name: AllMenus
     index: 8
-  - path: Assets/Scenes/Menu/MenuDesign.unity
-    name: MenuDesign
+  - name: MenuDesign
     index: 9
-  - path: Assets/Scenes/Credits/CreditsDesign.unity
-    name: CreditsDesign
+  - name: CreditsDesign
     index: 10
-  - path: Assets/Scenes/Managers.unity
-    name: Managers
+  - name: Managers
     index: 11
+  - name: win
+    index: 12
+  - name: lost
+    index: 13

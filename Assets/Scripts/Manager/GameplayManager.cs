@@ -17,6 +17,8 @@ namespace Manager
         [SerializeField] private string menuSceneName = "Menu";
         [SerializeField] private string gameplaySceneName = "Gameplay";
         [SerializeField] private string gameplayUIMenuName = "gameplayUI";
+        [SerializeField] private string winSceneName = "win";
+        [SerializeField] private string lostSceneName = "lost";
 
     
         [Header("Events")]
@@ -28,7 +30,8 @@ namespace Manager
             _activeLevelSceneName = initLevelSceneName;
             _sceneryManager ??= FindObjectOfType<SceneryManager>();
             _sceneryManager.LoadScene(_activeLevelSceneName);
-            _sceneryManager.SubscribeEventToAddScene(menuSceneName, UnloadGameplay);
+            _sceneryManager.SubscribeEventToAddScene(winSceneName, UnloadGameplay);
+            _sceneryManager.SubscribeEventToAddScene(lostSceneName, UnloadGameplay);
         
             EventManager.Instance?.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
         }
@@ -58,9 +61,8 @@ namespace Manager
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
-        
-            // TODO win scene
-            _sceneryManager.LoadScene(menuSceneName);
+            
+            _sceneryManager.LoadScene(winSceneName);
         }
 
         /// <summary>
@@ -70,7 +72,8 @@ namespace Manager
         {
             _sceneryManager.UnloadScene(_activeLevelSceneName);
             _sceneryManager.UnloadScene(gameplaySceneName);
-            _sceneryManager.UnsubscribeEventToAddScene(menuSceneName, UnloadGameplay);
+            _sceneryManager.UnsubscribeEventToAddScene(winSceneName, UnloadGameplay);
+            _sceneryManager.UnsubscribeEventToAddScene(lostSceneName, UnloadGameplay);
         }
 
         /// <summary>
@@ -144,7 +147,7 @@ namespace Manager
             Cursor.visible = true;
      
             // TODO lose scene
-            _sceneryManager.LoadScene(menuSceneName);
+            _sceneryManager.LoadScene(lostSceneName);
         }
     }
 }
