@@ -18,7 +18,9 @@ namespace CameraScripts
     
         [Tooltip("Max Angles on the bottom of the target in which the camera can rotate in X")] 
         [SerializeField] private Vector2 bottomMinMaxAngles = new Vector2(260.0f, 280.0f);
-    
+
+        [SerializeField] private float controllerDamper = 0.05f;
+        
         private Vector2 _desiredRotation;
         private bool _isController;
 
@@ -42,7 +44,7 @@ namespace CameraScripts
         {
             Quaternion previousRotationInX = transform.rotation;
             Vector3 previousPositionInX = transform.position;
-            float multiplier = _isController ? 1 : Time.deltaTime;
+            float multiplier = _isController ? controllerDamper : Time.deltaTime;
         
             transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * multiplier);
 
