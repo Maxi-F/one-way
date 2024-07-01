@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778030ffc8c080a419314d9cb25c2821, type: 3}
+  m_Name: CreditsDataConfig
+  m_EditorClassIdentifier: 
+  credits:
+  - title: Developers
+    members:
+    - Maximiliano Feldman
+  - title: Art
+    members:
+    - BG Studio - Skybox
+    - TreeTrunks - Medieval Instruments
+    - NOT_Lonely - Acoustic Guitar
+    - devandart - Low Poly African Instruments
+    - Dillon Wallace - Simple Collectibles Pack
+    - SaladMix Studio - The Notes
+  - title: Sound
+    members:
+    - Badoink - Music
+    - qubodup - Walk/Run SFX
+    - nhaudio - Jump bongo SFX
+    - cabled_mess - Coin SFX
+    - stomachache - Notes/Chords SFX
+    - Sheyvan - Click SFX
+  - title: Special Thanks
+    members:
+    - Juan Pablo Varela Aloisio
+    - Dario Otranto
+    - Nicolas Laure
+    - Juan Digilio
+    - Mateo Monastra
+    - Ignacio Souza
+    - Carolina Pohn
+    - Ignacio Arrastua
+    - And Image Campus!

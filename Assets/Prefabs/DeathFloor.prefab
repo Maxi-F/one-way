@@ -62,8 +62,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 196a83e4fac7a644ebc189706f6c2082, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,18 +118,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6314569198464105875, guid: 28e6adcb6e363ac499534431bd754217, type: 3}
-  onHandleDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7955728586405096038, guid: f20694ace3718064887079c1f7055b9b, type: 3}
-        m_TargetAssemblyTypeName: Manager.LevelManager, Assembly-CSharp
-        m_MethodName: HandleDeath
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  playerDeathEvent: playerDeath
+  lostLiveSound: lostLife

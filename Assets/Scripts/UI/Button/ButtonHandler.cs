@@ -43,6 +43,14 @@ namespace UI.Button
                 new Dictionary<string, object>() { { "name", canvasName }, { "isDeactivating", true } }
                 );
         }
+
+        /// <summary>
+        /// Start time scale again.
+        /// </summary>
+        public void StartTime()
+        {
+            Time.timeScale = 1;
+        }
     }
     
 }
