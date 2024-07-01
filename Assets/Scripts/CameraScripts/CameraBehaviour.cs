@@ -45,7 +45,7 @@ namespace CameraScripts
             Quaternion previousRotationInX = transform.rotation;
             Vector3 previousPositionInX = transform.position;
             float multiplier = _isController ? controllerDamper : Time.deltaTime;
-        
+            
             transform.RotateAround(target.position, transform.right, _desiredRotation.y * player.Sensibility * multiplier);
 
             float angleInX = transform.rotation.eulerAngles.x;
