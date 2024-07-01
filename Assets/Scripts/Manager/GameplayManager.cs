@@ -32,6 +32,7 @@ namespace Manager
             _sceneryManager.LoadScene(_activeLevelSceneName);
             _sceneryManager.SubscribeEventToAddScene(winSceneName, UnloadGameplay);
             _sceneryManager.SubscribeEventToAddScene(lostSceneName, UnloadGameplay);
+            _sceneryManager.SubscribeEventToAddScene(menuSceneName, UnloadGameplay);
         
             EventManager.Instance?.TriggerEvent(menuActivatedEvent, new Dictionary<string, object>() { { "name", gameplayUIMenuName } });
         }
@@ -74,6 +75,7 @@ namespace Manager
             _sceneryManager.UnloadScene(gameplaySceneName);
             _sceneryManager.UnsubscribeEventToAddScene(winSceneName, UnloadGameplay);
             _sceneryManager.UnsubscribeEventToAddScene(lostSceneName, UnloadGameplay);
+            _sceneryManager.UnsubscribeEventToAddScene(menuSceneName, UnloadGameplay);
         }
 
         /// <summary>

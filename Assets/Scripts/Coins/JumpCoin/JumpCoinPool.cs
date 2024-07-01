@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Manager;
 using ScriptableObjects.Scripts;
@@ -10,11 +11,9 @@ namespace Coins.JumpCoin
     {
         [SerializeField] private int amountToPool = 20;
         [SerializeField] private NoteConfig noteConfig;
-    
-        [Header("Events")]
-        [SerializeField] private string levelPassed = "levelPassed";
-    
+        
         private static JumpCoinPool _instance;
+        private int _amountOfNotes;
         public static JumpCoinPool Instance
         {
             // checks with null because if object is destroyed it returns true but object is not null.
@@ -27,6 +26,8 @@ namespace Coins.JumpCoin
     
         void Awake()
         {
+            _amountOfNotes = amountToPool;
+            
             if(Instance == null)
             {
                 Instance = this;
@@ -42,21 +43,19 @@ namespace Coins.JumpCoin
         void OnEnable()
         {
             _pooledJumpCoins = new List<GameObject>();
-            for(int i = 0; i < amountToPool; i++)
+            for(int i = 0; i < _amountOfNotes; i++)
             {
                 CreateNote();
             }
-        
-            EventManager.Instance?.SubscribeTo(levelPassed, ClearPooledNotes);
         }
-    
+
         /// <summary>
         /// Obtains a pooled note from the notes pool.
         /// </summary>
         /// <returns>A Note gameobject.</returns>
         public GameObject GetPooledNote()
         {
-            for(int i = 0; i < amountToPool; i++)
+            for(int i = 0; i < _pooledJumpCoins.Count; i++)
             {
                 if(!_pooledJumpCoins[i].activeInHierarchy)
                 {
@@ -66,17 +65,6 @@ namespace Coins.JumpCoin
         
             return CreateNote();
         }
-
-        /// <summary>
-        /// Sets all notes as non active from the notes pool.
-        /// </summary>
-        public void ClearPooledNotes(Dictionary<string, object> message)
-        {
-            for (int i = 0; i < amountToPool; i++)
-            {
-                _pooledJumpCoins[i].SetActive(false);
-            }
-        }
     
         /// <summary>
         /// Creates a note from the jump coin factory.
@@ -85,6 +73,7 @@ namespace Coins.JumpCoin
         private GameObject CreateNote()
         {
             GameObject note = _jumpCoinFactory.CreateJumpCoin();
+            note.transform.SetParent(gameObject.transform);
             
             note.SetActive(false);
             
@@ -99,7 +88,6 @@ namespace Coins.JumpCoin
         /// <param name="instantiatedNote">Note to return to the pool.</param>
         public void ReturnToPool(GameObject instantiatedNote)
         {
-            instantiatedNote.transform.SetParent(gameObject.transform);
             instantiatedNote.SetActive(false);
         }
     }
