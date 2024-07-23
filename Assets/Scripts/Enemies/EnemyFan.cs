@@ -9,13 +9,14 @@ namespace Enemies
     public class EnemyFan : MonoBehaviour, IEnemy
     {
         [SerializeField] private float speed = 10.0f;
-    
+        
         [Header("Events")]
         [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
         [SerializeField] private string enemyHitEvent = "enemyHit";
         
         private Transform _playerTransform;
         private Vector3 _initPosition;
+        private bool _shouldFollow;
         
         void Start()
         {
@@ -27,15 +28,19 @@ namespace Enemies
             });
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if (!_playerTransform) return;
+            if (!_playerTransform || !_shouldFollow) return;
 
             Vector3 direction = (_playerTransform.position - transform.position).normalized;
 
             transform.position += direction * (speed * Time.deltaTime);
-            transform.LookAt(_playerTransform.position);
+            
+            transform.LookAt(new Vector3(
+                _playerTransform.position.x,
+                transform.position.y,
+                _playerTransform.position.z
+                ));
         }
 
         private void OnCollisionEnter(Collision other)
@@ -62,6 +67,12 @@ namespace Enemies
         public void Reset()
         {
             transform.position = _initPosition;
+            gameObject.SetActive(true);
+        }
+
+        public void SetFollow(bool shouldFollow)
+        {
+            _shouldFollow = shouldFollow;
         }
     }
 }
