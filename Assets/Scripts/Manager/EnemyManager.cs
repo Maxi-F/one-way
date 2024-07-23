@@ -28,6 +28,8 @@ public class EnemyManager : MonoBehaviour
     void HandleNewEnemyFanEvent(Dictionary<string, object> message)
     {
         IEnemy enemy = (IEnemy)message["enemy"];
+
+        Debug.Log("New enemy Fan!");
         
         enemy.SetPlayer(player);
         _enemies.Add(enemy);

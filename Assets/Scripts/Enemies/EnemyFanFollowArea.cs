@@ -34,7 +34,7 @@ namespace Enemies
             _sphereCollider ??= GetComponent<SphereCollider>();
             Gizmos.DrawWireSphere(
                 _sphereCollider.transform.position,
-                _sphereCollider.radius * transform.lossyScale.x
+                _sphereCollider.radius
                 );
         }
     }

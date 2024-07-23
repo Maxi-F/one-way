@@ -15,7 +15,8 @@ namespace Input
         [SerializeField] private UnityEvent OnFly;
         [SerializeField] private UnityEvent OnPassLevel;
         [SerializeField] private UnityEvent OnPause;
-
+        [SerializeField] private UnityEvent OnAttack;
+        
         /// <summary>
         /// Handles move input events from input actions.
         /// </summary>
@@ -91,6 +92,17 @@ namespace Input
             if(context.started)
             {
                 OnPause?.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Handles Attack button press.
+        /// </summary>
+        public void HandleAttack(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                OnAttack?.Invoke();
             }
         }
     }

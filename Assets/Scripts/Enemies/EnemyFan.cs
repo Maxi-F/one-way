@@ -14,7 +14,7 @@ namespace Enemies
         [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
         [SerializeField] private string enemyHitEvent = "enemyHit";
         
-        private Transform _playerTransform;
+        private Player _player;
         private Vector3 _initPosition;
         private bool _shouldFollow;
         
@@ -30,16 +30,16 @@ namespace Enemies
 
         void Update()
         {
-            if (!_playerTransform || !_shouldFollow) return;
+            if (!_player.transform || !_shouldFollow) return;
 
-            Vector3 direction = (_playerTransform.position - transform.position).normalized;
+            Vector3 direction = (_player.transform.position - transform.position).normalized;
 
             transform.position += direction * (speed * Time.deltaTime);
             
             transform.LookAt(new Vector3(
-                _playerTransform.position.x,
+                _player.transform.position.x,
                 transform.position.y,
-                _playerTransform.position.z
+                _player.transform.position.z
                 ));
         }
 
@@ -58,7 +58,7 @@ namespace Enemies
         /// </summary>
         public void SetPlayer(Player player)
         {
-            _playerTransform = player.transform;
+            _player = player;
         }
         
         /// <summary>

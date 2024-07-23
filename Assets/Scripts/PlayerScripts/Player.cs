@@ -33,7 +33,7 @@ namespace PlayerScripts
         
         private Rigidbody _rigidBody;
         private bool _shouldStop = false;
-        private MovementFSM _movementFSM;
+        private MovementFsm _movementFSM;
         
         private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
@@ -44,7 +44,7 @@ namespace PlayerScripts
             _rotationBehaviour ??= GetComponent<RotationBehaviour>();
 
             IBehaviour[] behaviours = GetComponents<IBehaviour>();
-            _movementFSM = new MovementFSM(behaviours, walkBehaviour);
+            _movementFSM = new MovementFsm(behaviours, walkBehaviour);
 
             lives = maxLives;
         }
