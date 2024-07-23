@@ -20,6 +20,7 @@ namespace Manager
         [Header("Events")]
         [SerializeField] private string playerDeathEvent = "playerDeath";
 
+        [SerializeField] private string lostLiveEvent = "lostLive";
         [SerializeField] private string enemyHitEvent = "enemyHit";
         [SerializeField] private string menuActivatedEvent = "menuActivated";
         [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
@@ -73,20 +74,26 @@ namespace Manager
 
         public void HandleEnemyHit(Dictionary<string, object> message)
         {
-            EventManager.Instance?.TriggerEvent(playerDeathEvent, null);
+            this.LoseLive();
         }
-        
-        public void HandleDeath(Dictionary<string, object> message)
+
+        private void LoseLive()
         {
             AudioManager.Instance?.PlaySound(lostLiveSound);
             player.LoseLive();
-
+            EventManager.Instance?.TriggerEvent(lostLiveEvent, null);
+            
             if (player.Lives == 0)
             {
                 HandleLose();
                 
                 return;
             }
+        }
+        
+        public void HandleDeath(Dictionary<string, object> message)
+        {
+            this.LoseLive();
             
             player.transform.position = _startingPosition;
             

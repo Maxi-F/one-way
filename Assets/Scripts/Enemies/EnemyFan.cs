@@ -43,6 +43,8 @@ namespace Enemies
             if (other.gameObject.CompareTag("Player"))
             {
                 EventManager.Instance.TriggerEvent(enemyHitEvent, null);
+                
+                gameObject.SetActive(false);
             }
         }
 
@@ -53,7 +55,10 @@ namespace Enemies
         {
             _playerTransform = player.transform;
         }
-
+        
+        /// <summary>
+        /// Resets the enemy position to initial one.
+        /// </summary>
         public void Reset()
         {
             transform.position = _initPosition;
