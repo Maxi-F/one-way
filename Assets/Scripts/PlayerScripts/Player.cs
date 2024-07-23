@@ -1,4 +1,5 @@
 using System;
+using PlayerScripts.AttackBehaviours;
 using PlayerScripts.Behaviours;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,7 @@ namespace PlayerScripts
         [Header("PlayerData")]
         [SerializeField] private CapsuleCollider capsuleCollider;
         [SerializeField] WalkingBehaviour walkBehaviour;
+        [SerializeField] private IdleBehaviour idleBehaviour;
         [SerializeField] private int lives = 3;
         [SerializeField] private int maxLives = 3;
         [SerializeField] private int velocityToRun = 10;
@@ -33,7 +35,8 @@ namespace PlayerScripts
         
         private Rigidbody _rigidBody;
         private bool _shouldStop = false;
-        private MovementFsm _movementFSM;
+        private MovementFsm _movementFsm;
+        private AttackFsm _attackFsm;
         
         private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
@@ -44,8 +47,10 @@ namespace PlayerScripts
             _rotationBehaviour ??= GetComponent<RotationBehaviour>();
 
             IBehaviour[] behaviours = GetComponents<IBehaviour>();
-            _movementFSM = new MovementFsm(behaviours, walkBehaviour);
+            _movementFsm = new MovementFsm(behaviours, walkBehaviour);
 
+            IAttackBehaviour[] attackBehaviours = GetComponents<IAttackBehaviour>();
+            _attackFsm = new AttackFsm(attackBehaviours, idleBehaviour);
             lives = maxLives;
         }
 
@@ -73,7 +78,7 @@ namespace PlayerScripts
         /// </summary>
         public void TouchesGround()
         {
-            _movementFSM.ChangeStateTo(MovementBehaviour.Move);
+            _movementFsm.ChangeStateTo(MovementBehaviour.Move);
         }
 
         /// <summary>
@@ -81,12 +86,13 @@ namespace PlayerScripts
         /// </summary>
         public void Jump()
         {
-            _movementFSM.ChangeStateTo(MovementBehaviour.Jump);
+            _movementFsm.ChangeStateTo(MovementBehaviour.Jump);
         }
         
         public void Update()
         {
-            _movementFSM.OnUpdate();
+            _movementFsm.OnUpdate();
+            _attackFsm.OnUpdate();
             _rotationBehaviour.LookInDirection(); 
         }
 
@@ -98,7 +104,8 @@ namespace PlayerScripts
                 _shouldStop = false;
             }
             else {
-                _movementFSM.OnFixedUpdate();
+                _movementFsm.OnFixedUpdate();
+                _attackFsm.OnFixedUpdate();
             }
         }
 
@@ -115,7 +122,7 @@ namespace PlayerScripts
         /// </summary>
         public bool IsEdgeGrabbing()
         {
-            return _movementFSM.IsCurrentBehaviour(MovementBehaviour.EdgeGrab);
+            return _movementFsm.IsCurrentBehaviour(MovementBehaviour.EdgeGrab);
         }
 
         
@@ -126,7 +133,7 @@ namespace PlayerScripts
         {
             if (!IsEdgeGrabbing())
             {
-                _movementFSM.ChangeStateTo(MovementBehaviour.EdgeGrab);
+                _movementFsm.ChangeStateTo(MovementBehaviour.EdgeGrab);
             }
         }
 
@@ -135,7 +142,7 @@ namespace PlayerScripts
         /// </summary>
         public void Fly()
         {
-            _movementFSM.ChangeStateTo(MovementBehaviour.Fly);
+            _movementFsm.ChangeStateTo(MovementBehaviour.Fly);
         }
 
         /// <summary>
@@ -144,6 +151,16 @@ namespace PlayerScripts
         public void LoseLive()
         {
             lives--;
+        }
+
+        public void SetAttackInIdle()
+        {
+            _attackFsm.ChangeStateTo(AttackBehaviour.Idle);
+        }
+
+        public void Attack()
+        {
+            _attackFsm.ChangeStateTo(AttackBehaviour.Attack);
         }
     }
 }

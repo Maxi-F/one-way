@@ -19,7 +19,6 @@ namespace PlayerScripts
     {
         private readonly List<IBehaviour> _behaviours = new List<IBehaviour>();
         
-        
         public MovementFsm(IBehaviour[] behavioursToUse, IBehaviour initBehaviour) {
             _behaviours.AddRange(behavioursToUse);
             CurrentBehaviour = initBehaviour;

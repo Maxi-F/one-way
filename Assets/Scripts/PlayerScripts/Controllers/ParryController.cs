@@ -1,18 +1,59 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ParryController : MonoBehaviour
+namespace PlayerScripts.Controllers
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ParryController : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private float bufferBetweenAttacksInSeconds = 0.5f;
+        [SerializeField] private float timeAttackingInSeconds = 1f; 
+        [SerializeField] private SphereCollider attackSphere;
 
-    // Update is called once per frame
-    void Update()
-    {
+        private Player _player;
+        private bool _isAttacking;
+        private bool _canAttack = true;
+
+        void Start()
+        {
+            _player ??= GetComponent<Player>();
+        }
         
+        public void OnUpdate()
+        {
+            if (_isAttacking) return;
+            
+            _player.SetAttackInIdle();
+        }
+
+        public void SetBuffer()
+        {
+            _canAttack = false;
+            
+            StartCoroutine(enableAttack());
+        }
+        
+        public void Attack()
+        {
+            if (_canAttack)
+            {
+                _isAttacking = true;
+                StartCoroutine(StopAttack());
+            }
+        }
+
+        IEnumerator StopAttack()
+        {
+            yield return new WaitForSeconds(timeAttackingInSeconds);
+
+            _isAttacking = false;
+        }
+
+        IEnumerator enableAttack()
+        {
+            yield return new WaitForSeconds(bufferBetweenAttacksInSeconds);
+
+            _canAttack = true;
+        }
     }
 }

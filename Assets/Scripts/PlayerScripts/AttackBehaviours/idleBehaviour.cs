@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class idleBehaviour : MonoBehaviour
+namespace PlayerScripts.AttackBehaviours
 {
-    // Start is called before the first frame update
-    void Start()
+    public class IdleBehaviour : MonoBehaviour, IAttackBehaviour
     {
-        
-    }
+        public AttackBehaviour GetName()
+        {
+            return AttackBehaviour.Idle;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void OnBehaviourUpdate()
+        {
+        }
+
+        public void OnBehaviourFixedUpdate()
+        {
+        }
+
+        public AttackBehaviour[] GetNextBehaviours()
+        {
+            return new[] { AttackBehaviour.Attack };
+        }
+
+        public void Enter(IAttackBehaviour previousBehaviour)
+        {
+        }
+
+        public void Exit(IAttackBehaviour nextBehaviour)
+        {
+        }
     }
 }
