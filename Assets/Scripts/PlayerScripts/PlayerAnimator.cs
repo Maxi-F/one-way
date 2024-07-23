@@ -39,6 +39,14 @@ namespace PlayerScripts
         }
 
         /// <summary>
+        /// Set Attack flag on animator.
+        /// </summary>
+        public void HandleAttack()
+        {
+            animator.SetBool("isAttacking", true);
+        }
+
+        /// <summary>
         /// Handles jump flags on animator.
         /// </summary>
         public void HandleJump()
