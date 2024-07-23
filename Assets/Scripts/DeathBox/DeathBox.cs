@@ -16,9 +16,6 @@ public class DeathBox : MonoBehaviour
     [Header("Events")]
     [SerializeField] private string playerDeathEvent = "playerDeath";
     
-    [Header("Sounds")]
-    [SerializeField] private string lostLiveSound = "lostLife";
-    
     private void Start()
     {
         _plane = new Plane(transform.up, transform.position);
@@ -28,7 +25,6 @@ public class DeathBox : MonoBehaviour
     {
         if (!_plane.GetSide(player.transform.position))
         {
-            AudioManager.Instance?.PlaySound(lostLiveSound);
             EventManager.Instance?.TriggerEvent(playerDeathEvent, null);
         }
     }

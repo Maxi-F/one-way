@@ -19,6 +19,8 @@ namespace Manager
         
         [Header("Events")]
         [SerializeField] private string playerDeathEvent = "playerDeath";
+
+        [SerializeField] private string enemyHitEvent = "enemyHit";
         [SerializeField] private string menuActivatedEvent = "menuActivated";
         [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
         [SerializeField] private string sensibilityChangedEvent = "sensibilityChanged";
@@ -28,6 +30,8 @@ namespace Manager
         [Header("MenuData")] 
         [SerializeField] private string pauseMenuName = "pause";
 
+        [Header("Sounds")]
+        [SerializeField] private string lostLiveSound = "lostLife";
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
@@ -36,6 +40,7 @@ namespace Manager
         void Start()
         {
             EventManager.Instance?.SubscribeTo(playerDeathEvent, HandleDeath);
+            EventManager.Instance?.SubscribeTo(enemyHitEvent, HandleEnemyHit);
             EventManager.Instance?.SubscribeTo(sensibilityChangedEvent, SetSensibility);
             EventManager.Instance?.TriggerEvent(initPlayerLivesEvent, new Dictionary<string, object>() { { "value", player.Lives } });
             
@@ -66,8 +71,14 @@ namespace Manager
             EventManager.Instance?.SubscribeTo(sensibilityChangedEvent, SetSensibility);
         }
 
+        public void HandleEnemyHit(Dictionary<string, object> message)
+        {
+            EventManager.Instance?.TriggerEvent(playerDeathEvent, null);
+        }
+        
         public void HandleDeath(Dictionary<string, object> message)
         {
+            AudioManager.Instance?.PlaySound(lostLiveSound);
             player.LoseLive();
 
             if (player.Lives == 0)

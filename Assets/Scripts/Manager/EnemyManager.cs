@@ -8,13 +8,17 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private Player player;
+    [SerializeField] private List<IEnemy> _enemies;
     
     [Header("events")]
     [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
+    [SerializeField] private string playerDeathEvent = "playerDeath";
 
     void OnEnable()
     {
-        EventManager.Instance.SubscribeTo(enemyFanEnabledEvent, HandleNewEnemyFanEvent);    
+        _enemies = new List<IEnemy>();
+        EventManager.Instance.SubscribeTo(enemyFanEnabledEvent, HandleNewEnemyFanEvent);
+        EventManager.Instance.SubscribeTo(playerDeathEvent, HandleResetEnemies);
     }
 
     /// <summary>
@@ -26,5 +30,17 @@ public class EnemyManager : MonoBehaviour
         IEnemy enemy = (IEnemy)message["enemy"];
         
         enemy.SetPlayer(player);
+        _enemies.Add(enemy);
+    }
+
+    /// <summary>
+    /// Resets all enemies
+    /// </summary>
+    void HandleResetEnemies(Dictionary<string, object> message)
+    {
+        foreach (var enemy in _enemies)
+        {
+            enemy.Reset();
+        }
     }
 }
