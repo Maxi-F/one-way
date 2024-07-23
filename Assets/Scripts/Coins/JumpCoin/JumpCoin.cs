@@ -33,8 +33,6 @@ namespace Coins.JumpCoin
             
             RemoveDebug();
             
-            _jumpCoinFactory = new JumpCoinFactory(config);
-            
             Enable();
         }
 
