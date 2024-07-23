@@ -38,6 +38,7 @@ namespace PlayerScripts.Controllers
             if (_canAttack)
             {
                 _isAttacking = true;
+                attackSphere.gameObject.SetActive(true);
                 StartCoroutine(StopAttack());
             }
         }
@@ -47,6 +48,7 @@ namespace PlayerScripts.Controllers
             yield return new WaitForSeconds(timeAttackingInSeconds);
 
             _isAttacking = false;
+            attackSphere.gameObject.SetActive(false);
         }
 
         IEnumerator enableAttack()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Health;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
@@ -13,7 +14,8 @@ namespace Enemies
         [Header("Events")]
         [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
         [SerializeField] private string enemyHitEvent = "enemyHit";
-        
+
+        private HealthPoints _health;
         private Player _player;
         private Vector3 _initPosition;
         private bool _shouldFollow;
@@ -21,6 +23,7 @@ namespace Enemies
         void Start()
         {
             _initPosition = transform.position;
+            _health ??= GetComponent<HealthPoints>();
             
             EventManager.Instance.TriggerEvent(enemyFanEnabledEvent, new Dictionary<string, object>()
             {
@@ -41,6 +44,11 @@ namespace Enemies
                 transform.position.y,
                 _player.transform.position.z
                 ));
+        }
+
+        public void TakeDamage()
+        {
+            _health.TakeDamage();
         }
 
         private void OnCollisionEnter(Collision other)

@@ -13,12 +13,14 @@ public class EnemyManager : MonoBehaviour
     [Header("events")]
     [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
     [SerializeField] private string playerDeathEvent = "playerDeath";
-
+    [SerializeField] private string enemyDeadEvent = "enemyDead";
+    
     void OnEnable()
     {
         _enemies = new List<IEnemy>();
         EventManager.Instance.SubscribeTo(enemyFanEnabledEvent, HandleNewEnemyFanEvent);
         EventManager.Instance.SubscribeTo(playerDeathEvent, HandleResetEnemies);
+        EventManager.Instance.SubscribeTo(enemyDeadEvent, HandleEnemyDead);
     }
 
     /// <summary>
@@ -33,6 +35,19 @@ public class EnemyManager : MonoBehaviour
         
         enemy.SetPlayer(player);
         _enemies.Add(enemy);
+    }
+
+    /// <summary>
+    /// Handles enemy dead event after attack.
+    /// </summary>
+    void HandleEnemyDead(Dictionary<string, object> message)
+    {
+        GameObject healthPointsObject = (GameObject)message["gameObject"];
+
+        if ((string)message["entity"] == "enemy")
+        {
+            healthPointsObject.SetActive(false);
+        }
     }
 
     /// <summary>

@@ -472,11 +472,31 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 996968974c13ef04082ddd0fb8877485, type: 3}
+--- !u!1 &878556692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4004688537095907778, guid: 2f93fb0fec3dbd64f8cbf0459a083ccd, type: 3}
+  m_PrefabInstance: {fileID: 1208863108}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &878556693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8177226796514877070, guid: 2f93fb0fec3dbd64f8cbf0459a083ccd, type: 3}
   m_PrefabInstance: {fileID: 1208863108}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &878556699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878556692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588a11e4ae46e154e9bc99bd4e4bf0be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initHitPoints: 1
+  entity: enemy
+  entityDeadEvent: enemyDead
 --- !u!1 &1180333838
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +589,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4004688537095907778, guid: 2f93fb0fec3dbd64f8cbf0459a083ccd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 878556699}
     - targetCorrespondingSourceObject: {fileID: 8225626109300944619, guid: 2f93fb0fec3dbd64f8cbf0459a083ccd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1765773199}
@@ -1056,13 +1079,13 @@ MonoBehaviour:
   OnAttack:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 2081226857}
+        m_TargetAssemblyTypeName: PlayerScripts.Player, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

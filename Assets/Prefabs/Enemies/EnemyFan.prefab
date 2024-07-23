@@ -119,9 +119,10 @@ GameObject:
   - component: {fileID: 3841857752623552254}
   - component: {fileID: 378870948755892147}
   - component: {fileID: 7028195227705655931}
+  - component: {fileID: 1264414808107652686}
   m_Layer: 0
   m_Name: EnemyFan
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -258,6 +259,21 @@ MonoBehaviour:
   speed: 4.7
   enemyFanEnabledEvent: enemyFanEnabled
   enemyHitEvent: enemyHit
+--- !u!114 &1264414808107652686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4004688537095907778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588a11e4ae46e154e9bc99bd4e4bf0be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initHitPoints: 1
+  entity: enemy
+  entityDeadEvent: enemyDead
 --- !u!1 &8225626109300944619
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,8 +286,9 @@ GameObject:
   - component: {fileID: 8663988746569722566}
   - component: {fileID: 5450638647786171588}
   - component: {fileID: 3292222975733096240}
+  - component: {fileID: 2143612832869942740}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: FollowVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,3 +380,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2143612832869942740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8225626109300944619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4636e062efd14254698dc3dd47e37175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
