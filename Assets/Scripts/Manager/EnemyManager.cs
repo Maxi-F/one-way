@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
@@ -22,8 +23,8 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     void HandleNewEnemyFanEvent(Dictionary<string, object> message)
     {
-        EnemyFanMovement enemyFan = (EnemyFanMovement)message["enemyFan"];
+        IEnemy enemy = (IEnemy)message["enemy"];
         
-        enemyFan.SetPlayerTransform(player.transform);
+        enemy.SetPlayer(player);
     }
 }

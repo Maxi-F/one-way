@@ -1,39 +1,42 @@
-using System.Collections;
 using System.Collections.Generic;
 using Manager;
+using PlayerScripts;
 using UnityEngine;
 
-public class EnemyFanMovement : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private float speed = 10.0f;
-    
-    [Header("Events")]
-    [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
-    
-    private Transform _playerTransform;
-    void Start()
+    public class EnemyFanMovement : MonoBehaviour, IEnemy
     {
-        EventManager.Instance.TriggerEvent(enemyFanEnabledEvent, new Dictionary<string, object>()
+        [SerializeField] private float speed = 10.0f;
+    
+        [Header("Events")]
+        [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
+    
+        private Transform _playerTransform;
+        void Start()
         {
-            { "enemyFan", this }
-        });
-    }
+            EventManager.Instance.TriggerEvent(enemyFanEnabledEvent, new Dictionary<string, object>()
+            {
+                { "enemy", this }
+            });
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!_playerTransform) return;
+        // Update is called once per frame
+        void Update()
+        {
+            if (!_playerTransform) return;
 
-        Vector3 direction = (_playerTransform.position - transform.position).normalized;
+            Vector3 direction = (_playerTransform.position - transform.position).normalized;
 
-        transform.position += direction * (speed * Time.deltaTime);
-    }
+            transform.position += direction * (speed * Time.deltaTime);
+        }
 
-    /// <summary>
-    /// Sets the player transform.
-    /// </summary>
-    public void SetPlayerTransform(Transform playerTransform)
-    {
-        _playerTransform = playerTransform;
+        /// <summary>
+        /// Sets the player transform.
+        /// </summary>
+        public void SetPlayer(Player player)
+        {
+            _playerTransform = player.transform;
+        }
     }
 }
