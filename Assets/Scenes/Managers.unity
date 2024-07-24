@@ -189,8 +189,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[13].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 73fce8ca2fcc0f74eba92007274e63a3, type: 3}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
       propertyPath: musics.Array.data[0].loop
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[13].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[13].maxVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[13].soundName
+      value: attack
       objectReference: {fileID: 0}
     - target: {fileID: 5730773134152395118, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
       propertyPath: m_Name
