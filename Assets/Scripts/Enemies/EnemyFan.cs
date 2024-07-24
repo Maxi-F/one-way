@@ -98,6 +98,7 @@ namespace Enemies
         {
             transform.position = _initPosition;
 
+            _shouldFollow = false;
             _isDead = false;
             gameObject.SetActive(true);
             _collider.enabled = true;

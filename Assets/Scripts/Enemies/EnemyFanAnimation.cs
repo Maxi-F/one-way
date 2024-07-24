@@ -10,6 +10,8 @@ namespace Enemies
         {
             animator.SetBool("isRunning", false);
             animator.SetBool("isDead", false);
+            
+            animator.Rebind();
         }
         
         /// <summary>

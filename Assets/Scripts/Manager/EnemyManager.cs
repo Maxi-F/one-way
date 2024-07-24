@@ -8,12 +8,11 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private List<IEnemy> _enemies;
+    private List<IEnemy> _enemies;
     
     [Header("events")]
     [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
     [SerializeField] private string playerDeathEvent = "playerDeath";
-    [SerializeField] private string enemyDeadEvent = "enemyDead";
     
     void OnEnable()
     {
