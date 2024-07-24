@@ -17,6 +17,7 @@ namespace PlayerScripts
         [SerializeField] private string jumpSound = "jump";
         [SerializeField] private string doubleJumpSound = "doubleJump";
         [SerializeField] private string pauseMenuName = "pause";
+        [SerializeField] private string attackSound = "attack";
         
         [Header("Events")] 
         [SerializeField] private string menuActivatedEvent = "menuActivated";
@@ -59,12 +60,22 @@ namespace PlayerScripts
             }
         }
 
+        public void HandleAttack()
+        {
+            if (_isPaused) return;
+            
+            AudioManager.Instance?.StopSound(walkSound);
+            AudioManager.Instance?.StopSound(runSound);
+            
+            AudioManager.Instance?.PlaySound(attackSound);
+        }
+
         /// <summary>
         /// Handles Walk sounds or running sounds.
         /// </summary>
         public void OnWalk()
         {
-            if (_isPaused) return;
+            if (_isPaused || _player.IsAttacking()) return;
             
             Vector3 horizontalVelocity = _player.GetHorizontalVelocity();
             if (horizontalVelocity.magnitude < 0.0001f) return;

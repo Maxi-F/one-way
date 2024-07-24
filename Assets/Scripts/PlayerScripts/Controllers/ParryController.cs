@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace PlayerScripts.Controllers
 {
@@ -10,8 +11,10 @@ namespace PlayerScripts.Controllers
         [SerializeField] private float bufferBetweenAttacksInSeconds = 0.5f;
         [SerializeField] private float timeAttackingInSeconds = 1f; 
         [SerializeField] private SphereCollider attackSphere;
-
-        [Header("Events")] [SerializeField] private UnityEvent OnAttack;
+        
+        [Header("Events")] 
+        [SerializeField] private UnityEvent onAttack;
+        [SerializeField] private UnityEvent onAttackRelease;
         
         private Player _player;
         private bool _isAttacking;
@@ -44,7 +47,7 @@ namespace PlayerScripts.Controllers
                 attackSphere.gameObject.SetActive(true);
                 StartCoroutine(StopAttack());
                 
-                OnAttack?.Invoke();
+                onAttack?.Invoke();
             }
         }
 
@@ -53,6 +56,7 @@ namespace PlayerScripts.Controllers
             yield return new WaitForSeconds(timeAttackingInSeconds);
 
             _isAttacking = false;
+            onAttackRelease?.Invoke();
             attackSphere.gameObject.SetActive(false);
         }
 

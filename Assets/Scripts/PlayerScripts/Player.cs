@@ -162,5 +162,10 @@ namespace PlayerScripts
         {
             _attackFsm.ChangeStateTo(AttackBehaviour.Attack);
         }
+
+        public bool IsAttacking()
+        {
+            return _attackFsm.IsCurrentBehaviour(AttackBehaviour.Attack);
+        }
     }
 }
