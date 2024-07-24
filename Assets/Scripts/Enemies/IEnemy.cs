@@ -7,5 +7,6 @@ namespace Enemies
     {
         void SetPlayer(Player player);
         void Reset();
+        void Dead();
     }
 }

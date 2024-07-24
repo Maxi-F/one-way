@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using Manager;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Health
 {
     public class HealthPoints : MonoBehaviour, ITakeDamage
     {
         [SerializeField] private int initHitPoints = 1;
-        [SerializeField] private string entity = "entity";
         
         [Header("events")]
-        [SerializeField] private string entityDeadEvent = "entityDead";
+        [SerializeField] private UnityEvent onEntityDead;
         
         public int CurrentHp { get; private set; }
 
@@ -26,11 +26,7 @@ namespace Health
 
             if (CurrentHp <= 0)
             {
-                EventManager.Instance.TriggerEvent(entityDeadEvent, new Dictionary<string, object>()
-                {
-                    { "entity", entity },
-                    { "gameObject", gameObject }
-                });
+                onEntityDead?.Invoke();
             }
         }
     }
