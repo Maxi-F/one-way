@@ -168,10 +168,10 @@ namespace PlayerScripts
             {
                 AudioManager.Instance?.PlaySound(lostLiveSound);
                 EventManager.Instance?.TriggerEvent(lostLiveEvent, null);
+                Debug.Log("HERE!");
                 
                 lives--;
                 _isInvincible = true;
-
                 StartCoroutine(DisableInvincibility());
             }
         }

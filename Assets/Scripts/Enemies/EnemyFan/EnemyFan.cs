@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Health;
@@ -6,9 +5,8 @@ using Manager;
 using PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
-namespace Enemies
+namespace Enemies.EnemyFan
 {
     public class EnemyFan : MonoBehaviour, IEnemy
     {
@@ -105,6 +103,11 @@ namespace Enemies
             _rigidbody.useGravity = true;
 
             onReset?.Invoke();
+        }
+
+        public bool HasBeenDestroyed()
+        {
+            return this == null;
         }
 
         public void Dead()

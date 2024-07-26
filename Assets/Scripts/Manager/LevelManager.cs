@@ -11,7 +11,6 @@ namespace Manager
 {
     public class LevelManager : MonoBehaviour
     {
-        [SerializeField] private Player player;
         [SerializeField] private string nextLevelName;
         [SerializeField] private GameObject pauseCanvas;
         [SerializeField] private SensibilitySlider pauseSensibilitySensibilitySlider;
@@ -29,18 +28,21 @@ namespace Manager
         [Header("MenuData")] 
         [SerializeField] private string pauseMenuName = "pause";
         
+        private Player _player;
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
         private bool _isPaused = false;
         
         void Start()
         {
+            _player ??= FindObjectOfType<Player>();
+            
             EventManager.Instance?.SubscribeTo(playerDeathEvent, HandleDeath);
             EventManager.Instance?.SubscribeTo(enemyHitEvent, HandleEnemyHit);
             EventManager.Instance?.SubscribeTo(sensibilityChangedEvent, SetSensibility);
-            EventManager.Instance?.TriggerEvent(initPlayerLivesEvent, new Dictionary<string, object>() { { "value", player.Lives } });
+            EventManager.Instance?.TriggerEvent(initPlayerLivesEvent, new Dictionary<string, object>() { { "value", _player.Lives } });
             
-            _startingPosition = player.transform.position;
+            _startingPosition = _player.transform.position;
             _gameplayManager = FindObjectOfType<GameplayManager>();
 
             if (_gameplayManager == null)
@@ -49,7 +51,7 @@ namespace Manager
             }
             else
             {
-                player.Sensibility = _gameplayManager.GetSensibility();   
+                _player.Sensibility = _gameplayManager.GetSensibility();   
             }
             
             
@@ -74,9 +76,9 @@ namespace Manager
 
         private void LoseLive(bool fromEnemy)
         {
-            player.LoseLive(fromEnemy);
+            _player.LoseLive(fromEnemy);
             
-            if (player.Lives == 0)
+            if (_player.Lives == 0)
             {
                 HandleLose();
                 
@@ -88,10 +90,10 @@ namespace Manager
         {
             this.LoseLive(false);
             
-            player.transform.position = _startingPosition;
+            _player.transform.position = _startingPosition;
             
             OnDeath.Invoke();
-            player.Stop();
+            _player.Stop();
         }
 
         public void HandleLose()
@@ -120,7 +122,7 @@ namespace Manager
         {
             float newSensibility = (float)message["value"];
             
-            player.Sensibility = newSensibility;
+            _player.Sensibility = newSensibility;
             _gameplayManager.SetSensibility(newSensibility);
         }
 

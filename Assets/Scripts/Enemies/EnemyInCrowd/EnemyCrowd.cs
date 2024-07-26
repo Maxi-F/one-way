@@ -73,10 +73,15 @@ namespace Enemies.EnemyInCrowd
             _isBeingThrown = true;
             
             _thrownDirection = (transform.position - _player.transform.position);
-            _thrownDirection.y = transform.position.y;
+            _thrownDirection.y = 0;
             _thrownDirection = _thrownDirection.normalized;
             
             StartCoroutine(DisableEnemy());
+        }
+        
+        public bool HasBeenDestroyed()
+        {
+            return this == null;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Audio;
 using ScriptableObjects.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -145,6 +146,8 @@ namespace Manager
         /// </summary>
         public void HandleLose()
         {
+            AudioManager.Instance?.StopAllSounds();
+            
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
      

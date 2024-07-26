@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  enemyFanEnabledEvent: enemyFanEnabled
+  enemyEnabledEvent: enemyEnabled
+  playerDeathEvent: playerDeath

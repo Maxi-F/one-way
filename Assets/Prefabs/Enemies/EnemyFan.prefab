@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4.7
   disableAfterSeconds: 5
-  enemyFanEnabledEvent: enemyFanEnabled
+  enemyFanEnabledEvent: enemyEnabled
   enemyHitEvent: enemyHit
   onShouldFollow:
     m_PersistentCalls:

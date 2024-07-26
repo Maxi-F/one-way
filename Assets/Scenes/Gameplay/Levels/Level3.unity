@@ -846,6 +846,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 541872690}
+        m_TargetAssemblyTypeName: PlayerScripts.Player, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &549805782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,6 +1038,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 47ec3e07-085b-4bd2-ba1f-792b4b04b20b
     m_ActionName: Player/FlyDown[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 549805781}
+        m_TargetAssemblyTypeName: Input.InputReader, Assembly-CSharp
+        m_MethodName: HandleAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9c238847-1e6f-4616-8206-f06ba26ea94e
+    m_ActionName: Player/Attack[/Keyboard/f,/DualSenseGamepadHID/buttonWest]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1947,6 +1978,7 @@ MonoBehaviour:
   followSpeed: 10
   topMinMaxAngles: {x: 80, y: 100}
   bottomMinMaxAngles: {x: 260, y: 280}
+  controllerDamper: 0.05
 --- !u!45 &963194230
 Skybox:
   m_ObjectHideFlags: 0
