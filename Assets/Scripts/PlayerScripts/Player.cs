@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using Audio;
+using Manager;
 using PlayerScripts.AttackBehaviours;
 using PlayerScripts.Behaviours;
 using UnityEngine;
@@ -17,10 +20,18 @@ namespace PlayerScripts
         [SerializeField] private int lives = 3;
         [SerializeField] private int maxLives = 3;
         [SerializeField] private int velocityToRun = 10;
+        [SerializeField] private float invincibleTime = 3.0f;
+        [SerializeField] private GameObject invincibleSphere;
         
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
         
+        [Header("Sounds")]
+        [SerializeField] private string lostLiveSound = "lostLife";
+
+        [Header("Events")]
+        [SerializeField] private string lostLiveEvent = "lostLive";
+
         public bool IsFlying { get; set; }
 
         public int VelocityToRun
@@ -35,6 +46,7 @@ namespace PlayerScripts
         
         private Rigidbody _rigidBody;
         private bool _shouldStop = false;
+        private bool _isInvincible = false;
         private MovementFsm _movementFsm;
         private AttackFsm _attackFsm;
         
@@ -91,6 +103,8 @@ namespace PlayerScripts
         
         public void Update()
         {
+            invincibleSphere.SetActive(_isInvincible);
+            
             _movementFsm.OnUpdate();
             _attackFsm.OnUpdate();
             _rotationBehaviour.LookInDirection(); 
@@ -148,9 +162,25 @@ namespace PlayerScripts
         /// <summary>
         /// makes a player lose a life
         /// </summary>
-        public void LoseLive()
+        public void LoseLive(bool fromEnemy)
         {
-            lives--;
+            if (!fromEnemy || !_isInvincible)
+            {
+                AudioManager.Instance?.PlaySound(lostLiveSound);
+                EventManager.Instance?.TriggerEvent(lostLiveEvent, null);
+                
+                lives--;
+                _isInvincible = true;
+
+                StartCoroutine(DisableInvincibility());
+            }
+        }
+
+        private IEnumerator DisableInvincibility()
+        {
+            yield return new WaitForSeconds(invincibleTime);
+
+            _isInvincible = false;
         }
 
         public void SetAttackInIdle()

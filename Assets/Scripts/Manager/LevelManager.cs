@@ -19,8 +19,6 @@ namespace Manager
         
         [Header("Events")]
         [SerializeField] private string playerDeathEvent = "playerDeath";
-
-        [SerializeField] private string lostLiveEvent = "lostLive";
         [SerializeField] private string enemyHitEvent = "enemyHit";
         [SerializeField] private string menuActivatedEvent = "menuActivated";
         [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
@@ -30,9 +28,6 @@ namespace Manager
         
         [Header("MenuData")] 
         [SerializeField] private string pauseMenuName = "pause";
-
-        [Header("Sounds")]
-        [SerializeField] private string lostLiveSound = "lostLife";
         
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
@@ -74,14 +69,12 @@ namespace Manager
 
         public void HandleEnemyHit(Dictionary<string, object> message)
         {
-            this.LoseLive();
+            this.LoseLive(true);
         }
 
-        private void LoseLive()
+        private void LoseLive(bool fromEnemy)
         {
-            AudioManager.Instance?.PlaySound(lostLiveSound);
-            player.LoseLive();
-            EventManager.Instance?.TriggerEvent(lostLiveEvent, null);
+            player.LoseLive(fromEnemy);
             
             if (player.Lives == 0)
             {
@@ -93,7 +86,7 @@ namespace Manager
         
         public void HandleDeath(Dictionary<string, object> message)
         {
-            this.LoseLive();
+            this.LoseLive(false);
             
             player.transform.position = _startingPosition;
             
