@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemies.EnemyInCrowd
 {
-    public class EnemyCrowdAnimation : MonoBehaviour
+    public class EnemyInCrowdAnimation : MonoBehaviour
     {
         [SerializeField] private Animator enemyInCrowdAnimator;
 
