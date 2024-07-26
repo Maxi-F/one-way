@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using Enemies.Pools;
+using Health;
 using Manager;
+using PlayerScripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Enemies
 {
-    public class Tomato : MonoBehaviour
+    public class Tomato : MonoBehaviour, ITakeDamage
     {
         [SerializeField] private Vector2 secondsTillHitRange = new Vector2(0.5f, 1.0f);
         [SerializeField] private float secondsUntilDisable = 5.0f;
@@ -96,6 +98,11 @@ namespace Enemies
             horizontalForce.y = 0;
 
             return horizontalForce;
+        }
+
+        public void TakeDamage()
+        {
+            StopTomatoAndReturnToPool();
         }
     }
 }

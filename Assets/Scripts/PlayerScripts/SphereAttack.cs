@@ -1,5 +1,6 @@
 using System;
 using Enemies;
+using Health;
 using UnityEngine;
 
 namespace PlayerScripts
@@ -12,9 +13,9 @@ namespace PlayerScripts
         {
             if (other.gameObject.CompareTag("Enemy"))
             {
-                IEnemy enemy = other.gameObject.GetComponent<IEnemy>();
+                ITakeDamage enemy = other.gameObject.GetComponent<ITakeDamage>();
             
-                enemy.TakeDamage();
+                enemy?.TakeDamage();
             }
         }
 

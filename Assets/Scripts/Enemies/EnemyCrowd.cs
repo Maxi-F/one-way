@@ -1,90 +1,92 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Enemies;
 using Enemies.Pools;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyCrowd : MonoBehaviour, IEnemy
+namespace Enemies
 {
-    [SerializeField] private Vector2 secondsToThrowRange;
-
-    [Header("events")] [SerializeField] private string enemyEnabledEvent = "enemyEnabled";
-    
-    private Player _player;
-    private bool _isPlayerInArea;
-    private bool _isThrowing;
-
-    public void Start()
+    public class EnemyCrowd : MonoBehaviour, IEnemy
     {
-        EventManager.Instance.TriggerEvent(enemyEnabledEvent, new Dictionary<string, object>()
-        {
-            { "enemy", this }
-        });
-    }
+        [SerializeField] private Vector2 secondsToThrowRange;
+
+        [Header("events")] [SerializeField] private string enemyEnabledEvent = "enemyEnabled";
     
-    public void Update()
-    {
-        if (_isPlayerInArea && !_isThrowing)
+        private Player _player;
+        private bool _isPlayerInArea;
+        private bool _isThrowing;
+
+        public void Start()
         {
-            StartCoroutine(
-                Throw(
-                Random.Range(secondsToThrowRange.x, secondsToThrowRange.y)
-                )
-            );
+            EventManager.Instance.TriggerEvent(enemyEnabledEvent, new Dictionary<string, object>()
+            {
+                { "enemy", this }
+            });
         }
-    }
-
-    IEnumerator Throw(float waitTime)
-    {
-        ThrowTomato();
-        
-        _isThrowing = true;
-
-        yield return new WaitForSeconds(waitTime);
-
-        _isThrowing = false;
-    }
-
-    private void ThrowTomato()
-    {
-        GameObject tomatoObject = TomatoObjectPool.Instance.GetPooledObject();
-
-        tomatoObject.transform.position = transform.position;
-        tomatoObject.transform.SetParent(transform);
-        tomatoObject.SetActive(true);
-        
-        Tomato tomato = tomatoObject.GetComponent<Tomato>();
-        
-        tomato.ThrowTo(_player.transform);
-    }
     
-    public void TakeDamage()
-    {
-        throw new System.NotImplementedException();
-    }
+        public void Update()
+        {
+            if (_isPlayerInArea && !_isThrowing)
+            {
+                StartCoroutine(
+                    Throw(
+                        Random.Range(secondsToThrowRange.x, secondsToThrowRange.y)
+                    )
+                );
+            }
+        }
 
-    public void SetPlayer(Player player)
-    {
-        Debug.Log("player?");
-        _player = player;
-    }
+        /// <summary>
+        /// Coroutine that throws the tomato to the player.
+        /// </summary>
+        IEnumerator Throw(float waitTime)
+        {
+            ThrowTomato();
+        
+            _isThrowing = true;
 
-    public void SetPlayerInArea(bool isPlayerInArea)
-    {
-        _isPlayerInArea = isPlayerInArea;
-    }
+            yield return new WaitForSeconds(waitTime);
+
+            _isThrowing = false;
+        }
+
+        private void ThrowTomato()
+        {
+            GameObject tomatoObject = TomatoObjectPool.Instance.GetPooledObject();
+
+            tomatoObject.transform.position = transform.position;
+            tomatoObject.transform.SetParent(transform);
+            tomatoObject.SetActive(true);
+        
+            Tomato tomato = tomatoObject.GetComponent<Tomato>();
+        
+            tomato.ThrowTo(_player.transform);
+        }
     
-    public void ResetEnemy()
-    {
-        throw new System.NotImplementedException();
-    }
+        public void TakeDamage()
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public void Dead()
-    {
-        throw new System.NotImplementedException();
+        public void SetPlayer(Player player)
+        {
+            _player = player;
+        }
+
+        public void SetPlayerInArea(bool isPlayerInArea)
+        {
+            _isPlayerInArea = isPlayerInArea;
+        }
+    
+        public void ResetEnemy()
+        {
+            _isPlayerInArea = false;
+        }
+
+        public void Dead()
+        {
+        }
     }
 }
