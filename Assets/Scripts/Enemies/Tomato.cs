@@ -13,7 +13,7 @@ namespace Enemies
     {
         [SerializeField] private Vector2 secondsTillHitRange = new Vector2(0.5f, 1.0f);
         [SerializeField] private float secondsUntilDisable = 5.0f;
-
+        
         [Header("events")] [SerializeField] private string enemyHitEvent = "enemyHit";
         
         private Rigidbody _rigidbody;
@@ -58,6 +58,8 @@ namespace Enemies
         /// <param name="playerTransform">position of the player to throw the tomato to.</param>
         public void ThrowTo(Transform playerTransform)
         {
+            transform.LookAt(playerTransform.position);
+            
             float secondsUntilHit = Random.Range(secondsTillHitRange.x, secondsTillHitRange.y);
 
             Vector3 upwardsForce = GetUpwardsForce(playerTransform, secondsUntilHit);
