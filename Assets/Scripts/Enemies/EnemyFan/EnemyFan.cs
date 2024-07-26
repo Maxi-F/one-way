@@ -105,11 +105,6 @@ namespace Enemies.EnemyFan
             onReset?.Invoke();
         }
 
-        public bool HasBeenDestroyed()
-        {
-            return this == null;
-        }
-
         public void Dead()
         {
             onDead?.Invoke();

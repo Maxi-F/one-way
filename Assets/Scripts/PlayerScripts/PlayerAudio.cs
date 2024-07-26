@@ -17,6 +17,7 @@ namespace PlayerScripts
         [SerializeField] private string jumpSound = "jump";
         [SerializeField] private string doubleJumpSound = "doubleJump";
         [SerializeField] private string pauseMenuName = "pause";
+        [SerializeField] private string lostEvent = "lost";
         [SerializeField] private string attackSound = "attack";
         
         [Header("Events")] 
@@ -28,15 +29,25 @@ namespace PlayerScripts
             _player ??= GetComponent<Player>();
             
             EventManager.Instance?.SubscribeTo(menuActivatedEvent, OnPause);
+            EventManager.Instance?.SubscribeTo(lostEvent, SetPause);
             EventManager.Instance?.SubscribeTo(menuDeactivatedEvent, OnUnpause);
         }
 
         void OnDisable()
         {
             EventManager.Instance?.UnsubscribeTo(menuActivatedEvent, OnPause);
+            EventManager.Instance?.UnsubscribeTo(lostEvent, SetPause);
             EventManager.Instance?.UnsubscribeTo(menuDeactivatedEvent, OnUnpause);
         }
 
+        /// <summary>
+        /// Sets pause to audios
+        /// </summary>
+        private void SetPause(Dictionary<string, object> message)
+        {
+            _isPaused = true;
+        }
+        
         /// <summary>
         /// Event that listens to pause event to pause playing sounds.
         /// </summary>
@@ -44,7 +55,7 @@ namespace PlayerScripts
         {
             if ((string)message["name"] == pauseMenuName)
             {
-                _isPaused = true;
+                SetPause(null);
             }
         }
         

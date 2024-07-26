@@ -25,7 +25,8 @@ namespace Manager
         [Header("Events")]
         [SerializeField] private string menuActivatedEvent = "menuActivated";
         [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
-    
+        [SerializeField] private string lostEvent = "lost";
+        
         void Awake()
         {
             _activeLevelSceneName = initLevelSceneName;
@@ -147,6 +148,7 @@ namespace Manager
         public void HandleLose()
         {
             AudioManager.Instance?.StopAllSounds();
+            EventManager.Instance?.TriggerEvent(lostEvent, null);
             
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;

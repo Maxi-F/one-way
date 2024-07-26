@@ -66,7 +66,8 @@ namespace Manager
         private void OnDisable()
         {
             EventManager.Instance?.UnsubscribeTo(playerDeathEvent, HandleDeath);
-            EventManager.Instance?.SubscribeTo(sensibilityChangedEvent, SetSensibility);
+            EventManager.Instance?.UnsubscribeTo(sensibilityChangedEvent, SetSensibility); 
+            EventManager.Instance?.UnsubscribeTo(enemyHitEvent, HandleEnemyHit);
         }
 
         public void HandleEnemyHit(Dictionary<string, object> message)
@@ -81,8 +82,6 @@ namespace Manager
             if (_player.Lives == 0)
             {
                 HandleLose();
-                
-                return;
             }
         }
         

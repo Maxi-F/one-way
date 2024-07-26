@@ -7,6 +7,5 @@ namespace Enemies
     {
         void SetPlayer(Player player);
         void ResetEnemy();
-        bool HasBeenDestroyed();
     }
 }

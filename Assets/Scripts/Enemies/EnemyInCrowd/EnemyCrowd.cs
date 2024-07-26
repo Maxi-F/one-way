@@ -78,10 +78,5 @@ namespace Enemies.EnemyInCrowd
             
             StartCoroutine(DisableEnemy());
         }
-        
-        public bool HasBeenDestroyed()
-        {
-            return this == null;
-        }
     }
 }

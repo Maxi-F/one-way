@@ -74,6 +74,8 @@ MonoBehaviour:
   - {fileID: 2461024478693525652}
   - {fileID: 5906277694272659093}
   - {fileID: 8497767210896808678}
+  secondsUntilDisable: 2
+  deadVelocity: 1000
   enemyEnabledEvent: enemyEnabled
 --- !u!1001 &27154879717689296
 PrefabInstance:
@@ -126,6 +128,10 @@ PrefabInstance:
     - target: {fileID: 3057409426030210006, guid: e454e1d2f9c5f95459ed180580ae9feb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731375596030125836, guid: e454e1d2f9c5f95459ed180580ae9feb, type: 3}
+      propertyPath: m_Radius
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6245071280525066870, guid: e454e1d2f9c5f95459ed180580ae9feb, type: 3}
       propertyPath: m_Name

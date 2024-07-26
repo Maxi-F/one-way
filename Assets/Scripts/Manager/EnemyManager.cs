@@ -26,6 +26,12 @@ namespace Manager
             EventManager.Instance.SubscribeTo(playerDeathEvent, HandleResetEnemies);
         }
 
+        private void OnDisable()
+        {
+            EventManager.Instance.UnsubscribeTo(enemyEnabledEvent, HandleNewEnemyEvent);
+            EventManager.Instance.UnsubscribeTo(playerDeathEvent, HandleResetEnemies);
+        }
+
         /// <summary>
         /// When an enemy is created, this function gets called and sets
         /// the player to the enemy.
@@ -33,11 +39,6 @@ namespace Manager
         void HandleNewEnemyEvent(Dictionary<string, object> message)
         {
             IEnemy enemy = (IEnemy)message["enemy"];
-            
-            if (enemy == null)
-            {
-                return;
-            }
             
             enemy.SetPlayer(player);
             _enemies.Add(enemy);
@@ -50,13 +51,6 @@ namespace Manager
         {
             foreach (var enemy in _enemies.ToList())
             {
-                if (enemy.HasBeenDestroyed()) // Could happen because of scene changes that enemyManager has enemies from other level.
-                {
-                    Debug.Log("Enemy is null. removing...");
-                    _enemies.Remove(null);
-                    continue;
-                }
-                
                 Debug.Log("Enemy is not null. resetting...");
                 enemy.ResetEnemy();
             }
