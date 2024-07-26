@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d4e2bf861293c04a878ec92548b6d58, type: 3}
   m_Name: TomatoConfig
   m_EditorClassIdentifier: 
-  tomatoObject: {fileID: 0}
+  tomatoObject: {fileID: 5250601894675383231, guid: 4fffe7265b59b3848b99c0a8db155b6d, type: 3}
   tomatoSound: tomatoSplat

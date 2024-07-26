@@ -53,7 +53,10 @@ public class EnemyCrowd : MonoBehaviour, IEnemy
     {
         GameObject tomatoObject = TomatoObjectPool.Instance.GetPooledObject();
 
+        tomatoObject.transform.position = transform.position;
+        tomatoObject.transform.SetParent(transform);
         tomatoObject.SetActive(true);
+        
         Tomato tomato = tomatoObject.GetComponent<Tomato>();
         
         tomato.ThrowTo(_player.transform);
