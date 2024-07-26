@@ -1,23 +1,26 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Enemies
 {
-    public class EnemyFanFollowArea : MonoBehaviour
+    public class EnemyTriggerArea : MonoBehaviour
     {
-        private EnemyFan _enemyFan;
         private SphereCollider _sphereCollider;
+
+        [Header("Internal Events")] [SerializeField]
+        private UnityEvent<bool> onPlayerTrigger;
+        
         void Start()
         {
             _sphereCollider ??= GetComponent<SphereCollider>();
-            _enemyFan ??= GetComponentInParent<EnemyFan>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                _enemyFan.SetFollow(true);
+                onPlayerTrigger?.Invoke(true);
             }
         }
 
@@ -25,7 +28,7 @@ namespace Enemies
         {
             if (other.CompareTag("Player"))
             {
-                _enemyFan.SetFollow(false);
+                onPlayerTrigger?.Invoke(false);
             }
         }
 

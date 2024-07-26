@@ -42,7 +42,7 @@ public class EnemyManager : MonoBehaviour
     {
         foreach (var enemy in _enemies)
         {
-            enemy.Reset();
+            enemy.ResetEnemy();
         }
     }
 }

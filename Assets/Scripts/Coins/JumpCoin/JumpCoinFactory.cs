@@ -1,13 +1,14 @@
 using ScriptableObjects.Scripts;
 using UnityEngine;
+using Utils;
 
 namespace Coins.JumpCoin
 {
-    public class JumpCoinFactory
+    public class JumpCoinFactory : IFactory<NoteConfig>
     {
-        private readonly NoteConfig _creationConfig;
+        private NoteConfig _creationConfig;
 
-        public JumpCoinFactory(NoteConfig config)
+        public void SetConfig(NoteConfig config)
         {
             _creationConfig = config;
         }
@@ -17,7 +18,7 @@ namespace Coins.JumpCoin
         /// </summary>
         /// <param name="parent">parent object</param>
         /// <returns></returns>
-        public GameObject CreateJumpCoin()
+        public GameObject CreateObject()
         {
             GameObject noteObject = _creationConfig.noteObjects[Random.Range(0, _creationConfig.noteObjects.Count)];
             Material material = _creationConfig.materialsList[Random.Range(0, _creationConfig.materialsList.Count)];

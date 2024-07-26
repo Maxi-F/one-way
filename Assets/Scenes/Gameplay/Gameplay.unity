@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountToPool: 20
-  noteConfig: {fileID: 11400000, guid: 27e8ca01658060e499c8389765da6b60, type: 2}
+  objectConfig: {fileID: 11400000, guid: 27e8ca01658060e499c8389765da6b60, type: 2}
 --- !u!1 &2015105330
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2015105332
 Transform:
   m_ObjectHideFlags: 0

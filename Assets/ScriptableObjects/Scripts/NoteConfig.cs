@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Coins.JumpCoin;
 using UnityEngine;
+using Utils;
 
 namespace ScriptableObjects.Scripts
 {

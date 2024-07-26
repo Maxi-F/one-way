@@ -23,8 +23,9 @@ namespace Coins.JumpCoin
         public void Start()
         {
             _player = FindObjectOfType<Player>();
-            _jumpCoinFactory = new JumpCoinFactory(config);
-
+            _jumpCoinFactory = new JumpCoinFactory();
+            _jumpCoinFactory.SetConfig(config);
+            
             if (_player == null)
             {
                 Debug.LogError("Player not found from jump note!");
@@ -66,7 +67,7 @@ namespace Coins.JumpCoin
         /// </summary>
         public void Enable()
         {
-            _instantiatedNote = JumpCoinPool.Instance?.GetPooledNote();
+            _instantiatedNote = JumpCoinPool.Instance?.GetPooledObject();
             
             _jumpCoinFactory.Activate(_instantiatedNote, gameObject, _player.transform);
 

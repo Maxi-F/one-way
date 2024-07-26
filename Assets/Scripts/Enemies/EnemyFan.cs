@@ -94,7 +94,7 @@ namespace Enemies
         /// <summary>
         /// Resets the enemy position to initial one.
         /// </summary>
-        public void Reset()
+        public void ResetEnemy()
         {
             transform.position = _initPosition;
 
