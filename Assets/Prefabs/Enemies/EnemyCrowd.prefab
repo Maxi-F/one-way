@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a64ee02891442d349992c1c436aad083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsToThrowRange: {x: 0, y: 0}
+  secondsToThrowRange: {x: 2, y: 4}
 --- !u!1001 &4819749173560716884
 PrefabInstance:
   m_ObjectHideFlags: 0

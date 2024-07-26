@@ -4,20 +4,22 @@ using Enemies;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private Player player;
     private List<IEnemy> _enemies;
     
+    [FormerlySerializedAs("enemyFanEnabledEvent")]
     [Header("events")]
-    [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
+    [SerializeField] private string enemyEnabledEvent = "enemyEnabled";
     [SerializeField] private string playerDeathEvent = "playerDeath";
     
     void OnEnable()
     {
         _enemies = new List<IEnemy>();
-        EventManager.Instance.SubscribeTo(enemyFanEnabledEvent, HandleNewEnemyFanEvent);
+        EventManager.Instance.SubscribeTo(enemyEnabledEvent, HandleNewEnemyEvent);
         EventManager.Instance.SubscribeTo(playerDeathEvent, HandleResetEnemies);
     }
 
@@ -25,11 +27,11 @@ public class EnemyManager : MonoBehaviour
     /// When an enemy is created, this function gets called and sets
     /// the player to the enemy.
     /// </summary>
-    void HandleNewEnemyFanEvent(Dictionary<string, object> message)
+    void HandleNewEnemyEvent(Dictionary<string, object> message)
     {
         IEnemy enemy = (IEnemy)message["enemy"];
 
-        Debug.Log("New enemy Fan!");
+        Debug.Log("New enemy!");
         
         enemy.SetPlayer(player);
         _enemies.Add(enemy);

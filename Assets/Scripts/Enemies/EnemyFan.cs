@@ -16,7 +16,7 @@ namespace Enemies
         [SerializeField] private float disableAfterSeconds = 5.0f;
         
         [Header("Events")]
-        [SerializeField] private string enemyFanEnabledEvent = "enemyFanEnabled";
+        [SerializeField] private string enemyFanEnabledEvent = "enemyEnabled";
         [SerializeField] private string enemyHitEvent = "enemyHit";
 
         [Header("Internal events")] 
