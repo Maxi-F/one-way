@@ -16,9 +16,12 @@ namespace Coins.CollectableCoin
 
         private void OnTriggerEnter(Collider other)
         {
-            EventManager.Instance?.TriggerEvent(collectableCoinEvent, null);
-        
-            gameObject.SetActive(false);
+            if (other.CompareTag("Player"))
+            {
+                EventManager.Instance?.TriggerEvent(collectableCoinEvent, null);
+            
+                gameObject.SetActive(false);
+            }
         }
 
         public void Reset()
