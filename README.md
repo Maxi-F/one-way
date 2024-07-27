@@ -66,6 +66,8 @@ Maximiliano Feldman
 
 [Sheyvan](https://freesound.org/people/Sheyvan/) - Click SFX
 
+[Ihitokage](https://freesound.org/people/ihitokage/) - Punch SFX
+
 ### Special Thanks
 Juan Pablo Varela Aloisio
 
