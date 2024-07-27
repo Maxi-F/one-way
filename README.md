@@ -21,6 +21,7 @@ Your objective is to get to the guitar, after obtaining all stars!
 ### Controls
 ​Movement: WASD or Left Stick
 ​Jump: Spacebar or X
+Attack: F or Square
 
 ## Patterns Used
 ### FSM
