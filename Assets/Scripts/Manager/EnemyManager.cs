@@ -28,8 +28,8 @@ namespace Manager
 
         private void OnDisable()
         {
-            EventManager.Instance.UnsubscribeTo(enemyEnabledEvent, HandleNewEnemyEvent);
-            EventManager.Instance.UnsubscribeTo(playerDeathEvent, HandleResetEnemies);
+            EventManager.Instance?.UnsubscribeTo(enemyEnabledEvent, HandleNewEnemyEvent);
+            EventManager.Instance?.UnsubscribeTo(playerDeathEvent, HandleResetEnemies);
         }
 
         /// <summary>

@@ -22,7 +22,6 @@ namespace PlayerScripts
         [SerializeField] private int maxLives = 3;
         [SerializeField] private int velocityToRun = 10;
         [SerializeField] private float invincibleTime = 3.0f;
-        [SerializeField] private GameObject invincibleSphere;
         
         [Header("Accumulated force settings")] 
         [SerializeField] private float maxAccumulatedForce;
@@ -44,6 +43,13 @@ namespace PlayerScripts
         public int Lives
         {
             get { return lives; }
+        }
+
+        public bool IsInvincible
+        {
+            get {
+                return _isInvincible;
+            }
         }
         
         private Rigidbody _rigidBody;
@@ -105,8 +111,6 @@ namespace PlayerScripts
         
         public void Update()
         {
-            invincibleSphere.SetActive(_isInvincible);
-            
             _movementFsm.OnUpdate();
             _attackFsm.OnUpdate();
             _rotationBehaviour.LookInDirection(); 
