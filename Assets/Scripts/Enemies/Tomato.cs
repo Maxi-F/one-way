@@ -18,12 +18,13 @@ namespace Enemies
         
         private Rigidbody _rigidbody;
         private bool _canDamage = true;
+        private Coroutine _disableTomatoCoroutine = null;
         
         public void OnEnable()
         {
             _rigidbody ??= GetComponent<Rigidbody>();
 
-            StartCoroutine(DisableTomato());
+            _disableTomatoCoroutine = StartCoroutine(DisableTomato());
         }
 
         IEnumerator DisableTomato()
@@ -48,7 +49,7 @@ namespace Enemies
             {
                 EventManager.Instance.TriggerEvent(enemyHitEvent, null);
             
-                StopCoroutine(DisableTomato());
+                StopCoroutine(_disableTomatoCoroutine);
                 StopTomatoAndReturnToPool();
             }
         }
