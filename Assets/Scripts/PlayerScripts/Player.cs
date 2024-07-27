@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Audio;
+using Health;
 using Manager;
 using PlayerScripts.AttackBehaviours;
 using PlayerScripts.Behaviours;
@@ -10,7 +11,7 @@ using UnityEngine.Serialization;
 
 namespace PlayerScripts
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, ITakeDamage
     {
         [Header("Behaviours")]
         [Header("PlayerData")]
@@ -31,7 +32,8 @@ namespace PlayerScripts
 
         [Header("Events")]
         [SerializeField] private string lostLiveEvent = "lostLive";
-
+        [SerializeField] private string enemyHitEvent = "enemyHit";
+        
         public bool IsFlying { get; set; }
 
         public int VelocityToRun
@@ -195,6 +197,11 @@ namespace PlayerScripts
         public bool IsAttacking()
         {
             return _attackFsm.IsCurrentBehaviour(AttackBehaviour.Attack);
+        }
+
+        public void TakeDamage()
+        {
+            EventManager.Instance.TriggerEvent(enemyHitEvent, null);
         }
     }
 }

@@ -147,7 +147,6 @@ namespace Manager
         /// </summary>
         public void HandleLose()
         {
-            AudioManager.Instance?.StopAllSounds();
             EventManager.Instance?.TriggerEvent(lostEvent, null);
             
             Cursor.lockState = CursorLockMode.Confined;

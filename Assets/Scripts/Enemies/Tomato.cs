@@ -14,8 +14,6 @@ namespace Enemies
         [SerializeField] private Vector2 secondsTillHitRange = new Vector2(0.5f, 1.0f);
         [SerializeField] private float secondsUntilDisable = 5.0f;
         
-        [Header("events")] [SerializeField] private string enemyHitEvent = "enemyHit";
-        
         private Rigidbody _rigidbody;
         private bool _canDamage = true;
         private Coroutine _disableTomatoCoroutine = null;
@@ -47,8 +45,10 @@ namespace Enemies
         {
             if (other.CompareTag("Player") && _canDamage)
             {
-                EventManager.Instance.TriggerEvent(enemyHitEvent, null);
+                ITakeDamage player = other.GetComponent<ITakeDamage>();
             
+                player.TakeDamage();
+                
                 StopCoroutine(_disableTomatoCoroutine);
                 StopTomatoAndReturnToPool();
             }

@@ -15,7 +15,6 @@ namespace Enemies.EnemyFan
         
         [Header("Events")]
         [SerializeField] private string enemyFanEnabledEvent = "enemyEnabled";
-        [SerializeField] private string enemyHitEvent = "enemyHit";
 
         [Header("Internal events")] 
         [SerializeField] private UnityEvent<bool> onShouldFollow;
@@ -75,8 +74,9 @@ namespace Enemies.EnemyFan
         {
             if (other.gameObject.CompareTag("Player") && !_isDead)
             {
-                EventManager.Instance.TriggerEvent(enemyHitEvent, null);
-                
+                ITakeDamage player = other.gameObject.GetComponent<ITakeDamage>();
+            
+                player.TakeDamage();
                 gameObject.SetActive(false);
             }
         }

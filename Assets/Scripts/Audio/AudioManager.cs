@@ -107,19 +107,6 @@ namespace Audio
             }
             _pauseStack.Push(_playingSounds);
         }
-
-        private void StopAll(Sound[] sounds)
-        {
-            foreach (Sound sound in sounds)
-            {
-                sound.Stop();
-            }
-        }
-
-        public void StopAllSounds()
-        {
-            StopAll(sfxs);
-        }
         
         /// <summary>
         /// Check if a sound name is playing
