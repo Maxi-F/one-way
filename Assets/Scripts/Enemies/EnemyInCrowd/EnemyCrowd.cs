@@ -45,6 +45,7 @@ namespace Enemies.EnemyInCrowd
         public void SetPlayer(Player player)
         {
             _player = player;
+            Debug.Log("here!");
             foreach (var enemyInCrowd in enemiesFromCrowd)
             {
                 enemyInCrowd.SetPlayer(player);
