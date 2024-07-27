@@ -56,6 +56,11 @@ namespace Enemies.EnemyInCrowd
             StopCoroutine(DisableEnemy());
             transform.position = _startPosition;
 
+            foreach (var enemyInCrowd in enemiesFromCrowd)
+            {
+                enemyInCrowd.ResetEnemy();
+            }
+            
             _isBeingThrown = false;
             gameObject.SetActive(true);
         }
@@ -71,6 +76,11 @@ namespace Enemies.EnemyInCrowd
         public void Dead()
         {
             _isBeingThrown = true;
+            
+            foreach (var enemyInCrowd in enemiesFromCrowd)
+            {
+                enemyInCrowd.StopThrowing();
+            }
             
             _thrownDirection = (transform.position - _player.transform.position);
             _thrownDirection.y = 0;

@@ -22,6 +22,7 @@ namespace Enemies.EnemyInCrowd
         private Player _player;
         private bool _isPlayerInArea;
         private bool _isThrowing;
+        private bool _canThrow = true;
     
         public void Update()
         {
@@ -34,9 +35,7 @@ namespace Enemies.EnemyInCrowd
                 
                 if(!_isThrowing)
                     StartCoroutine(
-                    Throw(
-                        Random.Range(secondsToThrowRange.x, secondsToThrowRange.y)
-                    )
+                    Throw()
                 );
             }
         }
@@ -44,14 +43,17 @@ namespace Enemies.EnemyInCrowd
         /// <summary>
         /// Coroutine that throws the tomato to the player.
         /// </summary>
-        IEnumerator Throw(float waitTime)
+        IEnumerator Throw()
         {
+            float waitTime = Random.Range(secondsToThrowRange.x, secondsToThrowRange.y);
+            
             _isThrowing = true;
             onThrowing?.Invoke();
             
             yield return new WaitForSeconds(animationWaitSeconds);
             
-            ThrowTomato();
+            if(_canThrow)
+                ThrowTomato();
 
             onThrown?.Invoke();
             yield return new WaitForSeconds(waitTime);
@@ -70,11 +72,6 @@ namespace Enemies.EnemyInCrowd
         
             tomato.ThrowTo(_player.transform);
         }
-    
-        public void TakeDamage()
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void SetPlayer(Player player)
         {
@@ -84,6 +81,17 @@ namespace Enemies.EnemyInCrowd
         public void SetPlayerInArea(bool isPlayerInArea)
         {
             _isPlayerInArea = isPlayerInArea;
+        }
+
+        public void StopThrowing()
+        {
+            _canThrow = false;
+        }
+
+        public void ResetEnemy()
+        {
+            _isThrowing = false;
+            _canThrow = true;
         }
     }
 }

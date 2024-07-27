@@ -20,7 +20,6 @@ namespace Manager
     
         void OnEnable()
         {
-            Debug.Log("On enable!");
             _enemies = new List<IEnemy>();
             EventManager.Instance.SubscribeTo(enemyEnabledEvent, HandleNewEnemyEvent);
             EventManager.Instance.SubscribeTo(playerDeathEvent, HandleResetEnemies);

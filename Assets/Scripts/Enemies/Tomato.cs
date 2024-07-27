@@ -17,6 +17,7 @@ namespace Enemies
         [Header("events")] [SerializeField] private string enemyHitEvent = "enemyHit";
         
         private Rigidbody _rigidbody;
+        private bool _canDamage = true;
         
         public void OnEnable()
         {
@@ -34,6 +35,7 @@ namespace Enemies
 
         private void StopTomatoAndReturnToPool()
         {
+            _canDamage = true;
             _rigidbody.velocity = Vector3.zero;
             
             TomatoObjectPool.Instance.ReturnToPool(gameObject);
@@ -42,7 +44,7 @@ namespace Enemies
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && _canDamage)
             {
                 EventManager.Instance.TriggerEvent(enemyHitEvent, null);
             
@@ -104,7 +106,11 @@ namespace Enemies
 
         public void TakeDamage()
         {
-            StopTomatoAndReturnToPool();
+            _canDamage = false;
+
+            Vector3 force = 2.0f * -(_rigidbody.velocity);
+            
+            _rigidbody.AddForce(force, ForceMode.Impulse);
         }
     }
 }
