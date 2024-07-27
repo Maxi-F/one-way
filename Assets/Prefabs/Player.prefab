@@ -593,6 +593,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onFlashToggle: onFlashToggle
   acceleration: 200
   maxSpeed: 12
   maxAcceleration: 150
@@ -681,6 +682,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   brakeMultiplier: 0.6
+  cheatAcceleration: 1000
+  cheatMaxSpeed: 100
+  cheatMaxAcceleration: 500
 --- !u!114 &1552628158186361008
 MonoBehaviour:
   m_ObjectHideFlags: 0

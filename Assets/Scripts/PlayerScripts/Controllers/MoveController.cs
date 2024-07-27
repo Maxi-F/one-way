@@ -1,3 +1,7 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +12,7 @@ namespace PlayerScripts.Controllers
         [Header("Events")]
         [SerializeField] private UnityEvent OnMove;
         [SerializeField] private UnityEvent OnBreak;
+        [SerializeField] private string onFlashToggle = "onFlashToggle";
 
         [Header("Locomotion")]
         [SerializeField] private float acceleration = 100;
@@ -17,6 +22,13 @@ namespace PlayerScripts.Controllers
         [SerializeField] private AnimationCurve maxAccelerationFactorFromDot;
         [SerializeField] private float brakeMultiplier = .60f;
 
+        [Header("Cheat locomotion")]
+        [SerializeField] private float cheatAcceleration = 1000;
+        [SerializeField] private float cheatMaxSpeed = 100;
+        [SerializeField] private float cheatMaxAcceleration = 500;
+
+        private bool _isFlashToggled = false;
+        
         private Rigidbody _rigidBody;
         private Player _player;
 
@@ -25,12 +37,44 @@ namespace PlayerScripts.Controllers
 
         private Vector3 _goalVelocity;
         private bool _shouldBrake;
+        private float _maxSpeedToUse;
+        private float _maxAccelerationToUse;
+        private float _accelerationToUse;
         public Vector3 Direction => _desiredDirection;
 
         private void Start()
         {
             _rigidBody ??= GetComponent<Rigidbody>();
             _player ??= GetComponent<Player>();
+
+            _maxAccelerationToUse = maxAcceleration;
+            _accelerationToUse = acceleration;
+            _maxSpeedToUse = maxSpeed;
+            
+            EventManager.Instance.SubscribeTo(onFlashToggle, HandleFlashToggle);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance.UnsubscribeTo(onFlashToggle, HandleFlashToggle);
+        }
+
+        private void HandleFlashToggle(Dictionary<string, object> message)
+        {
+            if (!_isFlashToggled)
+            {
+                _maxSpeedToUse = cheatMaxSpeed;
+                _maxAccelerationToUse = cheatMaxAcceleration;
+                _accelerationToUse = cheatAcceleration;
+            }
+            else
+            {
+                _maxAccelerationToUse = maxAcceleration;
+                _accelerationToUse = acceleration;
+                _maxSpeedToUse = maxSpeed;
+            }
+
+            _isFlashToggled = !_isFlashToggled;
         }
 
         /// <summary>
@@ -95,10 +139,10 @@ namespace PlayerScripts.Controllers
 
             float velocityDot = isInAir ? Vector3.Dot(_desiredDirection.normalized, unitVelocity) : 1;
             
-            float accelerationToUse = acceleration * accelerationFactorFromDot.Evaluate(velocityDot);
+            float accelerationToUse = _accelerationToUse * accelerationFactorFromDot.Evaluate(velocityDot);
 
-            Vector3 goalVelocity = _desiredDirection.normalized * maxSpeed;
-
+            Vector3 goalVelocity = _desiredDirection.normalized * _maxSpeedToUse;
+            
             _goalVelocity = Vector3.MoveTowards(
                 _goalVelocity, 
                 goalVelocity, 
@@ -107,7 +151,9 @@ namespace PlayerScripts.Controllers
 
             Vector3 forceToApply = _goalVelocity - GetHorizontalVelocity();
 
-            float maxAccelerationToUse = maxAcceleration * maxAccelerationFactorFromDot.Evaluate(velocityDot);
+            Debug.Log(_desiredDirection.normalized);
+            
+            float maxAccelerationToUse = _maxAccelerationToUse * maxAccelerationFactorFromDot.Evaluate(velocityDot);
 
             return Vector3.ClampMagnitude(forceToApply, maxAccelerationToUse);
         }
@@ -163,5 +209,6 @@ namespace PlayerScripts.Controllers
                 
             }
         }
+        
     }
 }

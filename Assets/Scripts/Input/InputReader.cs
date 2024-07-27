@@ -16,6 +16,8 @@ namespace Input
         [SerializeField] private UnityEvent OnPassLevel;
         [SerializeField] private UnityEvent OnPause;
         [SerializeField] private UnityEvent OnAttack;
+        [SerializeField] private UnityEvent OnGodMode;
+        [SerializeField] private UnityEvent OnFlash;
         
         /// <summary>
         /// Handles move input events from input actions.
@@ -103,6 +105,22 @@ namespace Input
             if (context.started)
             {
                 OnAttack?.Invoke();
+            }
+        }
+
+        public void HandleGodMode(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                OnGodMode?.Invoke();
+            }
+        }
+
+        public void HandleFlash(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                OnFlash?.Invoke();
             }
         }
     }

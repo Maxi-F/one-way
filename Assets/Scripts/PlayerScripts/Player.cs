@@ -60,7 +60,7 @@ namespace PlayerScripts
         
         private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
-        
+        public bool IsInGodMode { get; set; }
         public void Start()
         {
             _rigidBody ??= GetComponent<Rigidbody>();
@@ -170,7 +170,7 @@ namespace PlayerScripts
         /// </summary>
         public void LoseLive(bool fromEnemy)
         {
-            if (!fromEnemy || !_isInvincible)
+            if (!IsInGodMode && (!fromEnemy || !_isInvincible))
             {
                 AudioManager.Instance?.PlaySound(lostLiveSound);
                 EventManager.Instance?.TriggerEvent(lostLiveEvent, null);

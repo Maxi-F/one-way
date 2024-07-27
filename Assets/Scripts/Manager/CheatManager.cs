@@ -13,9 +13,11 @@ namespace Manager
         [SerializeField] private FlyBehaviour flyBehaviour;
         [SerializeField] private WalkingBehaviour walkingBehaviour;
         [SerializeField] private bool isLastLevel;
-    
+        
+        [Header("Events")]
         [SerializeField] private UnityEvent OnFlyToggled;
-    
+        [SerializeField] private string onFlashToggle = "onFlashToggle";
+
         /// <summary>
         /// Toggles fly on player.
         /// </summary>
@@ -34,6 +36,16 @@ namespace Manager
             }
         
             OnFlyToggled?.Invoke();
+        }
+
+        public void ToggleGodmode()
+        {
+            player.IsInGodMode = !player.IsInGodMode;
+        }
+
+        public void ToggleFlash()
+        {
+            EventManager.Instance?.TriggerEvent(onFlashToggle, null);
         }
 
         /// <summary>
