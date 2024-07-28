@@ -22,6 +22,7 @@ namespace Enemies.EnemyInCrowd
         private Vector3 _startPosition;
         private Vector3 _thrownDirection;
         private bool _isBeingThrown = false;
+        private Coroutine _disableEnemyCoroutine;
         
         public void Start()
         {
@@ -52,7 +53,8 @@ namespace Enemies.EnemyInCrowd
 
         public void ResetEnemy()
         {
-            StopCoroutine(DisableEnemy());
+            if(_disableEnemyCoroutine != null)
+                StopCoroutine(_disableEnemyCoroutine);
             transform.position = _startPosition;
 
             foreach (var enemyInCrowd in enemiesFromCrowd)
@@ -93,7 +95,7 @@ namespace Enemies.EnemyInCrowd
             _thrownDirection.y = 0;
             _thrownDirection = _thrownDirection.normalized;
             
-            StartCoroutine(DisableEnemy());
+            _disableEnemyCoroutine = StartCoroutine(DisableEnemy());
         }
     }
 }
