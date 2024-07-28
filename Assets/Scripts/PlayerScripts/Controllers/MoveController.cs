@@ -151,8 +151,6 @@ namespace PlayerScripts.Controllers
             );
 
             Vector3 forceToApply = _goalVelocity - GetHorizontalVelocity();
-
-            Debug.Log(_desiredDirection.normalized);
             
             float maxAccelerationToUse = _maxAccelerationToUse * maxAccelerationFactorFromDot.Evaluate(velocityDot);
 
