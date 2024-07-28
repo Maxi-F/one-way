@@ -18,6 +18,11 @@ namespace Health
         {
             CurrentHp = initHitPoints;
         }
+
+        public void ResetHitPoints()
+        {
+            CurrentHp = initHitPoints;
+        }
         
         public void TakeDamage()
         {

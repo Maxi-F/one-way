@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 
 namespace PlayerScripts
 {
-    public class Player : MonoBehaviour, ITakeDamage
+    public class Player : MonoBehaviour
     {
         [Header("Behaviours")]
         [Header("PlayerData")]
@@ -57,6 +57,7 @@ namespace PlayerScripts
         private bool _isInvincible = false;
         private MovementFsm _movementFsm;
         private AttackFsm _attackFsm;
+        private HealthPoints _health;
         
         private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
@@ -66,6 +67,7 @@ namespace PlayerScripts
         {
             _rigidBody ??= GetComponent<Rigidbody>();
             _rotationBehaviour ??= GetComponent<RotationBehaviour>();
+            _health ??= GetComponent<HealthPoints>();
 
             IBehaviour[] behaviours = GetComponents<IBehaviour>();
             _movementFsm = new MovementFsm(behaviours, walkBehaviour);
@@ -177,11 +179,16 @@ namespace PlayerScripts
                 EventManager.Instance?.TriggerEvent(lostLiveEvent, null);
                 
                 lives--;
+                _health.ResetHitPoints();
+                
                 _isInvincible = true;
                 StartCoroutine(DisableInvincibility());
             }
         }
 
+        /// <summary>
+        /// Disables the invincibility on the player.
+        /// </summary>
         private IEnumerator DisableInvincibility()
         {
             yield return new WaitForSeconds(invincibleTime);
@@ -189,22 +196,34 @@ namespace PlayerScripts
             _isInvincible = false;
         }
 
+        /// <summary>
+        /// Sets attack in idle state.
+        /// </summary>
         public void SetAttackInIdle()
         {
             _attackFsm.ChangeStateTo(AttackBehaviour.Idle);
         }
 
+        /// <summary>
+        /// Sets attack in Attack state.
+        /// </summary>
         public void Attack()
         {
             _attackFsm.ChangeStateTo(AttackBehaviour.Attack);
         }
 
+        /// <summary>
+        /// Checks if attack FSM is in attack state.
+        /// </summary>
         public bool IsAttacking()
         {
             return _attackFsm.IsCurrentBehaviour(AttackBehaviour.Attack);
         }
 
-        public void TakeDamage()
+        /// <summary>
+        /// If health is zero (because of enemies), this event is called and triggers the enemy hit event.
+        /// </summary>
+        public void EnemyHit()
         {
             EventManager.Instance.TriggerEvent(enemyHitEvent, null);
         }

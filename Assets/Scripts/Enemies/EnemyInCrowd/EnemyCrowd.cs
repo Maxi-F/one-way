@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Audio;
+using Health;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
@@ -39,16 +40,10 @@ namespace Enemies.EnemyInCrowd
                 transform.position += _thrownDirection * (deadVelocity * Time.deltaTime);
             }
         }
-    
-        public void TakeDamage()
-        {
-            Dead();
-        }
 
         public void SetPlayer(Player player)
         {
             _player = player;
-            Debug.Log("here!");
             foreach (var enemyInCrowd in enemiesFromCrowd)
             {
                 enemyInCrowd.SetPlayer(player);
@@ -69,6 +64,10 @@ namespace Enemies.EnemyInCrowd
             gameObject.SetActive(true);
         }
 
+        /// <summary>
+        /// Disables the enemy crowd after some time has passed, so it does not
+        /// get thrown infinitely.
+        /// </summary>
         private IEnumerator DisableEnemy()
         {
             yield return new WaitForSeconds(secondsUntilDisable);
@@ -77,6 +76,9 @@ namespace Enemies.EnemyInCrowd
             gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Makes the enemy crowd "die", throwing them into infinity.
+        /// </summary>
         public void Dead()
         {
             _isBeingThrown = true;

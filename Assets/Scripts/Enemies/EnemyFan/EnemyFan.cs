@@ -18,14 +18,13 @@ namespace Enemies.EnemyFan
         [Header("Events")]
         [SerializeField] private string enemyFanEnabledEvent = "enemyEnabled";
 
-        [FormerlySerializedAs("enemyFanDeathsound")] [Header("Sounds")] [SerializeField] private string enemyFanDeathSound = "fanDeath";
+        [Header("Sounds")] [SerializeField] private string enemyFanDeathSound = "fanDeath";
         
         [Header("Internal events")] 
         [SerializeField] private UnityEvent<bool> onShouldFollow;
         [SerializeField] private UnityEvent onDead;
         [SerializeField] private UnityEvent onReset;
         
-        private HealthPoints _health;
         private Player _player;
         private Vector3 _initPosition;
         private Vector3 _deathPosition;
@@ -37,7 +36,6 @@ namespace Enemies.EnemyFan
         void Start()
         {
             _initPosition = transform.position;
-            _health ??= GetComponent<HealthPoints>();
             _collider ??= GetComponent<CapsuleCollider>();
             _rigidbody ??= GetComponent<Rigidbody>();
             
@@ -67,11 +65,6 @@ namespace Enemies.EnemyFan
                 transform.position.y,
                 _player.transform.position.z
                 ));
-        }
-
-        public void TakeDamage()
-        {
-            _health.TakeDamage();
         }
 
         private void OnCollisionEnter(Collision other)
@@ -109,6 +102,9 @@ namespace Enemies.EnemyFan
             onReset?.Invoke();
         }
 
+        /// <summary>
+        /// If enemy health is zero, this method is called to start dead state.
+        /// </summary>
         public void Dead()
         {
             onDead?.Invoke();
@@ -123,6 +119,9 @@ namespace Enemies.EnemyFan
             StartCoroutine(DisableEnemy());
         }
 
+        /// <summary>
+        /// Disables the enemy after some time.
+        /// </summary>
         IEnumerator DisableEnemy()
         {
             yield return new WaitForSeconds(disableAfterSeconds);
@@ -131,6 +130,9 @@ namespace Enemies.EnemyFan
                 gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Sets the follow boolean if the player is near or far from the enemy.
+        /// </summary>
         public void SetFollow(bool shouldFollow)
         {
             _shouldFollow = shouldFollow;
