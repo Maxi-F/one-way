@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +14,8 @@ namespace PlayerScripts.Controllers
         [SerializeField] private UnityEvent OnFalling;
         [SerializeField] private UnityEvent OnEdgeJump;
         [SerializeField] private UnityEvent OnJump;
+        [SerializeField] private string menuActivatedEvent = "menuActivated";
+        [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
         
         private Player _player;
         private float _timePassedWithoutTouchingGround = 0f;
@@ -21,6 +26,7 @@ namespace PlayerScripts.Controllers
 
         private bool _cheatsEnabled = false;
         private bool _isFalling = false;
+        private bool _isPaused = false;
         
         private void Start()
         {
@@ -31,6 +37,25 @@ namespace PlayerScripts.Controllers
             _jumpController ??= GetComponent<JumpController>();
             _edgeGrabController ??= GetComponent<EdgeGrabController>();
             _flyController ??= GetComponent<FlyController>();
+            
+            EventManager.Instance?.SubscribeTo(menuActivatedEvent, SetPause);
+            EventManager.Instance?.SubscribeTo(menuDeactivatedEvent, UnsetPause);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance?.UnsubscribeTo(menuActivatedEvent, SetPause);
+            EventManager.Instance?.UnsubscribeTo(menuDeactivatedEvent, UnsetPause);
+        }
+
+        private void UnsetPause(Dictionary<string, object> obj)
+        {
+            _isPaused = false;
+        }
+
+        private void SetPause(Dictionary<string, object> obj)
+        {
+            _isPaused = true;
         }
 
         public void Update()
@@ -96,6 +121,7 @@ namespace PlayerScripts.Controllers
         /// </summary>
         public void Jump()
         {
+            if (_isPaused) return;
             if (_cheatsEnabled)
             {
                 _flyController.GoUp();
