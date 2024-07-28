@@ -25,19 +25,36 @@ namespace CameraScripts
         [SerializeField] private float controllerDamper = 0.05f;
 
         [Header("Events")] [SerializeField] private string invertAxisEvent = "invertAxis";
+        [SerializeField] private string menuActivatedEvent = "menuActivated";
+        [SerializeField] private string menuDeactivatedEvent = "menuDeactivated";
         
         private Vector2 _desiredRotation;
         private bool _isController;
+        private bool _isPaused = false;
         private bool _invertedAxis = false;
 
         private void Start()
         {
             EventManager.Instance?.SubscribeTo(invertAxisEvent, SetAxis);
+            EventManager.Instance?.SubscribeTo(menuActivatedEvent, SetPause);
+            EventManager.Instance?.SubscribeTo(menuDeactivatedEvent, UnsetPause);
         }
 
         private void OnDisable()
         {
             EventManager.Instance?.UnsubscribeTo(invertAxisEvent, SetAxis);
+            EventManager.Instance?.UnsubscribeTo(menuActivatedEvent, SetPause);
+            EventManager.Instance?.UnsubscribeTo(menuDeactivatedEvent, UnsetPause);
+        }
+
+        private void UnsetPause(Dictionary<string, object> message)
+        {
+            _isPaused = false;
+        }
+
+        private void SetPause(Dictionary<string, object> message)
+        {
+            _isPaused = true;
         }
 
         private void SetAxis(Dictionary<string, object> message)
@@ -65,6 +82,8 @@ namespace CameraScripts
         /// </summary>
         private void ModifyRotation()
         {
+            if (_isPaused) return;
+            
             Quaternion previousRotationInX = transform.rotation;
             Vector3 previousPositionInX = transform.position;
             float multiplier = _isController ? controllerDamper : Time.deltaTime;
