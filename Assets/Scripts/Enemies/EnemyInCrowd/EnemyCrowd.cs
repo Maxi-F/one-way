@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace Enemies.EnemyInCrowd
         
         [Header("events")] [SerializeField] private string enemyEnabledEvent = "enemyEnabled";
 
+        [Header("Sounds")] [SerializeField] private string enemyDeathSound = "crowdDeath";
+        
         private Player _player;
         private Vector3 _startPosition;
         private Vector3 _thrownDirection;
@@ -77,6 +80,7 @@ namespace Enemies.EnemyInCrowd
         public void Dead()
         {
             _isBeingThrown = true;
+            AudioManager.Instance?.PlaySound(enemyDeathSound);
             
             foreach (var enemyInCrowd in enemiesFromCrowd)
             {

@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
+using Audio;
 using Enemies.Pools;
 using Health;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Enemies
@@ -13,6 +15,8 @@ namespace Enemies
     {
         [SerializeField] private Vector2 secondsTillHitRange = new Vector2(0.5f, 1.0f);
         [SerializeField] private float secondsUntilDisable = 5.0f;
+
+        [Header("Sounds")] [SerializeField] private string tomatoSplashSound = "tomatoSplash";
         
         private Rigidbody _rigidbody;
         private bool _canDamage = true;
@@ -107,6 +111,8 @@ namespace Enemies
 
         public void TakeDamage()
         {
+            AudioManager.Instance?.PlaySound(tomatoSplashSound);
+            
             _canDamage = false;
 
             Vector3 force = 2.0f * -(_rigidbody.velocity);

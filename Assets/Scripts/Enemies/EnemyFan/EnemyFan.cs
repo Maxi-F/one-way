@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Health;
 using Manager;
 using PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Enemies.EnemyFan
 {
@@ -16,6 +18,8 @@ namespace Enemies.EnemyFan
         [Header("Events")]
         [SerializeField] private string enemyFanEnabledEvent = "enemyEnabled";
 
+        [FormerlySerializedAs("enemyFanDeathsound")] [Header("Sounds")] [SerializeField] private string enemyFanDeathSound = "fanDeath";
+        
         [Header("Internal events")] 
         [SerializeField] private UnityEvent<bool> onShouldFollow;
         [SerializeField] private UnityEvent onDead;
@@ -108,7 +112,8 @@ namespace Enemies.EnemyFan
         public void Dead()
         {
             onDead?.Invoke();
-
+            AudioManager.Instance?.PlaySound(enemyFanDeathSound);
+            
             _isDead = true;
             _collider.enabled = false;
             _rigidbody.useGravity = false;

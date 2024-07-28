@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Enemies.Pools;
 using Manager;
 using PlayerScripts;
@@ -16,8 +17,9 @@ namespace Enemies.EnemyInCrowd
 
         [Header("Internal events")] 
         [SerializeField] private UnityEvent onThrowing;
-
         [SerializeField] private UnityEvent onThrown;
+
+        [Header("Sounds")] [SerializeField] private string playerInRangeSound = "crowdBoo";
         
         private Player _player;
         private bool _isPlayerInArea;
@@ -80,12 +82,18 @@ namespace Enemies.EnemyInCrowd
 
         public void SetPlayerInArea(bool isPlayerInArea)
         {
+            if (isPlayerInArea)
+            {
+                AudioManager.Instance?.PlaySoundIfAble(playerInRangeSound);
+            }
+            
             _isPlayerInArea = isPlayerInArea;
         }
 
         public void StopThrowing()
         {
             _canThrow = false;
+            AudioManager.Instance?.StopSound(playerInRangeSound);
         }
 
         public void ResetEnemy()

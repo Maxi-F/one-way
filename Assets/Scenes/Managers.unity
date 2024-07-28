@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -190,12 +190,28 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
       propertyPath: sfxs.Array.size
-      value: 14
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
       propertyPath: sfxs.Array.data[13].clip
       value: 
       objectReference: {fileID: 8300000, guid: 73fce8ca2fcc0f74eba92007274e63a3, type: 3}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[14].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 00fa1f66855860f45ac53c512a09e7b4, type: 3}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[15].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b88d84edb925a8640a1d67ecb6403cc6, type: 3}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[16].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a39ed69f5b707154b993672669a552e7, type: 3}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[17].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a89ab2d15372ba4c89119d2afd31f9a, type: 3}
     - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
       propertyPath: musics.Array.data[0].loop
       value: 1
@@ -205,12 +221,60 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[14].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[15].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[16].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[17].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
       propertyPath: sfxs.Array.data[13].maxVolume
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
       propertyPath: sfxs.Array.data[13].soundName
       value: attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[14].maxVolume
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[14].soundName
+      value: crowdBoo
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[15].maxVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[15].soundName
+      value: crowdDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[16].maxVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[16].soundName
+      value: fanDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[17].maxVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33413045950773125, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
+      propertyPath: sfxs.Array.data[17].soundName
+      value: tomatoSplash
       objectReference: {fileID: 0}
     - target: {fileID: 5730773134152395118, guid: 3217955ef869d444c86c7e2f56dffe01, type: 3}
       propertyPath: m_Name

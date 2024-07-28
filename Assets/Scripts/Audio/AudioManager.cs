@@ -170,6 +170,15 @@ namespace Audio
             Play(soundName, sfxs);
         }
 
+        public void PlaySoundIfAble(string soundName)
+        {
+            Sound soundToPlay = FindSound(soundName, sfxs);
+
+            if (soundToPlay.IsPlaying()) return;
+            
+            PlaySound(soundName);
+        }
+
         /// <summary>
         /// Stop a SFX sound
         /// </summary>
