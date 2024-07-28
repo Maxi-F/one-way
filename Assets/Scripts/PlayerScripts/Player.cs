@@ -61,6 +61,7 @@ namespace PlayerScripts
         private RotationBehaviour _rotationBehaviour;
         public float Sensibility { get; set; }
         public bool IsInGodMode { get; set; }
+
         public void Start()
         {
             _rigidBody ??= GetComponent<Rigidbody>();
@@ -88,7 +89,7 @@ namespace PlayerScripts
         /// <summary>
         /// Returns the current player horizontal velocity magnitude.
         /// </summary>
-        public float GetHorizontalVelocityMagnitude()
+        public float GetHorizontalSpeed()
         {
             return GetHorizontalVelocity().magnitude;
         }

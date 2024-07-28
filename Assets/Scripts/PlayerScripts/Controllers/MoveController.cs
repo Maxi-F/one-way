@@ -41,6 +41,7 @@ namespace PlayerScripts.Controllers
         private float _maxAccelerationToUse;
         private float _accelerationToUse;
         public Vector3 Direction => _desiredDirection;
+        public float MaxSpeed => maxSpeed;
 
         private void Start()
         {
@@ -56,7 +57,7 @@ namespace PlayerScripts.Controllers
 
         private void OnDisable()
         {
-            EventManager.Instance.UnsubscribeTo(onFlashToggle, HandleFlashToggle);
+            EventManager.Instance?.UnsubscribeTo(onFlashToggle, HandleFlashToggle);
         }
 
         private void HandleFlashToggle(Dictionary<string, object> message)
