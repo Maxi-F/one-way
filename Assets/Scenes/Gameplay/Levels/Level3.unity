@@ -2230,7 +2230,7 @@ MonoBehaviour:
   followSpeed: 10
   topMinMaxAngles: {x: 80, y: 100}
   bottomMinMaxAngles: {x: 260, y: 280}
-  controllerDamper: 0.05
+  controllerDamper: 0.2
 --- !u!45 &963194230
 Skybox:
   m_ObjectHideFlags: 0

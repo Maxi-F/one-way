@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Manager;
 using PlayerScripts;
 using UnityEngine;
 
@@ -20,9 +23,29 @@ namespace CameraScripts
         [SerializeField] private Vector2 bottomMinMaxAngles = new Vector2(260.0f, 280.0f);
 
         [SerializeField] private float controllerDamper = 0.05f;
+
+        [Header("Events")] [SerializeField] private string invertAxisEvent = "invertAxis";
         
         private Vector2 _desiredRotation;
         private bool _isController;
+        private bool _invertedAxis = false;
+
+        private void Start()
+        {
+            EventManager.Instance?.SubscribeTo(invertAxisEvent, SetAxis);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance?.UnsubscribeTo(invertAxisEvent, SetAxis);
+        }
+
+        private void SetAxis(Dictionary<string, object> message)
+        {
+            bool value = (bool)message["value"];
+
+            _invertedAxis = value;
+        }
 
         private void FixedUpdate()
         {
@@ -81,13 +104,20 @@ namespace CameraScripts
         {
             _isController = isController;
 
+            Vector2 lookInputToUse = lookInput;
+
+            if (_invertedAxis)
+            {
+                lookInputToUse.y *= -1;
+            }
+            
             if (isController)
             {
-                _desiredRotation = lookInput;
+                _desiredRotation = lookInputToUse;
             }
             else
             {
-                _desiredRotation = new Vector2(lookInput.x, -lookInput.y);
+                _desiredRotation = new Vector2(lookInputToUse.x, -lookInputToUse.y);
             }
         }
     }
