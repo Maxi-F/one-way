@@ -32,6 +32,7 @@ namespace Manager
         private Vector3 _startingPosition;
         private GameplayManager _gameplayManager;
         private bool _isPaused = false;
+        private bool _alreadyWon = false;
         
         void Start()
         {
@@ -108,8 +109,11 @@ namespace Manager
 
         public void HandleWinGame()
         {
+            if (_alreadyWon) return;
+            
             _gameplayManager.HandleWin();
             EventManager.Instance?.TriggerEvent(levelPassed, null);
+            _alreadyWon = true;
         }
 
         public void BackToMenu()
