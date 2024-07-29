@@ -69,6 +69,10 @@ Maximiliano Feldman
 
 [Ihitokage](https://freesound.org/people/ihitokage/) - Punch SFX
 
+[dr_skitz](https://freesound.org/people/dr_skitz/) - boo SFX
+
+[aarrnnoo](https://freesound.org/people/aarrnnoo/) - Punch SFX
+
 ### Special Thanks
 Juan Pablo Varela Aloisio
 
